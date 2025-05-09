@@ -1,0 +1,576 @@
+#include "score.h"
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <sstream>
+#include <SFML/Graphics.hpp>
+
+using namespace std;
+
+class Stack
+{
+private:
+    int data[1000];
+    int top_index;
+
+public:
+    Stack() : top_index(-1)
+    {}
+
+    void push(int val) {
+        if (top_index < 99) {
+            data[++top_index] = val;
+        }
+    }
+
+    void pop() {
+        if (!empty()) {
+            top_index--;
+        }
+    }
+
+    int top() const {
+        return empty() ? -1 : data[top_index];
+    }
+
+    bool empty() const {
+        return top_index == -1;
+    }
+
+    int size() const {
+        return top_index + 1;
+    }
+
+    void clear() {
+        top_index = -1;
+    }
+};
+
+ScoreManager::ScoreManager() :
+    player1Score(0),
+    player2Score(0),
+    isSinglePlayer(true),
+    player1BonusCount(0),
+    player2BonusCount(0),
+    player1ContinuousTiles(0),
+    player2ContinuousTiles(0),
+    player1BonusApplied(false),
+    player2BonusApplied(false),
+    player1PowerUpCount(0),
+    player2PowerUpCount(0),
+    player1PowerUpUsed(false),
+    player2PowerUpUsed(false),
+    player1PowerUpStartTime(0),
+    player2PowerUpStartTime(0),
+    player1LastPowerUpScore(0),
+    player2LastPowerUpScore(0)
+{
+    // Initialize texts with default properties
+    player1ScoreText.setCharacterSize(24);
+    player1ScoreText.setFillColor(sf::Color::White);
+    player1ScoreText.setPosition(10.f, 10.f);
+
+    player2ScoreText.setCharacterSize(24);
+    player2ScoreText.setFillColor(sf::Color::White);
+    player2ScoreText.setPosition(55.f * 18.f - 150.f, 10.f);
+
+    // Initialize stacks
+    player1TileStack = new Stack();
+    player2TileStack = new Stack();
+    player1PowerUpStack = new Stack();
+    player2PowerUpStack = new Stack();
+}
+
+ScoreManager::~ScoreManager() {
+    // Clean up dynamically allocated stacks
+    delete player1TileStack;
+    delete player2TileStack;
+    delete player1PowerUpStack;
+    delete player2PowerUpStack;
+}
+
+bool ScoreManager::initializeFont(const string& fontPath) {
+    // Load font
+    if (!font.loadFromFile(fontPath)) {
+        cout << "Error loading font: " << fontPath << endl;
+        return false;
+    }
+
+    // Set font for both score texts
+    player1ScoreText.setFont(font);
+    player2ScoreText.setFont(font);
+
+    return true;
+}
+
+void ScoreManager::resetScores() {
+    player1Score = 0;
+    player2Score = 0;
+    player1BonusCount = 0;
+    player2BonusCount = 0;
+    player1ContinuousTiles = 0;
+    player2ContinuousTiles = 0;
+    player1BonusApplied = false;
+    player2BonusApplied = false;
+    player1PowerUpCount = 0;
+    player2PowerUpCount = 0;
+    player1PowerUpUsed = false;
+    player2PowerUpUsed = false;
+    player1PowerUpStartTime = 0;
+    player2PowerUpStartTime = 0;
+    player1LastPowerUpScore = 0;
+    player2LastPowerUpScore = 0;
+
+
+    player1TileStack->clear();
+    player2TileStack->clear();
+    player1PowerUpStack->clear();
+    player2PowerUpStack->clear();
+}
+
+void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
+{
+    // Process Player 1 Score
+    int player1Multiplier = 1;
+
+    if (player1NewTiles > 0) {
+        // Push tiles to stack
+        player1TileStack->push(player1NewTiles);
+
+        // Calculate continuous tiles
+        int continuousTiles = 0;
+        Stack* tempStack = new Stack();
+
+        while (!player1TileStack->empty()) {
+            int tile = player1TileStack->top();
+            continuousTiles += tile;
+            tempStack->push(tile);
+            player1TileStack->pop();
+        }
+
+        // Restore original stack
+        while (!tempStack->empty()) {
+            player1TileStack->push(tempStack->top());
+            tempStack->pop();
+        }
+        delete tempStack;
+
+        // Bonus logic for Player 1
+        if (player1BonusCount >= 5) {
+            player1Multiplier = (player1NewTiles > 5) ? 4 : 1;
+        }
+        else if (player1BonusCount >= 3) {
+            if (player1NewTiles > 5) {
+                player1Multiplier = 2;
+
+                if (!player1BonusApplied) {
+                    player1BonusCount++;
+                    player1BonusApplied = true;
+                }
+            }
+        }
+        else {
+            if (continuousTiles > 10 && !player1BonusApplied) {
+                player1BonusCount++;
+                player1BonusApplied = true;
+            }
+        }
+    }
+    else {
+        // Clear stack when streak breaks
+        player1TileStack->clear();
+        player1BonusApplied = false;
+    }
+
+    // Calculate score for player 1
+    int player1ScoreIncrease = max(0, player1NewTiles) * player1Multiplier;
+    player1Score += player1ScoreIncrease;
+
+    // Power-up acquisition logic for Player 1 using stack
+    if (player1Score >= 100 && player1LastPowerUpScore < 100) {
+        player1PowerUpStack->push(1);
+        player1LastPowerUpScore = 100;
+    }
+    else if (player1Score >= 70 && player1LastPowerUpScore < 70) {
+        if (player1PowerUpStack->size() < 2) {
+            player1PowerUpStack->push(1);
+        }
+        player1LastPowerUpScore = 70;
+    }
+    else if (player1Score >= 50 && player1LastPowerUpScore < 50) {
+        player1PowerUpStack->push(1);
+        player1LastPowerUpScore = 50;
+    }
+
+    // Multiplayer logic
+    if (!isSinglePlayer) {
+        int player2Multiplier = 1;
+
+        if (player2NewTiles > 0) {
+            player2TileStack->push(player2NewTiles);
+
+            int continuousTiles = 0;
+            Stack* tempStack = new Stack();
+
+            while (!player2TileStack->empty()) {
+                int tile = player2TileStack->top();
+                continuousTiles += tile;
+                tempStack->push(tile);
+                player2TileStack->pop();
+            }
+
+            // Restore original stack
+            while (!tempStack->empty()) {
+                player2TileStack->push(tempStack->top());
+                tempStack->pop();
+            }
+            delete tempStack;
+
+            // Bonus logic for Player 2
+            if (player2BonusCount >= 5) {
+                player2Multiplier = (player2NewTiles > 5) ? 4 : 1;
+            }
+            else if (player2BonusCount >= 3) {
+                if (player2NewTiles > 5) {
+                    player2Multiplier = 2;
+
+                    if (!player2BonusApplied) {
+                        player2BonusCount++;
+                        player2BonusApplied = true;
+                    }
+                }
+            }
+            else {
+                if (continuousTiles > 10 && !player2BonusApplied) {
+                    player2BonusCount++;
+                    player2BonusApplied = true;
+                }
+            }
+        }
+        else {
+            player2TileStack->clear();
+            player2BonusApplied = false;
+        }
+
+        // Calculate score for player 2
+        int player2ScoreIncrease = max(0, player2NewTiles) * player2Multiplier;
+        player2Score += player2ScoreIncrease;
+
+        // Power-up acquisition logic for Player 2
+        if (player2Score >= 100 && player2LastPowerUpScore < 100) {
+            player2PowerUpStack->push(1);
+            player2LastPowerUpScore = 100;
+        }
+        else if (player2Score >= 70 && player2LastPowerUpScore < 70) {
+            if (player2PowerUpStack->size() < 2) {
+                player2PowerUpStack->push(1);
+            }
+            player2LastPowerUpScore = 70;
+        }
+        else if (player2Score >= 50 && player2LastPowerUpScore < 50) {
+            player2PowerUpStack->push(1);
+            player2LastPowerUpScore = 50;
+        }
+    }
+}
+
+bool ScoreManager::canActivatePowerUp(bool isPlayer1) const {
+    return isPlayer1 ? !player1PowerUpStack->empty() :
+        (!isSinglePlayer && !player2PowerUpStack->empty());
+}
+
+bool ScoreManager::tryActivatePowerUp(bool isPlayer1) {
+    if (isPlayer1) {
+        if (!player1PowerUpStack->empty()) {
+            player1PowerUpStack->pop();
+            player1PowerUpUsed = true;
+            player1PowerUpStartTime = static_cast<unsigned int>(time(nullptr));
+            return true;
+        }
+    }
+    else if (!isSinglePlayer) {
+        if (!player2PowerUpStack->empty()) {
+            player2PowerUpStack->pop();
+            player2PowerUpUsed = true;
+            player2PowerUpStartTime = static_cast<unsigned int>(time(nullptr));
+            return true;
+        }
+    }
+    return false;
+}
+
+void ScoreManager::updatePowerUpTimer(bool isPlayer1) {
+    unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
+
+    if (isPlayer1) {
+        if (player1PowerUpUsed &&
+            currentTime - player1PowerUpStartTime >= 3) {
+            player1PowerUpUsed = false;
+        }
+    }
+    else {
+        if (player2PowerUpUsed &&
+            currentTime - player2PowerUpStartTime >= 3) {
+            player2PowerUpUsed = false;
+        }
+    }
+}
+
+void ScoreManager::resetPowerUpState(bool isPlayer1) {
+    if (isPlayer1) {
+        player1PowerUpUsed = false;
+        player1PowerUpStartTime = 0;
+    }
+    else {
+        player2PowerUpUsed = false;
+        player2PowerUpStartTime = 0;
+    }
+}
+
+int ScoreManager::getPowerUpCount(bool isPlayer1) const {
+    return isPlayer1 ? player1PowerUpStack->size() : player2PowerUpStack->size();
+}
+
+bool ScoreManager::isPowerUpUsed(bool isPlayer1) const {
+    return isPlayer1 ? player1PowerUpUsed : player2PowerUpUsed;
+}
+
+int ScoreManager::getPlayer1Score() const {
+    return player1Score;
+}
+
+int ScoreManager::getPlayer2Score() const {
+    return player2Score;
+}
+
+int ScoreManager::getPlayer1BonusCount() const {
+    return player1BonusCount;
+}
+
+int ScoreManager::getPlayer2BonusCount() const {
+    return player2BonusCount;
+}
+void ScoreManager::setPlayerUsernames(const string& p1Username, const string& p2Username) {
+    player1Username = p1Username;
+    player2Username = p2Username;
+}
+
+void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode) {
+    
+    isSinglePlayer = isSinglePlayerMode;
+
+    if (isSinglePlayerMode) {
+        string scoreText = "Score: " + to_string(player1Score);
+
+        // Add bonus level information
+        if (player1BonusCount > 0) {
+            scoreText += " (Bonus Lvl " + to_string(player1BonusCount) + ")";
+        }
+
+        // Add power-up count with more descriptive text
+        scoreText += " [Power-Ups: " + to_string(player1PowerUpStack->size()) + "]";
+
+        // Show if a power-up is currently in use
+        if (player1PowerUpUsed) {
+            scoreText += " (Active)";
+        }
+
+        player1ScoreText.setString(scoreText);
+        window.draw(player1ScoreText);
+    }
+    else {
+        /*      string player1ScoreStr = "Player 1: " + to_string(player1Score);
+              string player2ScoreStr = "Player 2: " + to_string(player2Score);*/
+
+        string player1ScoreStr = player1Username + ": " + to_string(player1Score);
+        string player2ScoreStr = player2Username + ": " + to_string(player2Score);
+
+
+
+
+        // Add bonus level information
+        if (player1BonusCount > 0) {
+            player1ScoreStr += " (Bonus Lvl " + to_string(player1BonusCount) + ")";
+        }
+        if (player2BonusCount > 0) {
+            player2ScoreStr += " (Bonus Lvl " + to_string(player2BonusCount) + ")";
+        }
+
+        // Add power-up count details
+        player1ScoreStr += " [Power-Ups: " + to_string(player1PowerUpStack->size()) + "]";
+        player2ScoreStr += " [Power-Ups: " + to_string(player2PowerUpStack->size()) + "]";
+
+        // Show if power-ups are in use
+        if (player1PowerUpUsed) {
+            player1ScoreStr += " (Active)";
+        }
+        if (player2PowerUpUsed) {
+            player2ScoreStr += " (Active)";
+        }
+
+        player1ScoreText.setString(player1ScoreStr);
+        player2ScoreText.setString(player2ScoreStr);
+
+        window.draw(player1ScoreText);
+        window.draw(player2ScoreText);
+    }
+}
+
+void ScoreManager::setGameMode(bool singlePlayer) {
+    isSinglePlayer = singlePlayer;
+}
+
+int ScoreManager::countFilledTiles(int grid[35][55]) {
+    int filledTiles = 0;
+    const int M = 35;
+    const int N = 55;
+    for (int i = 0; i < M; i++)
+        for (int j = 0; j < N; j++)
+            if (grid[i][j] == 2)
+                filledTiles++;
+    return filledTiles;
+}
+
+string ScoreManager::sanitizeFilename(const string& username) {
+    string sanitized = username;
+    // Remove or replace characters that might cause issues in filenames
+    for (char& c : sanitized) {
+        if (c == '/' || c == '\\' || c == ':' || c == '*' || c == '?' ||
+            c == '"' || c == '<' || c == '>' || c == '|') {
+            c = '_';
+        }
+    }
+    return sanitized;
+}
+
+string ScoreManager::getCurrentDateTime() {
+    time_t now = time(nullptr);
+    tm local_tm = {};
+    localtime_s(&local_tm, &now);
+
+    ostringstream timestampStream;
+    timestampStream << put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
+    return timestampStream.str();
+}
+
+void ScoreManager::saveUserProgress(const string& username) {
+    // Sanitize username for file operations
+    string safeUsername = sanitizeFilename(username);
+
+    // Create user-specific progress file
+    string progressFilePath = "user_progress_" + safeUsername + ".txt";
+
+    ofstream progressFile(progressFilePath, ios::app);
+    if (progressFile.is_open()) {
+        string currentTime = getCurrentDateTime();
+
+        progressFile << "--- Game Session on " << currentTime << " ---\n";
+        if (isSinglePlayer) {
+            progressFile << "Final Score: " << player1Score << "\n";
+            progressFile << "Bonus Level: " << player1BonusCount << "\n";
+            progressFile << "Power-Ups: " << player1PowerUpStack->size() << "\n\n";
+        }
+        else {
+            progressFile << "Player 1 Score: " << player1Score
+                << " (Bonus Level: " << player1BonusCount
+                << ", Power-Ups: " << player1PowerUpStack->size() << ")\n";
+            progressFile << "Player 2 Score: " << player2Score
+                << " (Bonus Level: " << player2BonusCount
+                << ", Power-Ups: " << player2PowerUpStack->size() << ")\n\n";
+        }
+        progressFile.close();
+    }
+}
+
+bool ScoreManager::loadUserProgress(const string& username) {
+    // Sanitize username for file operations
+    string safeUsername = sanitizeFilename(username);
+
+    // Create user-specific progress file path
+    string progressFilePath = "user_progress_" + safeUsername + ".txt";
+
+    ifstream progressFile(progressFilePath);
+    if (progressFile.is_open()) {
+        // Here you could implement logic to load previous game state
+        // For now, just return true if file exists
+        progressFile.close();
+        return true;
+    }
+    return false;
+}
+
+void ScoreManager::recordGameResults(const string& scoreFilePath,
+    const string& powerUpFilePath,
+    const string& player1Username,
+    const string& player2Username,
+    bool isSinglePlayer) {
+    // Sanitize usernames for file operations
+    string safePlayer1Username = sanitizeFilename(player1Username);
+    string safePlayer2Username = sanitizeFilename(player2Username);
+
+    // Get current timestamp
+    string timestamp = getCurrentDateTime();
+
+    // Append to global score file
+    ofstream scoreFile(scoreFilePath, ios::app);
+    if (scoreFile.is_open()) {
+        scoreFile << "--- Game Score for " << safePlayer1Username << endl;
+
+        if (isSinglePlayer) {
+            scoreFile << "Game Mode: Single Player\n";
+            scoreFile << "Game Score for " << player1Username << "\n";
+            scoreFile << "Final Score: " << player1Score << "\n";
+            scoreFile << "Bonus Level: " << player1BonusCount << "\n";
+            scoreFile << "Power-Ups Collected: " << player1PowerUpStack->size() << "\n";
+            scoreFile << "Power-Ups Used: " << (player1PowerUpUsed ? "Yes" : "No") << "\n\n";
+        }
+        else {
+            scoreFile << "Game Mode: Multiplayer\n";
+            scoreFile << "Game Score for " << player1Username << "\n";
+            scoreFile << "Player 1 Score: " << player1Score
+                << " (Bonus Level: " << player1BonusCount
+                << ", Power-Ups: " << player1PowerUpStack->size()
+                << ", Used: " << (player1PowerUpUsed ? "Yes" : "No") << ")\n";
+            scoreFile << "Game Score for " << player2Username << "\n";
+            scoreFile << "Player 2 Score: " << player2Score
+                << " (Bonus Level: " << player2BonusCount
+                << ", Power-Ups: " << player2PowerUpStack->size()
+                << ", Used: " << (player2PowerUpUsed ? "Yes" : "No") << ")\n\n";
+        }
+        scoreFile.close();
+    }
+    else {
+        cout << "Unable to open score file: " << scoreFilePath << endl;
+    }
+
+    // Save user-specific progress
+    saveUserProgress(player1Username);
+
+    // Separate detailed power-up tracking
+    ofstream powerUpFile(powerUpFilePath, ios::app);
+    if (powerUpFile.is_open()) {
+        powerUpFile << "--- Power-Up Tracking for " << safePlayer1Username
+            << " (" << timestamp << ") ---\n";
+
+        if (isSinglePlayer) {
+            powerUpFile << "Game Mode: Single Player\n";
+            powerUpFile << "Total Power-Ups: " << player1PowerUpStack->size() << "\n";
+            powerUpFile << "Current Power-Up Status: "
+                << (player1PowerUpUsed ? "Active" : "Inactive") << "\n\n";
+        }
+        else {
+            powerUpFile << "Game Mode: Multiplayer\n";
+            powerUpFile << "Player 1 - Total Power-Ups: " << player1PowerUpStack->size()
+                << " (Status: " << (player1PowerUpUsed ? "Active" : "Inactive") << ")\n";
+            powerUpFile << "Player 2 - Total Power-Ups: " << player2PowerUpStack->size()
+                << " (Status: " << (player2PowerUpUsed ? "Active" : "Inactive") << ")\n\n";
+        }
+        powerUpFile.close();
+    }
+    else {
+        cout << "Unable to open power-up file: " << powerUpFilePath << endl;
+    }
+}

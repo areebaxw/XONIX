@@ -1,0 +1,61 @@
+--- Game Session on 2025-05-04 00:55:46 ---
+Final Score: 64
+Bonus Level: 3
+Power-Ups: 1
+
+--- Game Session on 2025-05-04 00:55:56 ---
+Final Score: 24
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2025-05-04 00:55:59 ---
+Final Score: 10
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2025-05-04 00:56:55 ---
+Final Score: 129
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2025-05-04 05:29:23 ---
+Player 1 Score: 291 (Bonus Level: 3, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2025-05-04 05:29:37 ---
+Final Score: 23
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2025-05-04 17:00:52 ---
+Player 1 Score: 279 (Bonus Level: 3, Power-Ups: 2)
+Player 2 Score: 125 (Bonus Level: 3, Power-Ups: 3)
+
+--- Game Session on 2025-05-04 20:22:11 ---
+Player 1 Score: 382 (Bonus Level: 3, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2025-05-05 00:50:03 ---
+Player 1 Score: 286 (Bonus Level: 3, Power-Ups: 2)
+Player 2 Score: 99 (Bonus Level: 3, Power-Ups: 2)
+
+--- Game Session on 2025-05-05 03:33:42 ---
+Final Score: 14
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2025-05-05 03:33:51 ---
+Final Score: 41
+Bonus Level: 2
+Power-Ups: 0
+
+--- Game Session on 2025-05-05 14:56:27 ---
+Final Score: 183
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2025-05-05 15:11:28 ---
+Final Score: 67
+Bonus Level: 3
+Power-Ups: 1
+
