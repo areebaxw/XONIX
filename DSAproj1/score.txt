@@ -1,0 +1,39 @@
+--- Game Score for aeba
+Game Mode: Multiplayer
+Game Score for aeba
+Player 1 Score: 154 (Bonus Level: 3, Power-Ups: 3, Used: No)
+Game Score for zara
+Player 2 Score: 82 (Bonus Level: 3, Power-Ups: 2, Used: No)
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 8
+Bonus Level: 0
+Power-Ups Collected: 0
+Power-Ups Used: No
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 27
+Bonus Level: 1
+Power-Ups Collected: 0
+Power-Ups Used: No
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 65
+Bonus Level: 3
+Power-Ups Collected: 1
+Power-Ups Used: No
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 319
+Bonus Level: 3
+Power-Ups Collected: 2
+Power-Ups Used: Yes
+

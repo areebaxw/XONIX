@@ -1,0 +1,1122 @@
+--- Power-Up Status (2025-05-01 14:27:29) ---
+Remaining Power-Ups: 2
+Power-Ups Used: No
+
+--- Power-Up Status for aeba (2025-05-01 14:32:54) ---
+Remaining Power-Ups: 2
+Power-Ups Used: No
+
+--- Power-Up Tracking for aeba (2025-05-01 15:06:00) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-02 11:27:26) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-02 11:27:40) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:16:57) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:17:20) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:17:54) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:18:18) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 3 (Status: Inactive)
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:18:35) ---
+Game Mode: Single Player
+Total Power-Ups: 1
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hhbmsasss (2025-05-02 14:20:25) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Active
+
+--- Power-Up Tracking for aeba (2025-05-03 21:00:43) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:07:40) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:07:40) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:11:55) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:02) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:03) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:04) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:05) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:05) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:13:05) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:14:07) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:16:53) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:26:01) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 21:38:25) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Status for aeba (2025-05-03 21:42:41) ---
+Remaining Power-Ups: 0
+Power-Ups Used: No
+
+--- Power-Up Tracking for aeba (2025-05-03 21:49:28) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 22:01:27) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 22:01:53) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 23:01:52) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 23:17:38) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 23:22:22) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 23:22:41) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-03 23:23:33) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 00:55:46) ---
+Game Mode: Single Player
+Total Power-Ups: 1
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 00:55:56) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 00:55:59) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 00:56:55) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-04 03:12:27) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-04 03:22:06) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-04 03:36:42) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for tanzeela (2025-05-04 04:00:39) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 05:29:23) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for hamna (2025-05-04 05:29:37) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-04 17:00:52) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Active)
+Player 2 - Total Power-Ups: 3 (Status: Inactive)
+
+--- Power-Up Tracking for hamna (2025-05-04 20:22:11) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-04 22:39:16) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-04 23:59:28) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 00:01:53) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 3 (Status: Inactive)
+
+--- Power-Up Tracking for hamna (2025-05-05 00:50:03) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Active)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 01:41:37) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 01:59:20) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 02:04:42) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 02:46:31) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 02:55:17) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 03:13:27) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 03:14:17) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for hamna (2025-05-05 03:33:41) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-05 03:33:51) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 03:36:03) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 03:39:27) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 11:58:13) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for Player1 (2025-05-05 11:58:53) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for Player1 (2025-05-05 11:59:45) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 12:01:24) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 12:06:21) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 12:08:44) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 1 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 12:09:28) ---
+Game Mode: Single Player
+Total Power-Ups: 1
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 12:46:31) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-05 14:53:26) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 14:54:08) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-05 14:56:27) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for hamna (2025-05-05 15:11:28) ---
+Game Mode: Single Player
+Total Power-Ups: 1
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 15:15:18) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 15:16:08) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 15:36:37) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 15:40:10) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-05 16:00:24) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-06 00:09:37) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-06 00:10:24) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-06 00:10:45) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-06 01:21:17) ---
+Game Mode: Single Player
+Total Power-Ups: 3
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-07 20:36:40) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-07 23:23:17) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:23:37) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:24:11) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:24:46) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:25:29) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-07 23:37:25) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:39:35) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:47:25) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 2 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-07 23:52:14) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:07:25) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:11:12) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:13:00) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:26:14) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:28:13) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 1 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Player1 (2025-05-08 00:32:52) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 00:52:50) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 00:53:35) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for Humna (2025-05-08 00:55:24) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 1 (Status: Inactive)
+Player 2 - Total Power-Ups: 1 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 10:24:39) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 10:28:32) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 10:29:30) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 0 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 10:43:54) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 1 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 10:56:26) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 0 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 11:07:44) ---
+Game Mode: Multiplayer
+Player 1 - Total Power-Ups: 3 (Status: Inactive)
+Player 2 - Total Power-Ups: 2 (Status: Inactive)
+
+--- Power-Up Tracking for aeba (2025-05-08 11:08:39) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-09 15:05:11) ---
+Game Mode: Single Player
+Total Power-Ups: 0
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-09 15:05:34) ---
+Game Mode: Single Player
+Total Power-Ups: 1
+Current Power-Up Status: Inactive
+
+--- Power-Up Tracking for aeba (2025-05-09 13:10:27) ---
+Game Mode: Single Player
+Total Power-Ups: 2
+Current Power-Up Status: Active
+
