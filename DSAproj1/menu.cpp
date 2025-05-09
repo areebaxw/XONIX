@@ -50,28 +50,29 @@ Menu::Menu(RenderWindow& window, const std::string& username, Authentication& au
 void Menu::initMainMenu()
 {
     startText.setFont(font);
-    startText.setString("Start Game");
-    startText.setPosition(200, 100);
+    startText.setString("Start");
+    startText.setPosition(470, 124);
     startText.setCharacterSize(30);
     startText.setFillColor(Color::White);
 
     selectLevelText.setFont(font);
-    selectLevelText.setString("Select Level");
-    selectLevelText.setPosition(200, 150);
+    selectLevelText.setString("Levels");
+    selectLevelText.setPosition(470, 190);
     selectLevelText.setCharacterSize(30);
     selectLevelText.setFillColor(Color::White);
 
     leaderboardText.setFont(font);
     leaderboardText.setString("Leaderboard");
-    leaderboardText.setPosition(200, 200);
-    leaderboardText.setCharacterSize(30);
+    leaderboardText.setPosition(448, 245);
+    leaderboardText.setCharacterSize(25);
     leaderboardText.setFillColor(Color::White);
 
     profileText.setFont(font);
-    profileText.setString("Player Profile");
-    profileText.setPosition(200, 250);
+    profileText.setString("Player");
+    profileText.setPosition(785, 37);
     profileText.setCharacterSize(30);
-    profileText.setFillColor(Color::White);
+    profileText.setFillColor(Color(209, 42, 144));  // Apply pink color
+
 
     //theme
 
@@ -79,25 +80,18 @@ void Menu::initMainMenu()
 
 
     themeSelectionText.setFont(font);
-    themeSelectionText.setString("Theme Selection");
-    themeSelectionText.setPosition(200, 350);
+    themeSelectionText.setString("Theme");
+    themeSelectionText.setPosition(470, 305);
     themeSelectionText.setCharacterSize(30);
     themeSelectionText.setFillColor(sf::Color::White);
-
-
-
-
-
-
-
 
 
     //friendlist 
 
     // Add Friends List menu option
     friendListText.setFont(font);
-    friendListText.setString("Friends List");
-    friendListText.setPosition(200, 300);  // Position after Profile
+    friendListText.setString("Friends");
+    friendListText.setPosition(470, 360);  // Position after Profile
     friendListText.setCharacterSize(30);
     friendListText.setFillColor(Color::White);
 
@@ -130,7 +124,7 @@ void Menu::initEndMenu()
 void Menu::displayMainMenu()
 {
     window.clear();
-	bgSprite.Draw(window);;
+	bgSprite.Draw(window);
     window.draw(startText);
     window.draw(selectLevelText);
     window.draw(leaderboardText);
@@ -180,10 +174,11 @@ void Menu::handleMainMenu()
         if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left)
         {
             Vector2i mousePosition = Mouse::getPosition(window);
-
+            Vector2f mousePosF = window.mapPixelToCoords(mousePosition);
             // Check if Start Game button is clicked
-            if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-                mousePosition.y >= 100 && mousePosition.y <= 130) {
+
+            if (startText.getGlobalBounds().contains(mousePosF)) {
+
                 // Show matchmaking screen and switch to multiplayer mode
                 std::string player1 = currentProfile->getUsername();  // Current logged-in player
                 std::string player2 = leaderboard.getTopScorer();  // Get top scorer
@@ -205,29 +200,22 @@ void Menu::handleMainMenu()
 
                 startGame();  // Transition to mode selection
             }
-            // Check if Select Level button is clicked
-            else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-                mousePosition.y >= 150 && mousePosition.y <= 180) {
+            else if (selectLevelText.getGlobalBounds().contains(mousePosF)) {
                 selectLevel();  // Show level selection
             }
             // Check if Leaderboard button is clicked
-            else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-                mousePosition.y >= 200 && mousePosition.y <= 230) {
-                showLeaderboard();  // Show leaderboard
-            }
-            // Check if Profile button is clicked
-            else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-                mousePosition.y >= 250 && mousePosition.y <= 280) {
-                showProfile();  // Show player profile
-            }
+           else if (leaderboardText.getGlobalBounds().contains(mousePosF)) {
+    showLeaderboard();  // Show leaderboard
+}
+else if (profileText.getGlobalBounds().contains(mousePosF)) {
+    showProfile();  // Show player profile
+}
             // Check if Friends List button is clicked
-            else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-                mousePosition.y >= 300 && mousePosition.y <= 330) {
+else if (friendListText.getGlobalBounds().contains(mousePosF)) {
                 showingMainMenu = false;
                 showFriendList();
             }
-			else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
-				mousePosition.y >= 350 && mousePosition.y <= 380) 
+			else if (themeSelectionText.getGlobalBounds().contains(mousePosF))
             {
                 int themeId = -1;
 				themeId = themeSelection();
@@ -244,8 +232,10 @@ void Menu::handleMainMenu()
                     if(themeNode)
                     {
                         MySprite tempSprite(themeNode->themepaths[0], 0, 0);
+                        MySprite tempSprite2(themeNode->themepaths[1], 0, 0);
 						cout << endl << themeNode->themepaths[0] << endl;
 						this->bgSprite.setTexture(tempSprite.getPath());
+                        this->bgMode.setTexture(tempSprite2.getPath());
                     }
                 }
 			}
@@ -293,7 +283,12 @@ void Menu::selectMode()
     backText.setFillColor(Color::White);
     backText.setPosition(200, 300);
 
-	bgSprite.Draw(window);
+
+
+
+
+	bgMode.Draw(window);
+
     window.draw(modeSelectionText);
     window.draw(singlePlayerText);
     window.draw(multiplayerText);

@@ -324,8 +324,8 @@ public:
 	{
 		AVLNode* oceanTheme = new AVLNode(1);
 		oceanTheme->themepaths[0] = "images/Oceantheme.jpg";
-		/*oceanTheme->themepaths[1] = "ocean_theme_path_2";
-		oceanTheme->themepaths[2] = "ocean_theme_path_3";*/
+		oceanTheme->themepaths[1] = "images/mode.jpg";
+		//oceanTheme->themepaths[2] = "ocean_theme_path_3";*
 		insert(oceanTheme);
 	}
 

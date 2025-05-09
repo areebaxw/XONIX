@@ -33,7 +33,7 @@ private:
     Text finalScoreText;
 
     Level level;  // Reference to level class
-
+    MySprite bgMode;
 
     void initMainMenu();
     void initEndMenu();
