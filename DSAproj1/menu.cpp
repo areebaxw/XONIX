@@ -233,9 +233,14 @@ else if (friendListText.getGlobalBounds().contains(mousePosF)) {
                     {
                         MySprite tempSprite(themeNode->themepaths[0], 0, 0);
                         MySprite tempSprite2(themeNode->themepaths[1], 0, 0);
+                        MySprite tempSprite3(themeNode->themepaths[2], 0, 0);
+                        MySprite tempSprite4(themeNode->themepaths[3], 0, 0);
 						cout << endl << themeNode->themepaths[0] << endl;
 						this->bgSprite.setTexture(tempSprite.getPath());
                         this->bgMode.setTexture(tempSprite2.getPath());
+                        this->bgLevel.setTexture(tempSprite3.getPath());
+                        this->bgLeaderboard.setTexture(tempSprite4.getPath());
+
                     }
                 }
 			}
@@ -771,37 +776,41 @@ void Menu::selectLevel()
     levelSelectionText.setString("Select Level:");
     levelSelectionText.setCharacterSize(30);
     levelSelectionText.setFillColor(Color::White);
-    levelSelectionText.setPosition(200, 100);
+    levelSelectionText.setPosition(400, 100);
 
     Text level1Text;
     level1Text.setFont(font);
     level1Text.setString("1. Level 1 (Easy)");
     level1Text.setCharacterSize(30);
     level1Text.setFillColor(Color::White);
-    level1Text.setPosition(200, 150);
+    level1Text.setPosition(400, 150);
 
     Text level2Text;
     level2Text.setFont(font);
     level2Text.setString("2. Level 2 (Medium)");
     level2Text.setCharacterSize(30);
     level2Text.setFillColor(Color::White);
-    level2Text.setPosition(200, 200);
+    level2Text.setPosition(400, 200);
 
     Text level3Text;
     level3Text.setFont(font);
     level3Text.setString("3. Level 3 (Hard)");
     level3Text.setCharacterSize(30);
     level3Text.setFillColor(Color::White);
-    level3Text.setPosition(200, 250);
+    level3Text.setPosition(400, 250);
 
     Text backText;
     backText.setFont(font);
     backText.setString("Press ESC to go back");
     backText.setCharacterSize(20);
     backText.setFillColor(Color::White);
-    backText.setPosition(200, 300);
+    backText.setPosition(400, 300);
 
-	bgSprite.Draw(window);
+
+
+    bgLevel.Draw(window);
+
+
     window.draw(levelSelectionText);
     window.draw(level1Text);
     window.draw(level2Text);
@@ -870,7 +879,7 @@ void Menu::showLeaderboard()
     while (true) {
         // Clear the window for leaderboard display
         window.clear();
-        bgSprite.Draw(window);
+        bgLeaderboard.Draw(window);
 
         // Create leaderboard title text
         Text leaderboardTitle;
@@ -878,7 +887,7 @@ void Menu::showLeaderboard()
         leaderboardTitle.setString("LEADERBOARD");
         leaderboardTitle.setCharacterSize(40);
         leaderboardTitle.setFillColor(Color::White);
-        leaderboardTitle.setPosition(200, 50);
+        leaderboardTitle.setPosition(400, 50);
 
         // Mode selection text
         Text modeText;
@@ -901,7 +910,7 @@ void Menu::showLeaderboard()
         modeText.setString(modeString);
         modeText.setCharacterSize(20);
         modeText.setFillColor(Color::Yellow);
-        modeText.setPosition(200, 100);
+        modeText.setPosition(395, 100);
 
         // Draw title and mode
         window.draw(leaderboardTitle);
@@ -967,7 +976,7 @@ void Menu::showLeaderboard()
 
             playerText.setCharacterSize(25);
             playerText.setFillColor(Color::White);
-            playerText.setPosition(200, 150 + i * 40);
+            playerText.setPosition(400, 150 + i * 40);
 
             window.draw(playerText);
         }
@@ -977,8 +986,8 @@ void Menu::showLeaderboard()
         instructionText.setFont(font);
         instructionText.setString("Press SPACE to change view\nPress ESC to go back");
         instructionText.setCharacterSize(20);
-        instructionText.setFillColor(Color::White);
-        instructionText.setPosition(200, 550);
+        instructionText.setFillColor(Color::Yellow);
+        instructionText.setPosition(400, 550);
 
         window.draw(instructionText);
 
@@ -1142,37 +1151,37 @@ void Menu::displayLevelSelection()
     levelSelectionText.setString("Select Level:");
     levelSelectionText.setCharacterSize(30);
     levelSelectionText.setFillColor(Color::White);
-    levelSelectionText.setPosition(200, 100);
+    levelSelectionText.setPosition(350, 150);
 
     Text level1Text;
     level1Text.setFont(font);
     level1Text.setString("1. Level 1 (Easy)");
     level1Text.setCharacterSize(30);
     level1Text.setFillColor(Color::White);
-    level1Text.setPosition(200, 150);
+    level1Text.setPosition(350, 200);
 
     Text level2Text;
     level2Text.setFont(font);
     level2Text.setString("2. Level 2 (Medium)");
     level2Text.setCharacterSize(30);
     level2Text.setFillColor(Color::White);
-    level2Text.setPosition(200, 200);
+    level2Text.setPosition(350, 250);
 
     Text level3Text;
     level3Text.setFont(font);
     level3Text.setString("3. Level 3 (Hard)");
     level3Text.setCharacterSize(30);
     level3Text.setFillColor(Color::White);
-    level3Text.setPosition(200, 250);
+    level3Text.setPosition(350, 300);
 
     Text backText;
     backText.setFont(font);
     backText.setString("Press ESC to go back");
     backText.setCharacterSize(20);
     backText.setFillColor(Color::White);
-    backText.setPosition(200, 300);
+    backText.setPosition(350, 350);
 
-	bgSprite.Draw(window);  // Draw background sprite
+	bgLevel.Draw(window);  // Draw background sprite
     window.draw(levelSelectionText);
     window.draw(level1Text);
     window.draw(level2Text);

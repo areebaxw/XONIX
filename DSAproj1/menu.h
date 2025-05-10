@@ -35,6 +35,8 @@ private:
     Level level;  // Reference to level class
     MySprite bgMode;
 
+    MySprite bgLevel;
+
     void initMainMenu();
     void initEndMenu();
 
@@ -102,6 +104,7 @@ public:
     void exitGame();
     int getCurrentLevel();
 
+    MySprite bgLeaderboard;
 
 
 
