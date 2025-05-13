@@ -1,8 +1,8 @@
 Username: aeba
-Highest Score: 319
+Highest Score: 527
 Friends Count: 0
 Match History Count: 0
-Most Recent Game Mode: Multiplayer
-Most Recent Bonus Level: 1
-Most Recent Power-Ups Collected: 0
+Most Recent Game Mode: Single Player
+Most Recent Bonus Level: 3
+Most Recent Power-Ups Collected: 3
 Most Recent Power-Up Status: None

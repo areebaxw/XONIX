@@ -439,3 +439,27 @@ Player 1 Score: 219 (Bonus Level: 3, Power-Ups: 3, Used: No)
 Game Score for aeba
 Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0, Used: No)
 
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 527
+Bonus Level: 3
+Power-Ups Collected: 3
+Power-Ups Used: No
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 65
+Bonus Level: 1
+Power-Ups Collected: 1
+Power-Ups Used: No
+
+--- Game Score for aeba
+Game Mode: Single Player
+Game Score for aeba
+Final Score: 247
+Bonus Level: 3
+Power-Ups Collected: 3
+Power-Ups Used: No
+

@@ -400,6 +400,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-
+*.vcxproj
 
 DSAproj1/DSAproj1.vcxproj

@@ -164,3 +164,6 @@ aeba,49,aeba,49,Player2,0,Single Player,0
 aeba,28,aeba,28,Player2,0,Single Player,0
 aeba vs hannah,298,aeba,197,hannah,101,Multiplayer,0
 hannah vs aeba,219,hannah,219,aeba,0,Multiplayer,0
+aeba,527,aeba,527,Player2,0,Single Player,0
+aeba,65,aeba,65,Player2,0,Single Player,0
+aeba,247,aeba,247,Player2,0,Single Player,0
