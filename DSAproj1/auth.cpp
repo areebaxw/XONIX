@@ -4,22 +4,25 @@
 
 using namespace std;
 
-
-bool hasSpecialCharacter(const string& password) {
-const string specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-for (char c : password) 
+bool hasSpecialCharacter(const string& password)
 {
-    if (specialChars.find(c) !=string::npos) {
-        return true;
+    const string specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    for (char c : password)
+    {
+        for (char specialChar : specialChars)
+        {
+            if (c == specialChar)
+            {
+                return true;
+            }
+        }
     }
-}
-return false;
+    return false;
 }
 
-Authentication::Authentication() : currentUser(""), isLoginMode(true), userListHead(nullptr) {
+Authentication::Authentication() : currentUser(""), isLoginMode(true), userListHead(NULL) {
 
-if (!font.loadFromFile("arial.ttf"))
+if (!font.loadFromFile("Courier Prime Bold.ttf"))
 {
    cout<< "Error loading font" <<endl;
 }
@@ -29,111 +32,155 @@ loadUsers();
 
 
 titleText.setFont(font);
-titleText.setString("Xonix Game - Authentication");
-titleText.setCharacterSize(24);
-titleText.setFillColor(sf::Color::White);
-titleText.setPosition(100, 50);
+titleText.setString("Xonix");
+titleText.setCharacterSize(35);
+titleText.setFillColor(Color(189, 23, 205));
+titleText.setPosition(245, 65);
 
-// Setup username text
+
 usernameText.setFont(font);
 usernameText.setString("Username:");
-usernameText.setCharacterSize(20);
-usernameText.setFillColor(sf::Color::White);
-usernameText.setPosition(100, 150);
+usernameText.setCharacterSize(23);
+usernameText.setFillColor(Color(189, 23, 205)); 
+usernameText.setPosition(105, 140);
 
-// Setup password text
+
 passwordText.setFont(font);
 passwordText.setString("Password:");
-passwordText.setCharacterSize(20);
-passwordText.setFillColor(sf::Color::White);
-passwordText.setPosition(100, 250);
+passwordText.setCharacterSize(23);
+passwordText.setFillColor(Color(189, 23, 205));//(a shade of purple)
+passwordText.setPosition(105, 245);
 
-// Setup mode text
+
 modeText.setFont(font);
 modeText.setString("Press S to switch between Login and Signup");
-modeText.setCharacterSize(16);
-modeText.setFillColor(sf::Color::White);
-modeText.setPosition(100, 400);
+modeText.setCharacterSize(18);
+modeText.setFillColor(Color(15, 133, 155));
+modeText.setPosition(80, 375);
 
-// Setup message text
+
+ourtext.setFont(font);
+ourtext.setString("By Humna & Areeba");
+ourtext.setCharacterSize(15);
+ourtext.setFillColor(Color(189, 23, 205));
+ourtext.setPosition(240, 400);
+
+
+
 messageText.setFont(font);
-messageText.setCharacterSize(18);
-messageText.setFillColor(sf::Color::Red);
+messageText.setCharacterSize(22);
+messageText.setFillColor(Color(229, 122, 75)); // Lighter orange-red shade
+
+
+
 messageText.setPosition(100, 350);
 
-// Setup input boxes
-usernameBox.setSize(sf::Vector2f(300, 40));
-usernameBox.setFillColor(sf::Color(100, 100, 100));
-usernameBox.setPosition(250, 140);
 
-passwordBox.setSize(sf::Vector2f(300, 40));
-passwordBox.setFillColor(sf::Color(100, 100, 100));
-passwordBox.setPosition(250, 240);
+
+usernameBox.setSize(Vector2f(200, 40));
+usernameBox.setFillColor(Color::White);
+usernameBox.setPosition(245, 140);
+
+passwordBox.setSize(Vector2f(200, 40));
+passwordBox.setFillColor(Color::White);
+passwordBox.setPosition(245, 240);
 }
 
-Authentication::~Authentication() {
-// Clear the linked list
+Authentication::~Authentication()
+{
+
 clearUserList();
 }
 
 void Authentication::loadUsers() {
-// Clear existing list first
-clearUserList();
 
-// Open file and read users
-ifstream file("users.txt");
-if (!file.is_open()) return;
+    clearUserList();
 
-string line;
-while (getline(file, line)) {
-    size_t colonPos = line.find(':');
-    if (colonPos !=string::npos) {
-       string username = line.substr(0, colonPos);
-       string password = line.substr(colonPos + 1);
-        addUser(username, password);
+
+    ifstream file("users.txt");
+
+
+    if (!file.is_open())
+        return;
+
+    string line;
+
+
+    while (getline(file, line)) 
+    {
+        int colonPos = -1;
+        for (int i = 0; i < line.length(); i++)
+        {
+            if (line[i] == ':') 
+            {
+                colonPos = i;
+                break;
+            }
+        }
+
+        if (colonPos != -1)
+        {
+            string username = line.substr(0, colonPos);
+            string password = line.substr(colonPos + 1);
+            addUser(username, password);
+        }
     }
-}
-file.close();
+    file.close();
 }
 
-void Authentication::saveUsers() {
-// Open file for writing
+void Authentication::saveUsers() 
+{
+
 ofstream file("users.txt");
-if (!file.is_open()) return;
 
-// Traverse linked list and write users
+
+if (!file.is_open()) 
+return;
+
 UserNode* current = userListHead;
-while (current != nullptr) {
+
+
+
+while (current != NULL)
+
+{
     file << current->username << ":" << current->password <<endl;
     current = current->next;
 }
 file.close();
 }
 
-void Authentication::addUser(const string& username, const string& password) {
-// Create new node
+void Authentication::addUser(const string& username, const string& password)
+
+{
+
 UserNode* newNode = new UserNode(username, password);
 
-// If list is empty, set as head
-if (userListHead == nullptr) {
+
+if (userListHead == NULL) {
     userListHead = newNode;
     return;
 }
 
-// Traverse to end of list
 UserNode* current = userListHead;
-while (current->next != nullptr) {
+while (current->next != NULL) {
     current = current->next;
 }
 
-// Add new node at end
+// Adding new node at end
 current->next = newNode;
 }
 
-bool Authentication::findUser(const string& username) {
+
+
+
+bool Authentication::findUser(const string& username)
+{
 UserNode* current = userListHead;
-while (current != nullptr) {
-    if (current->username == username) {
+while (current != NULL)
+{
+    if (current->username == username) 
+    {
         return true;
     }
     current = current->next;
@@ -141,10 +188,17 @@ while (current != nullptr) {
 return false;
 }
 
-bool Authentication::checkPassword(const string& username, const string& password) {
+
+bool Authentication::checkPassword(const string& username, const string& password) 
+{
+
 UserNode* current = userListHead;
-while (current != nullptr) {
-    if (current->username == username && current->password == password) {
+
+
+while (current != NULL)
+{
+    if (current->username == username && current->password == password) 
+    {
         return true;
     }
     current = current->next;
@@ -152,172 +206,271 @@ while (current != nullptr) {
 return false;
 }
 
-void Authentication::clearUserList() {
-while (userListHead != nullptr) {
+void Authentication::clearUserList()
+{
+while (userListHead != NULL) 
+{
     UserNode* temp = userListHead;
+
     userListHead = userListHead->next;
+
     delete temp;
 }
 }
+string dsubstr(const string& str, unsigned int start, unsigned int length) {
 
-// ... (rest of the implementation remains the same as in the previous version)
-bool Authentication::showAuthScreen(sf::RenderWindow& window) {
-string username, password;
-sf::Text inputUsername(username, font, 20);
-sf::Text inputPassword(password, font, 20);
-inputUsername.setPosition(260, 150);
-inputPassword.setPosition(260, 250);
-inputPassword.setFillColor(sf::Color::White);
+    if (start >= str.length())
+    {
+        return "";  
+    }
 
-bool isUsernameSelected = true;
-messageText.setString("");
+    unsigned int end = start + length;
+    if (end > str.length())
+    {
+        end = str.length();  
+    }
 
-while (window.isOpen()) {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-            return false;
-        }
+    string result = "";
+    for (unsigned int i = start; i < end; ++i) {
+        result += str[i];
+    }
 
-        // Handle key presses for input
-        if (event.type == sf::Event::KeyPressed) {
-            // Backspace handling
-            if (event.key.code == sf::Keyboard::BackSpace) {
-                if (isUsernameSelected) {
-                    if (!username.empty()) {
-                        username.pop_back();
-                        inputUsername.setString(username);
-                    }
-                }
-                else {
-                    if (!password.empty()) {
-                        password.pop_back();
-                        inputPassword.setString(string(password.length(), '*'));
-                    }
-                }
+    return result;
+}
+
+
+bool Authentication::showAuthScreen(RenderWindow& window)
+{
+    //variables
+    string username, password;
+    Text inputUsername(username, font, 20);
+    Text inputPassword(password, font, 20);
+    inputUsername.setPosition(260, 150);
+    inputUsername.setFillColor(Color::Black);
+    inputPassword.setPosition(260, 250);
+    inputPassword.setFillColor(Color::Black);
+
+    bool isUsernameSelected = true;
+    //variables
+
+
+
+
+    messageText.setString("");
+
+
+
+    while (window.isOpen()) 
+    
+    {
+        Event event;
+        while (window.pollEvent(event)) 
+        
+        {
+            if (event.type == Event::Closed)
+            {
+                window.close();
+                return false;
             }
 
-            // Switch between username and password input with Enter
-            if (event.key.code == sf::Keyboard::Return) {
-                if (isUsernameSelected) {
-                    // If on username, move to password
-                    if (!username.empty()) {
-                        isUsernameSelected = false;
-                    }
-                }
-                else {
-                    // If on password, submit credentials
-                    if (!username.empty() && !password.empty()) {
-                        if (isLoginMode) {
-                            // Login mode
-                            if (!findUser(username)) {
-                                messageText.setString("User does not exist. Switch to Signup.");
-                            }
-                            else if (checkPassword(username, password)) {
-                                currentUser = username;
-                                return true;
-                            }
-                            else {
-                                messageText.setString("Incorrect password");
-                            }
-                        }
-                        else {
-                            // Signup mode
-                            // Check for special character in password
-                            if (!hasSpecialCharacter(password)) {
-                                messageText.setString("Password must contain a special character");
-                            }
-                            else if (findUser(username)) {
-                                messageText.setString("Username already exists");
-                            }
-                            else {
-                                addUser(username, password);
-                                saveUsers(); // Save to file
-                                currentUser = username;
-                                return true;
-                            }
-                        }
-                    }
-                    else {
-                        messageText.setString("Username and password cannot be empty");
-                    }
-                }
-            }
-
-            // Toggle between Login and Signup modes
-            if (event.key.code == sf::Keyboard::S) {
-                isLoginMode = !isLoginMode;
-                messageText.setString(isLoginMode ? "Login Mode" : "Signup Mode");
-            }
-        }
-
-        // Handle text input for printable characters
-        if (event.type == sf::Event::TextEntered) {
-            if (event.text.unicode < 128) {
-                char inputChar = static_cast<char>(event.text.unicode);
-                if (inputChar >= 32 && inputChar < 127) {  // Printable characters
-                    if (isUsernameSelected) {
-                        if (username.length() < 20) {
-                            username += inputChar;
+           
+            if (event.type == Event::KeyPressed) {
+                // Backspace handling
+                if (event.key.code == Keyboard::BackSpace) {
+                    if (isUsernameSelected) 
+                    {
+                        if (!username.empty()) 
+                        {
+                            username = dsubstr(username, 0, username.length() - 1);
                             inputUsername.setString(username);
                         }
                     }
                     else {
-                        if (password.length() < 20) {
-                            password += inputChar;
-                            inputPassword.setString(string(password.length(), '*'));
+                        if (!password.empty())
+                        {
+                            password = dsubstr(password, 0, password.length() - 1);
+
+                            string maskedPass = "";
+                            for (unsigned int i = 0; i < password.length(); ++i) {
+                                maskedPass += '*';
+                            }
+                            inputPassword.setString(maskedPass);
+
+                        }
+                    }
+                }
+                if (event.key.code == Keyboard::Return)
+                {
+                    if (isUsernameSelected)
+                    {
+
+                        if (!username.empty())
+                        {
+                            isUsernameSelected = false;
+                        }
+                    }
+                    else {
+
+                        if (!username.empty() && !password.empty())
+
+                        {
+                            if (isLoginMode)
+
+                            {
+                                // Login mode
+                                if (!findUser(username))
+                                {
+                                    messageText.setString("User does not exist. Switch to Signup.");
+                                }
+                                else if (checkPassword(username, password))
+                                {
+                                    currentUser = username;
+                                    return true;
+                                }
+                                else
+                                {
+                                    messageText.setString("Incorrect password");
+                                }
+                            }
+                            else {
+                                // Signup mode
+                                if (!hasSpecialCharacter(password))
+                                {
+                                    messageText.setString("Password must contain a special character");
+                                }
+                                else if (findUser(username))
+                                {
+                                    messageText.setString("Username already exists");
+                                }
+                                else
+                                {
+                                    addUser(username, password);
+                                    saveUsers();
+                                    currentUser = username;
+                                    return true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            messageText.setString("Username and password cannot be empty");
+                        }
+                    }
+                }
+
+                // Toggling b/w Login and Signup modes
+                if (event.key.code == Keyboard::S)
+                {
+                    isLoginMode = !isLoginMode;
+                    messageText.setString(isLoginMode ? "Login Mode" : "Signup Mode");
+                }
+            }
+
+            //text input for printable characters
+            if (event.type == Event::TextEntered)
+            {
+
+                if (event.text.unicode < 128)
+                {
+                    char inputChar = static_cast<char>(event.text.unicode);
+
+                    if (inputChar >= 32 && inputChar < 127)
+                    {
+                        if (isUsernameSelected)
+                        {
+                            if (username.length() < 20)
+                            {
+                                username += inputChar;
+                                inputUsername.setString(username);
+                            }
+                        }
+                        else {
+                            if (password.length() < 20)
+                            {
+                                password += inputChar;
+                                inputPassword.setString(string(password.length(), '*'));
+                            }
                         }
                     }
                 }
             }
+
+            //mouse clicks for input selection
+            if (event.type == Event::MouseButtonPressed)
+            {
+                Vector2i mousePos = Mouse::getPosition(window);
+
+                if (usernameBox.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                {
+                    isUsernameSelected = true;
+                }
+
+                if (passwordBox.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                {
+                    isUsernameSelected = false;
+                }
+            }
         }
 
-        // Handle mouse clicks for input selection
-        if (event.type == sf::Event::MouseButtonPressed) {
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            if (usernameBox.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                isUsernameSelected = true;
-            }
-            if (passwordBox.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                isUsernameSelected = false;
-            }
+        window.clear();
+
+
+        Texture texture;
+
+        if (!texture.loadFromFile("images/auth.png"))
+        {
+            cout << "Error loading texture" << endl;
+            return -1;
         }
+
+
+        Sprite sprite(texture);
+
+
+        window.draw(sprite);
+
+
+
+
+
+
+
+
+
+
+
+        window.draw(titleText);
+        window.draw(usernameText);
+        window.draw(passwordText);
+        window.draw(usernameBox);
+        window.draw(passwordBox);
+        window.draw(inputUsername);
+        window.draw(inputPassword);
+        window.draw(messageText);
+        window.draw(modeText);
+        window.draw(ourtext);
+
+        window.display();
     }
 
-    // Clear the window
-    window.clear(sf::Color(50, 50, 50));
-
-    // Draw all elements
-    window.draw(titleText);
-    window.draw(usernameText);
-    window.draw(passwordText);
-    window.draw(usernameBox);
-    window.draw(passwordBox);
-    window.draw(inputUsername);
-    window.draw(inputPassword);
-    window.draw(messageText);
-    window.draw(modeText);
-
-    // Display the window
-    window.display();
-}
 
 return false;
 }
 
-string Authentication::getCurrentUsername() const {
+string Authentication::getCurrentUsername() const 
+{
     return currentUser;
 
 }
 
 
-//FRIENDLIST 
-// Add this method to the Authentication class implementation
-void Authentication::getValidUsers(std::string* usernames, int& count, const std::string& currentUsername) {
+//FRIENDLIST functions
+void Authentication::getValidUsers(string* usernames, int& count, const string& currentUsername)
+{
     count = 0;
     UserNode* current = userListHead;
-    while (current != nullptr) {
+    while (current != NULL) 
+    {
         if (current->username != currentUsername) {
             usernames[count] = current->username;
             count++;

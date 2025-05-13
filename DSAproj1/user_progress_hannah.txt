@@ -1,0 +1,9 @@
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 171
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 219 (Bonus Level: 3, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+

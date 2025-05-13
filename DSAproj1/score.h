@@ -1,16 +1,17 @@
-#ifndef SCORE_H
-#define SCORE_H
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
 using namespace std;
+using namespace sf;
 
-class Stack; // Forward declaration for the Stack class
+class Stack; 
+
 
 class ScoreManager {
 private:
-    // Existing private members
+    // ---------------Private members for storing player data and game state---------------//
     int player1Score;
     int player2Score;
     bool isSinglePlayer;
@@ -29,39 +30,41 @@ private:
     int player1LastPowerUpScore;
     int player2LastPowerUpScore;
 
-
-
-
-    // Stacks for tracking game state
+    // ---------------Stacks for tracking game state---------------//
     Stack* player1TileStack;
     Stack* player2TileStack;
     Stack* player1PowerUpStack;
     Stack* player2PowerUpStack;
 
-    // Graphics-related members
-    sf::Font font;
-    sf::Text player1ScoreText;
-    sf::Text player2ScoreText;
+    // ---------------TEXT AND FONT---------------//
+    Font font;
+    Text player1ScoreText;
+    Text player2ScoreText;
 
-    // New private helper methods
-    std::string sanitizeFilename(const std::string& username);
-    std::string getCurrentDateTime();
+    // ---------------Private helper methods---------------//
+    string helper(const string& username);
+    string getCurrentDateTime();
     int determinePowerUpLevel(int score);
 
 public:
-    void setPlayerUsernames(const std::string& p1Username, const std::string& p2Username);
-    std::string player1Username;
-    std::string player2Username;
-    // Constructor and Destructor
+    // --------------For managing player usernames---------------//
+    void setPlayerUsernames(const string& p1Username, const string& p2Username);
+    string player1Username;
+    string player2Username;
+
+    // ---------------Constructor and Destructor---------------//
     ScoreManager();
     ~ScoreManager();
 
-    // New methods for saving and loading progress
-    void saveUserProgress(const std::string& username);
-    bool loadUserProgress(const std::string& username);
 
-    // Existing public methods
-    bool initializeFont(const std::string& fontPath);
+
+    // ---------------Methods for saving and loading progress---------------//
+    void saveUserProgress(const string& username);
+    bool loadUserProgress(const string& username);
+
+
+    // ---------------For score updates and power-ups---------------//
+    bool initializeFont(const string& fontPath);
     void resetScores();
     void updateScore(int player1NewTiles, int player2NewTiles);
     bool canActivatePowerUp(bool isPlayer1) const;
@@ -74,17 +77,16 @@ public:
     int getPlayer2Score() const;
     int getPlayer1BonusCount() const;
     int getPlayer2BonusCount() const;
-    void drawScores(sf::RenderWindow& window, bool isSinglePlayerMode);
+
+
+    // ---------------Methods for drawing scores and game mode settings---------------//
+    void drawScores(RenderWindow& window, bool isSinglePlayerMode);
     void setGameMode(bool singlePlayer);
+
+    // ---------------Static method for counting filled tiles in a grid---------------//
     static int countFilledTiles(int grid[35][55]);
-    void recordGameResults(const string& scoreFilePath,
-        const string& powerUpFilePath,
-        const string& player1Username,
-        const string& player2Username,
-        bool isSinglePlayer);
 
-
-    
+    // ---------------Method for recording game results to files---------------//
+    void recordGameResults(const string& scoreFilePath,const string& powerUpFilePath,const string& player1Username,const string& player2Username,bool isSinglePlayer);
 };
 
-#endif // SCORE_H

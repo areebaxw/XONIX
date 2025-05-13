@@ -1,57 +1,50 @@
-#ifndef PLAYER_HASH_H
-#define PLAYER_HASH_H
+#pragma once
 
 #include <string>
 #include "friendlist.h"
 
 class PlayerHashTable {
 private:
-    static const int TABLE_SIZE = 100;
+    //---------------------Constants---------------------
+    static const int tablesize = 100;
 
+    //---------------------Hash Node Structure---------------------
     struct HashNode {
-        std::string username;
-        FriendList friendList;  // Each node now has a FriendList
+        string username;
+        FriendList friendList;  
         HashNode* next;
 
-        HashNode(const std::string& name) :
-            username(name), next(nullptr) {}
+        HashNode(const string& name) : username(name), next(NULL) {}
     };
 
-    HashNode* table[TABLE_SIZE];
+    //---------------------Hash Table---------------------
+    HashNode* table[tablesize];
 
-    // Improved hash function
-    int hashUsername(const std::string& username) {
+    //---------------------Hash Function---------------------
+    int hashUsername(const string& username)
+    {
         unsigned long hash = 5381;
         for (char c : username) {
-            hash = ((hash << 5) + hash) + c; // hash * 33 + c
+            hash = ((hash << 5) + hash) + c; 
         }
-        return hash % TABLE_SIZE;
+        return hash % tablesize;
     }
 
 public:
+    //---------------------Constructor and Destructor---------------------
     PlayerHashTable();
     ~PlayerHashTable();
 
-    // Add player if not exists
-    void addPlayer(const std::string& username);
+    //---------------------Player Management Methods---------------------
+    void addPlayer(const string& username);  
+    void removePlayer(const string& username); 
 
-    // Find mutual friends between two users
-    void findMutualFriends(const std::string& user1,
-        const std::string& user2,
-        std::string mutualFriends[],
-        int& count);
+    //---------------------Friend List Management---------------------
+    void findMutualFriends(const string& user1, const string& user2, string mutualFriends[], int& count);
 
-    // Get friend list for a username
-    FriendList* getFriendList(const std::string& username);
+    FriendList* getFriendList(const string& username);  
 
-    // Check if a user exists
-    bool userExists(const std::string& username);
-
-    // Remove a player
-    void removePlayer(const std::string& username);
+    //---------------------User Existence Check---------------------
+    bool userExists(const string& username);  
 };
 
-// Global hash table instance
-extern PlayerHashTable playerHashTable;
-
-#endif // PLAYER_HASH_H

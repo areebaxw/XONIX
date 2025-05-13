@@ -912,3 +912,240 @@ Final Score: 319
 Bonus Level: 3
 Power-Ups: 2
 
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 13
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 15
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:04 ---
+Final Score: 73
+Bonus Level: 2
+Power-Ups: 2
+
+--- Game Session on 2024-05-11 12:30:06 ---
+Final Score: 49
+Bonus Level: 2
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 120
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 20
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 29
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 75
+Bonus Level: 3
+Power-Ups: 2
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 82
+Bonus Level: 3
+Power-Ups: 2
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 141
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 103
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 61
+Bonus Level: 2
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 144
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 116
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 7
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 58
+Bonus Level: 3
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 15
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 40
+Bonus Level: 2
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 32
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 23
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 55
+Bonus Level: 2
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 39
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 28
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 57
+Bonus Level: 2
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 39
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 50
+Bonus Level: 2
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 42
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 67
+Bonus Level: 3
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 52 (Bonus Level: 0, Power-Ups: 1)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 30 (Bonus Level: 0, Power-Ups: 0)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 137 (Bonus Level: 1, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 191 (Bonus Level: 0, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 29 (Bonus Level: 0, Power-Ups: 0)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 149 (Bonus Level: 0, Power-Ups: 3)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 59 (Bonus Level: 2, Power-Ups: 1)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 86 (Bonus Level: 0, Power-Ups: 2)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 15 (Bonus Level: 0, Power-Ups: 0)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 87 (Bonus Level: 0, Power-Ups: 2)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 20 (Bonus Level: 0, Power-Ups: 0)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 14
+Bonus Level: 0
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 78
+Bonus Level: 3
+Power-Ups: 2
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 64
+Bonus Level: 2
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 22
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 295
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 258
+Bonus Level: 3
+Power-Ups: 3
+
+--- Game Session on 2024-05-11 12:30:04 ---
+Player 1 Score: 32 (Bonus Level: 0, Power-Ups: 0)
+Player 2 Score: 0 (Bonus Level: 0, Power-Ups: 0)
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 59
+Bonus Level: 3
+Power-Ups: 1
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 49
+Bonus Level: 3
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Final Score: 28
+Bonus Level: 1
+Power-Ups: 0
+
+--- Game Session on 2024-05-11 12:30:02 ---
+Player 1 Score: 197 (Bonus Level: 2, Power-Ups: 3)
+Player 2 Score: 101 (Bonus Level: 3, Power-Ups: 3)
+

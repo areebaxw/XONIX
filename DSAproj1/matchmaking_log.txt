@@ -114,3 +114,7 @@ Matched players: aeba (Score: 228) vs hamna (Score: 183)
 Player hamna entered queue with score 183
 Player aeba entered queue with score 278
 Matched players: aeba (Score: 278) vs hamna (Score: 183)
+Player aeba entered queue with score 319
+Player aeba entered queue with score 319
+Player aeba entered queue with score 319
+Matched players: hannah vs aeba (Top leaderboard player)

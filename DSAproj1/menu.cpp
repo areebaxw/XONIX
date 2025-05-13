@@ -1,18 +1,24 @@
 #include "menu.h"
 #include "level.h"
 #include "player.h"
+#include "auth.h"
 #include "theme.h"
 #include "Sprite.h"
+#include <iostream>
+using namespace std;
+using namespace sf;
 
 
-Menu::Menu(RenderWindow& window, const std::string& username, Authentication& authRef)
+Menu::Menu(RenderWindow& window, const string& username, Authentication& authRef)
     : window(window), auth(authRef)
 {
-    font.loadFromFile("arial.ttf");  // Load font
+    font.loadFromFile("arial.ttf"); 
 
-    // Create player profile
+
     currentProfile = new PlayerProfile(username);
-    // Initialize player names
+
+
+    //player names
     matchedPlayer1 = username;
     matchedPlayer2 = "";
 
@@ -20,7 +26,7 @@ Menu::Menu(RenderWindow& window, const std::string& username, Authentication& au
     initEndMenu();
     leaderboard.loadLeaderboard();
 
-    // Initialize state variables
+    //state variables
     showingMainMenu = true;
     showingModeSelection = false;
     showingLevelSelection = false;
@@ -45,8 +51,8 @@ Menu::Menu(RenderWindow& window, const std::string& username, Authentication& au
 
 
 
+//-------------------- Menu Logic ------------------//
 
-// Main Menu Logic
 void Menu::initMainMenu()
 {
     startText.setFont(font);
@@ -71,19 +77,19 @@ void Menu::initMainMenu()
     profileText.setString("Player");
     profileText.setPosition(785, 37);
     profileText.setCharacterSize(30);
-    profileText.setFillColor(Color(209, 42, 144));  // Apply pink color
+
+    profileText.setFillColor(Color::White);  
+    profileText.setOutlineColor(Color::Black);
+    profileText.setOutlineThickness(2);
 
 
     //theme
-
-
-
 
     themeSelectionText.setFont(font);
     themeSelectionText.setString("Theme");
     themeSelectionText.setPosition(470, 305);
     themeSelectionText.setCharacterSize(30);
-    themeSelectionText.setFillColor(sf::Color::White);
+    themeSelectionText.setFillColor(Color::White);
 
 
     //friendlist 
@@ -91,39 +97,57 @@ void Menu::initMainMenu()
     // Add Friends List menu option
     friendListText.setFont(font);
     friendListText.setString("Friends");
-    friendListText.setPosition(470, 360);  // Position after Profile
+    friendListText.setPosition(470, 360); 
     friendListText.setCharacterSize(30);
     friendListText.setFillColor(Color::White);
 
 }
 
-std::string Menu::getValidPlayerName(const std::string& name, const std::string& defaultName) {
+
+string Menu::getValidPlayerName(const string& name, const string& defaultName) {
     if (name.empty()) {
         return defaultName;
     }
     return name;
 }
 
-// End Menu Logic
+//--------------------- End Menu Logic ------------------//
+
+
 void Menu::initEndMenu()
 {
     endText.setFont(font);
-    endText.setString("Game Over");
+   ///* endText.setString("Game Over");*/
     endText.setPosition(200, 100);
     endText.setCharacterSize(30);
     endText.setFillColor(Color::White);
 
     finalScoreText.setFont(font);
-    finalScoreText.setString("Final Score: 1000");  // Update dynamically
+    finalScoreText.setString("Final Score: 1000"); 
     finalScoreText.setPosition(200, 150);
     finalScoreText.setCharacterSize(30);
     finalScoreText.setFillColor(Color::White);
 }
 
-// Display Main Menu
+
+//---------------- Menu Display Logic ------------------//
 void Menu::displayMainMenu()
 {
     window.clear();
+
+
+   Texture texture;
+    if (!texture.loadFromFile("images/mm.jpg")) {  
+        cout<< "Error loading texture" << endl;
+    }
+
+
+   Sprite sprite(texture);
+
+
+    window.draw(sprite);
+
+
 	bgSprite.Draw(window);
     window.draw(startText);
     window.draw(selectLevelText);
@@ -131,20 +155,20 @@ void Menu::displayMainMenu()
     window.draw(profileText);
     window.draw(friendListText);
     window.draw(themeSelectionText);
-	// Draw background sprite
+
     window.display();
 
 }
 
 
 
-void Menu::setSecondPlayerName(const std::string& playerName) {
+void Menu::setSecondPlayerName(const string& playerName) {
     secondPlayerName = playerName;
     matchedPlayer2 = playerName;
 }
 
 
-
+//----------------- Menu Event Handling ------------------//
 void Menu::handleMainMenu()
 {
     Event e;
@@ -156,38 +180,37 @@ void Menu::handleMainMenu()
         if (e.type == Event::KeyPressed)
         {
             if (e.key.code == Keyboard::Enter) {
-                startGame();  // Transition to mode selection
+                startGame();  
             }
             else if (e.key.code == Keyboard::Down) {
-                selectLevel();  // Show level selection
+                selectLevel(); 
             }
             else if (e.key.code == Keyboard::Up) {
-                showLeaderboard();  // Show leaderboard
+                showLeaderboard(); 
             }
             else if (e.key.code == Keyboard::Right) {
-                showProfile();  // Show player profile
+                showProfile();  
             }
 
         }
 
-        // Add mouse click handling for menu items
+        //-----------------------------------MOUSE HANDLE------------------------------------//
         if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left)
         {
             Vector2i mousePosition = Mouse::getPosition(window);
             Vector2f mousePosF = window.mapPixelToCoords(mousePosition);
-            // Check if Start Game button is clicked
+           
 
             if (startText.getGlobalBounds().contains(mousePosF)) {
 
-                // Show matchmaking screen and switch to multiplayer mode
-                std::string player1 = currentProfile->getUsername();  // Current logged-in player
-                std::string player2 = leaderboard.getTopScorer();  // Get top scorer
+                string player1 = currentProfile->getUsername();  
+                string player2 = leaderboard.getTopScorer(); 
 
                 if (!player2.empty() && player2 != player1) {
-                    matchedPlayer1 = player1;  // Set Player 1 (logged-in user)
-                    matchedPlayer2 = player2;  // Set Player 2 (top scorer)
+                    matchedPlayer1 = player1;  
+                    matchedPlayer2 = player2; 
 
-                    // Switch to multiplayer mode
+                    //---------------- Switch to multiplayer mode----------------//
                     isSinglePlayerSelected = false;
                     showingModeSelection = false;
                     gameStarted = true;
@@ -198,49 +221,64 @@ void Menu::handleMainMenu()
                     cout << "No players in queue or unable to match. Try again later!" << endl;
                 }
 
-                startGame();  // Transition to mode selection
+                startGame();  
             }
+
+			//------------------ Select Level ----------------//
             else if (selectLevelText.getGlobalBounds().contains(mousePosF)) {
-                selectLevel();  // Show level selection
+                selectLevel();  
             }
-            // Check if Leaderboard button is clicked
-           else if (leaderboardText.getGlobalBounds().contains(mousePosF)) {
-    showLeaderboard();  // Show leaderboard
-}
+        
+			//--------------- Show Leaderboard ----------------//
+            else if (leaderboardText.getGlobalBounds().contains(mousePosF)) {
+                showLeaderboard();
+            }
+
+			//---------------- Show Profile ----------------//
 else if (profileText.getGlobalBounds().contains(mousePosF)) {
-    showProfile();  // Show player profile
+    showProfile(); 
 }
-            // Check if Friends List button is clicked
+            
+			//------------------ Show Friends List ----------------//
 else if (friendListText.getGlobalBounds().contains(mousePosF)) {
                 showingMainMenu = false;
                 showFriendList();
             }
+
+			//------------------ Show Theme Selection ----------------//
+
 			else if (themeSelectionText.getGlobalBounds().contains(mousePosF))
             {
                 int themeId = -1;
 				themeId = themeSelection();
 				cout << "Theme ID selected: " << themeId << endl;
 
-                if (themeId > 0 && themeId < 3)
+                
+                if (themeId > 0 && themeId < 4)
                 {
 
                     showingMainMenu = true;
-
+                    
                     AVLTree themeSearching;
                     AVLNode* themeNode = themeSearching.search(themeId);
 
+					//------------------ Set Theme ----------------//
                     if(themeNode)
                     {
                         MySprite tempSprite(themeNode->themepaths[0], 0, 0);
                         MySprite tempSprite2(themeNode->themepaths[1], 0, 0);
                         MySprite tempSprite3(themeNode->themepaths[2], 0, 0);
                         MySprite tempSprite4(themeNode->themepaths[3], 0, 0);
+                        MySprite tempSprite5(themeNode->themepaths[4], 0, 0);
+                        MySprite tempSprite6(themeNode->themepaths[5], 0, 0);
+
 						cout << endl << themeNode->themepaths[0] << endl;
 						this->bgSprite.setTexture(tempSprite.getPath());
                         this->bgMode.setTexture(tempSprite2.getPath());
                         this->bgLevel.setTexture(tempSprite3.getPath());
                         this->bgLeaderboard.setTexture(tempSprite4.getPath());
-
+                        this->bgFriends.setTexture(tempSprite5.getPath());
+                        this->bgPlayer.setTexture(tempSprite6.getPath());
                     }
                 }
 			}
@@ -248,60 +286,87 @@ else if (friendListText.getGlobalBounds().contains(mousePosF)) {
         }
     }
 }
-// Mode Selection Screen
+
+
+
+
 void Menu::selectMode()
 {
     window.clear();
 
+
+
+
+
+   Texture texture;
+    if (!texture.loadFromFile("images/auth.jpg")) {  
+        cout<< "Error loading texture" << endl;
+        
+    }
+
+
+   Sprite sprite(texture);
+
+
+    window.draw(sprite);
+
+	//------------------ Mode Selection Text ----------------//
     Text modeSelectionText;
     modeSelectionText.setFont(font);
     modeSelectionText.setString("Select Mode:");
     modeSelectionText.setCharacterSize(30);
     modeSelectionText.setFillColor(Color::White);
-    modeSelectionText.setPosition(200, 100);
+    modeSelectionText.setPosition(410, 150);
 
     Text singlePlayerText;
     singlePlayerText.setFont(font);
     singlePlayerText.setString("1. Single Player");
     singlePlayerText.setCharacterSize(30);
     singlePlayerText.setFillColor(Color::White);
-    singlePlayerText.setPosition(200, 150);
+    singlePlayerText.setPosition(380, 200);
 
     Text multiplayerText;
     multiplayerText.setFont(font);
     multiplayerText.setString("2. Multiplayer");
     multiplayerText.setCharacterSize(30);
     multiplayerText.setFillColor(Color::White);
-    multiplayerText.setPosition(200, 200);
+    multiplayerText.setPosition(380, 250);
+
+    Text friendMultiplayerText;
+    friendMultiplayerText.setFont(font);
+    friendMultiplayerText.setString("3. Play with Friends");
+    friendMultiplayerText.setCharacterSize(30);
+    friendMultiplayerText.setFillColor(Color::White);
+    friendMultiplayerText.setPosition(380, 300);
 
     Text matchmakingText;
     matchmakingText.setFont(font);
-    matchmakingText.setString("3. Matchmaking");
+    matchmakingText.setString("4. Matchmaking");
     matchmakingText.setCharacterSize(30);
     matchmakingText.setFillColor(Color::White);
-    matchmakingText.setPosition(200, 250);
+    matchmakingText.setPosition(380, 350);
 
     Text backText;
     backText.setFont(font);
     backText.setString("Press ESC to go back");
     backText.setCharacterSize(20);
     backText.setFillColor(Color::White);
-    backText.setPosition(200, 300);
+    backText.setPosition(560, 410);
 
-
-
-
-
-	bgMode.Draw(window);
+    bgMode.Draw(window);
 
     window.draw(modeSelectionText);
     window.draw(singlePlayerText);
     window.draw(multiplayerText);
+    window.draw(friendMultiplayerText);
     window.draw(matchmakingText);
     window.draw(backText);
     window.display();
 }
-// Handle Mode Selection Input
+
+
+
+//----------------- MODE SELECTION ----------------//
 void Menu::handleModeSelection()
 {
     Event e;
@@ -310,16 +375,23 @@ void Menu::handleModeSelection()
         if (e.type == Event::Closed)
             window.close();
 
+
+        
         if (e.type == Event::KeyPressed)
         {
+			//----------------- Single Player Mode ----------------//
             if (e.key.code == Keyboard::Num1 || e.key.code == Keyboard::Numpad1) {
                 isSinglePlayerSelected = true;
                 showingModeSelection = false;
                 gameStarted = true;
                 cout << "Single Player Mode Selected!" << endl;
             }
+
+
+			//----------------- Multiplayer Mode ----------------//
+		
             else if (e.key.code == Keyboard::Num2 || e.key.code == Keyboard::Numpad2) {
-                // Create a separate window for second player name input
+            
                 RenderWindow secondPlayerWindow(VideoMode(400, 200), "Enter Second Player Name");
                 Font font;
                 if (!font.loadFromFile("arial.ttf")) {
@@ -341,6 +413,8 @@ void Menu::handleModeSelection()
                 inputText.setPosition(50, 100);
 
                 string inputString;
+
+				//----------------- Input Handling for Second Player Name ----------------//
                 while (secondPlayerWindow.isOpen())
                 {
                     Event inputEvent;
@@ -363,6 +437,7 @@ void Menu::handleModeSelection()
                             inputText.setString(inputString);
                         }
 
+						//----------------- Check for Enter Key Press ----------------//
                         if (inputEvent.type == Event::KeyPressed)
                         {
                             if (inputEvent.key.code == Keyboard::Return && !inputString.empty()) {
@@ -378,51 +453,58 @@ void Menu::handleModeSelection()
                     secondPlayerWindow.display();
                 }
 
-                // After getting second player name
-                // After getting second player name
+               
                 if (!matchedPlayer2.empty()) {
                     isSinglePlayerSelected = false;
                     showingModeSelection = false;
                     gameStarted = true;
-                    // Sync the player names
+                   
                     syncPlayerNames();
                     cout << "Multiplayer Mode Selected with Player 2: " << matchedPlayer2 << endl;
                 }
             }
+			//---------------- Show Friends List for Multiplayer ----------------//
             else if (e.key.code == Keyboard::Num3 || e.key.code == Keyboard::Numpad3) {
-                // Existing matchmaking mode logic
+              
+                showFriendsForMultiplayer();
+            }
+
+            else if (e.key.code == Keyboard::Num4 || e.key.code == Keyboard::Numpad4) {
+               
                 isMatchmakingEnabled = true;
                 showingModeSelection = false;
                 showingMatchmakingQueue = true;
 
-                // Get Player 1 and Player 2 (top scorer)
-                std::string player1 = currentProfile->getUsername();  // Current logged-in player
-                std::string player2 = leaderboard.getTopScorer();  // Get top scorer
-
+                
+				//----------------- Matchmaking Logic ----------------//
+                string player1 = currentProfile->getUsername();  
+                string player2 = leaderboard.getTopScorer(); 
                 if (!player2.empty() && player2 != player1) {
-                    matchedPlayer1 = player1;  // Set Player 1
-                    matchedPlayer2 = player2;  // Set Player 2
+                    matchedPlayer1 = player1;  
+                    matchedPlayer2 = player2;  
                 }
                 else {
-                    // Fallback if no top scorer found
+                 
                     matchedPlayer2 = "Player2";
                 }
 
                 cout << "Matchmaking Mode Selected!" << endl;
             }
             else if (e.key.code == Keyboard::Escape) {
-                // Go back to main menu
+               
                 showingModeSelection = false;
                 showingMainMenu = true;
             }
         }
 
-        // Add mouse click handling with similar logic
+      
         if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left)
         {
             Vector2i mousePosition = Mouse::getPosition(window);
 
-            // Check if Single Player option is clicked
+           
+
+			//----------------- Single Player Mode ----------------//
             if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 150 && mousePosition.y <= 180) {
                 isSinglePlayerSelected = true;
@@ -430,10 +512,13 @@ void Menu::handleModeSelection()
                 gameStarted = true;
                 cout << "Single Player Mode Selected!" << endl;
             }
-            // Check if Multiplayer option is clicked
+            
+
+			//----------------- Multiplayer Mode ----------------//
+			
             else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 200 && mousePosition.y <= 230) {
-                // Create a separate window for second player name input
+               
                 RenderWindow secondPlayerWindow(VideoMode(400, 200), "Enter Second Player Name");
                 Font font;
                 if (!font.loadFromFile("arial.ttf")) {
@@ -455,6 +540,8 @@ void Menu::handleModeSelection()
                 inputText.setPosition(50, 100);
 
                 string inputString;
+
+				//----------------- Input Handling for Second Player Name ----------------//
                 while (secondPlayerWindow.isOpen())
                 {
                     Event inputEvent;
@@ -492,7 +579,7 @@ void Menu::handleModeSelection()
                     secondPlayerWindow.display();
                 }
 
-                // After getting second player name
+                
                 if (!matchedPlayer2.empty()) {
                     isSinglePlayerSelected = false;
                     showingModeSelection = false;
@@ -500,24 +587,31 @@ void Menu::handleModeSelection()
                     cout << "Multiplayer Mode Selected with Player 2: " << matchedPlayer2 << endl;
                 }
             }
-            // Check if Matchmaking option is clicked
+         
+			//---------------- Show Friends List for Multiplayer ----------------// 
             else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 250 && mousePosition.y <= 280) {
-                // Existing matchmaking mode logic
+               
+                showFriendsForMultiplayer();
+            }
+           
+            else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
+                mousePosition.y >= 300 && mousePosition.y <= 330) {
+               
                 isMatchmakingEnabled = true;
                 showingModeSelection = false;
                 showingMatchmakingQueue = true;
 
-                // Get Player 1 and Player 2 (top scorer)
-                std::string player1 = currentProfile->getUsername();  // Current logged-in player
-                std::string player2 = leaderboard.getTopScorer();  // Get top scorer
+             
+                string player1 = currentProfile->getUsername();  
+                string player2 = leaderboard.getTopScorer();  
 
                 if (!player2.empty() && player2 != player1) {
-                    matchedPlayer1 = player1;  // Set Player 1
-                    matchedPlayer2 = player2;  // Set Player 2
+                    matchedPlayer1 = player1;  
+                    matchedPlayer2 = player2;  
                 }
                 else {
-                    // Fallback if no top scorer found
+                   
                     matchedPlayer2 = "Player2";
                 }
 
@@ -528,136 +622,146 @@ void Menu::handleModeSelection()
 }
 
 
-
-
 void Menu::showMatchmakingQueue() {
     window.clear();
 
-    // Create the title text for matchmaking queue
+
+
+   Font font;
+    if (!font.loadFromFile("Courier Prime Bold.ttf")) {
+        cout << "Error loading font" << endl;
+
+    }
+
+   
     Text matchmakingTitleText;
     matchmakingTitleText.setFont(font);
     matchmakingTitleText.setString("Matchmaking Queue");
-    matchmakingTitleText.setCharacterSize(30);
+    matchmakingTitleText.setCharacterSize(50);
     matchmakingTitleText.setFillColor(Color::White);
     matchmakingTitleText.setPosition(200, 100);
 
-    // Get the current player username
-    std::string currentUsername = currentProfile->getUsername();
+   
+    string currentUsername = currentProfile->getUsername();
+    string topPlayer = matchmaker.getTopPlayerFromLeaderboard();
 
-    // Get the top player from the leaderboard
-    std::string topPlayer = matchmaker.getTopPlayerFromLeaderboard();
 
-    // If there s only one player in the queue, we need to find the next available top player
+
+
     if (matchmaker.getQueueSize() < 2) {
+
+    
         if (!topPlayer.empty() && topPlayer != currentUsername) {
-            // Try to find the next player after the top player
-            std::string nextTopPlayer = matchmaker.getNextTopPlayerFromLeaderboard(topPlayer);  // Get the next top player
+  
+            string nextTopPlayer = matchmaker.getNextTopPlayerFromLeaderboard(topPlayer);  
+
 
             if (!nextTopPlayer.empty()) {
-                // Show the next available player if found
+               
                 queueStatusText.setString("Ready to match with: " + nextTopPlayer);
             }
             else {
-                // If no next player found, show that not enough players are in the queue
+               
                 queueStatusText.setString("Not enough players in queue.");
             }
         }
         else {
-            // If there s no top player or top player is the same as the current player
+        
             queueStatusText.setString("Waiting for other players...");
         }
     }
     else {
-        // If there s more than one player in the queue, match with the top player
-        if (!topPlayer.empty() && topPlayer != currentUsername) {
-            queueStatusText.setString("Ready to match with: " + topPlayer);  // Show the top player to match with
+       
+        if (!topPlayer.empty() && topPlayer != currentUsername) 
+        {
+            queueStatusText.setString("Ready to match with: " + topPlayer); 
         }
         else {
-            // If top player is unavailable or already in the queue, show the queue size
-            queueStatusText.setString("Players in Queue: " + std::to_string(matchmaker.getQueueSize()));
+           
+            queueStatusText.setString("Players in Queue: " + to_string(matchmaker.getQueueSize()));
         }
     }
 
-    // Style and position the queue status text
+   
     queueStatusText.setCharacterSize(30);
     queueStatusText.setFillColor(Color::White);
     queueStatusText.setPosition(200, 150);
 
-    // Instruction text for matchmaking controls
+    
     Text instructionText;
     instructionText.setFont(font);
     instructionText.setString("Press ENTER to start matchmaking\nPress ESC to cancel");
-    instructionText.setCharacterSize(20);
+    instructionText.setCharacterSize(30);
     instructionText.setFillColor(Color::White);
     instructionText.setPosition(200, 250);
 
-    // Drawing all elements to the window
+    
     window.draw(matchmakingTitleText);
     window.draw(queueStatusText);
     window.draw(instructionText);
 
-    // Display the window content
+   
     window.display();
 }
 
 
-std::string Menu::promptForSecondPlayerName() {
-    // This could be a separate window or dialog
-    // For simplicity, we'll use console input in this example
-    std::string secondPlayerName;
-    std::cout << "Enter the name of the second player: ";
-    std::cin >> secondPlayerName;
+string Menu::promptForSecondPlayerName() {
+    string secondPlayerName;
+    cout << "Enter the name of the second player: ";
+    cin >> secondPlayerName;
     return secondPlayerName;
 }
 
 
 bool Menu::startMatchmaking() {
-    // Get the current username
-    std::string currentUsername = currentProfile->getUsername();
-
-    // Populate queue with players from leaderboard, excluding the current user
+    
+    string currentUsername = currentProfile->getUsername();
     matchmaker.populateQueueFromLeaderboard(currentUsername);
 
-    // Display the queue size and state for debugging
-    std::cout << "Current Queue Size: " << matchmaker.getQueueSize() << std::endl;
-    matchmaker.debugPrintQueue();  // Print the state of the queue for debugging
+    cout << "Current Queue Size: " << matchmaker.getQueueSize() << endl;
+   // matchmaker.debugPrintQueue();  
 
-    // Get the top player from the leaderboard
-    std::string topPlayerUsername = matchmaker.getTopPlayerFromLeaderboard();
-    std::cout << "Top player from leaderboard: " << topPlayerUsername << std::endl;
 
-    // Always ensure player1 is set to current user
+    string topPlayerUsername = matchmaker.getTopPlayerFromLeaderboard();
+    cout << "Top player from leaderboard: " << topPlayerUsername << endl;
+
+
+
+
     matchedPlayer1 = currentUsername;
 
-    // If the current player is the top player, try to match with other players
-    if (topPlayerUsername.empty() || topPlayerUsername == currentUsername) {
-        std::cout << "Adding " << currentUsername << " to matchmaking queue..." << std::endl;
+    //------------------- If the current player is the top player, trying to match with other players----------------------//
+    if (topPlayerUsername.empty() || topPlayerUsername == currentUsername)
+    {
+        cout << "Adding " << currentUsername << " to matchmaking queue..." << endl;
         int currentScore = matchmaker.readUserHighestScore(currentUsername);
 
-        // Add the current player to the matchmaking queue with their score
+      
         matchmaker.enterQueue(currentUsername, currentScore);
 
-        // If the queue has only one player, try to match with the next top player from the leaderboard
-        if (matchmaker.getQueueSize() < 2) {
-            std::string nextTopPlayer = matchmaker.getNextTopPlayerFromLeaderboard(topPlayerUsername);
+        //---------------------- If the queue has only one player, trying to match with the next top player from the leaderboard--------//
+        if (matchmaker.getQueueSize() < 2) 
+        {
+            string nextTopPlayer = matchmaker.getNextTopPlayerFromLeaderboard(topPlayerUsername);
 
-            if (!nextTopPlayer.empty() && nextTopPlayer != currentUsername) {
-                matchedPlayer2 = nextTopPlayer;  // Match with next top player
+            if (!nextTopPlayer.empty() && nextTopPlayer != currentUsername)
+            {
+                matchedPlayer2 = nextTopPlayer;  
 
-                // Make sure secondPlayerName is also set
+              
                 secondPlayerName = matchedPlayer2;
 
-                std::cout << "Only one player in the queue. Matching "
-                    << matchedPlayer1 << " vs " << matchedPlayer2 << std::endl;
+                cout << "Only one player in the queue. Matching "
+                    << matchedPlayer1 << " vs " << matchedPlayer2 << endl;
 
-                // Log the match
-                std::ofstream logFile("matchmaking_log.txt", std::ios_base::app);
-                if (logFile.is_open()) {
-                    logFile << "Matched players: " << matchedPlayer1
-                        << " vs " << matchedPlayer2
-                        << " (Next top leaderboard player)" << std::endl;
-                    logFile.close();
-                }
+                ////
+                //ofstream logFile("matchmaking_log.txt", ios_base::app);
+                //if (logFile.is_open()) {
+                //    logFile << "Matched players: " << matchedPlayer1
+                //        << " vs " << matchedPlayer2
+                //        << " (Next top leaderboard player)" << endl;
+                //    logFile.close();
+                //}
 
                 // Proceed to start the game
                 isSinglePlayerSelected = false;
@@ -665,11 +769,12 @@ bool Menu::startMatchmaking() {
                 showingMatchmakingQueue = false;
                 return true;
             }
-            else {
-                std::cout << "Not enough players to match. Current queue size: "
-                    << matchmaker.getQueueSize() << std::endl;
+            else 
+            {
+                cout << "Not enough players to match. Current queue size: "
+                    << matchmaker.getQueueSize() << endl;
 
-                // Set default value for matchedPlayer2 even if matchmaking fails
+              
                 if (matchedPlayer2.empty()) {
                     matchedPlayer2 = "Player2";
                     secondPlayerName = matchedPlayer2;
@@ -679,22 +784,24 @@ bool Menu::startMatchmaking() {
             }
         }
 
-        // If there are more than one player, continue the regular matchmaking
-        if (matchmaker.matchPlayers(matchedPlayer1, matchedPlayer2)) {
-            // Make sure secondPlayerName is also set
+        //----------------------- If there are more than one player, continue the regular matchmaking------------------------//
+        if (matchmaker.matchPlayers(matchedPlayer1, matchedPlayer2)) 
+        {
             secondPlayerName = matchedPlayer2;
 
-            // Successful match
+       
             isSinglePlayerSelected = false;
             gameStarted = true;
             showingMatchmakingQueue = false;
-            std::cout << "Match found: " << matchedPlayer1 << " vs " << matchedPlayer2 << std::endl;
+
+
+
+            cout << "Match found: " << matchedPlayer1 << " vs " << matchedPlayer2 << endl;
             return true;
         }
         else {
-            std::cout << "Matchmaking failed. Try again later!" << std::endl;
+            cout << "Matchmaking failed. Try again later!" << endl;
 
-            // Set default value for matchedPlayer2 even if matchmaking fails
             if (matchedPlayer2.empty()) {
                 matchedPlayer2 = "Player2";
                 secondPlayerName = matchedPlayer2;
@@ -704,32 +811,40 @@ bool Menu::startMatchmaking() {
         }
     }
     else {
-        // If the top player isn't the same as the current player, match with them
-        matchedPlayer2 = topPlayerUsername;  // Top player from leaderboard
+        //------------------ If the top player isn't the same as the current player, match with them-----------------------------//
+        matchedPlayer2 = topPlayerUsername;  
 
-        // Make sure secondPlayerName is also set
         secondPlayerName = matchedPlayer2;
 
-        std::cout << "Match found: " << matchedPlayer1 << " vs " << matchedPlayer2 << std::endl;
+        cout << "Match found: " << matchedPlayer1 << " vs " << matchedPlayer2 << endl;
 
-        // Log the match
-        std::string logMessage = "Matched players: " + matchedPlayer1 +
-            " vs " + matchedPlayer2 +
-            " (Top leaderboard player)";
-        std::ofstream logFile("matchmaking_log.txt", std::ios_base::app);
-        if (logFile.is_open()) {
-            logFile << logMessage << std::endl;
-            logFile.close();
-        }
 
-        // Proceed with matchmaking or start the game
+
+
+
+    //    
+    //    string logMessage = "Matched players: " + matchedPlayer1 +
+    //        " vs " + matchedPlayer2 +
+    //        " (Top leaderboard player)";
+
+
+    ///*    ofstream logFile("matchmaking_log.txt", ios_base::app);
+    //    if (logFile.is_open()) {
+    //        logFile << logMessage << endl;
+    //        logFile.close();
+    //    }*/
+
+       
+
+
         isSinglePlayerSelected = false;
         gameStarted = true;
         showingMatchmakingQueue = false;
         return true;
     }
 }
-// Handle matchmaking queue input
+
+
 void Menu::handleMatchmakingQueue()
 {
     Event e;
@@ -762,7 +877,7 @@ void Menu::handleMatchmakingQueue()
 
 
 int currentLevel;
-Level level;  // Define level object
+Level level;  
 
 void Menu::selectLevel()
 {
@@ -770,6 +885,13 @@ void Menu::selectLevel()
     showingLevelSelection = true;
 
     window.clear();
+
+
+
+
+   
+
+
 
     Text levelSelectionText;
     levelSelectionText.setFont(font);
@@ -867,21 +989,33 @@ void Menu::setLeaderboardDisplayMode(int mode) {
 
 void Menu::showLeaderboard()
 {
-    // Set menu state
+
     showingMainMenu = false;
 
-    // Leaderboard mode tracking
+
     // 0 - Single Player
     // 1 - Multiplayer
     // 2 - Total Score
     int currentMode = 0;
 
     while (true) {
-        // Clear the window for leaderboard display
+      
         window.clear();
+
+       Texture texture;
+        if (!texture.loadFromFile("images/bb.jpg")) {  
+            cout<< "Error loading texture" << endl;
+           
+        }
+
+
+       Sprite sprite(texture);
+
+
+        window.draw(sprite);
         bgLeaderboard.Draw(window);
 
-        // Create leaderboard title text
+
         Text leaderboardTitle;
         leaderboardTitle.setFont(font);
         leaderboardTitle.setString("LEADERBOARD");
@@ -889,11 +1023,18 @@ void Menu::showLeaderboard()
         leaderboardTitle.setFillColor(Color::White);
         leaderboardTitle.setPosition(400, 50);
 
+
+
         // Mode selection text
         Text modeText;
         modeText.setFont(font);
         string modeString;
-        switch (currentMode) {
+
+
+
+		//------------------ Display Mode -----------------//
+        switch (currentMode) 
+        {
         case 0:
             leaderboard.setDisplayMode(0);  // Single Player
             modeString = "Mode: Single Player Scores";
@@ -902,36 +1043,47 @@ void Menu::showLeaderboard()
             leaderboard.setDisplayMode(1);  // Multiplayer
             modeString = "Mode: Multiplayer Matches";
             break;
+
+            //not efficient
         case 2:
-            leaderboard.setDisplayMode(0);  // Default to single player for combined scores
+            leaderboard.setDisplayMode(0);  // Default
             modeString = "Mode: Combined Scores";
             break;
         }
+
+
+
         modeText.setString(modeString);
         modeText.setCharacterSize(20);
         modeText.setFillColor(Color::Yellow);
         modeText.setPosition(395, 100);
 
-        // Draw title and mode
+   
         window.draw(leaderboardTitle);
         window.draw(modeText);
 
-        // Temporary array to store sorted leaderboard
+
+		//------------------ Sort and Display Leaderboard -----------------//
+      
         LeaderboardEntry sortedLeaderboard[HEAP_SIZE];
         leaderboard.sortForDisplay(sortedLeaderboard);
 
-        // Display top 10 entries based on current mode
+       
         for (int i = 0; i < 10; i++) {
             Text playerText;
             playerText.setFont(font);
 
-            // Only display if there's an entry
+         
             if (i < leaderboard.heapSize) {
                 string displayText;
 
+
+
                 switch (currentMode) {
-                case 0: // Single Player
-                    // Only show non-multiplayer entries
+
+					//------------------- Single Player -----------------//
+                case 0:
+                   
                     if (sortedLeaderboard[i].isMultiplayer) {
                         playerText.setString(to_string(i + 1) + ". ---");
                     }
@@ -944,8 +1096,8 @@ void Menu::showLeaderboard()
                     }
                     break;
 
-                case 1: // Multiplayer
-                    // Only show multiplayer entries
+                case 1: 
+					//------------------- Multiplayer -----------------//
                     if (!sortedLeaderboard[i].isMultiplayer) {
                         playerText.setString(to_string(i + 1) + ". ---");
                     }
@@ -961,7 +1113,8 @@ void Menu::showLeaderboard()
                     }
                     break;
 
-                case 2: // Total Score
+					//------------------- Combined -----------------//
+                case 2:
                     displayText = to_string(i + 1) + ". " +
                         sortedLeaderboard[i].username +
                         " - Score: " +
@@ -981,7 +1134,7 @@ void Menu::showLeaderboard()
             window.draw(playerText);
         }
 
-        // Instructions text
+		//------------------ Instruction Text -----------------//
         Text instructionText;
         instructionText.setFont(font);
         instructionText.setString("Press SPACE to change view\nPress ESC to go back");
@@ -990,11 +1143,10 @@ void Menu::showLeaderboard()
         instructionText.setPosition(400, 550);
 
         window.draw(instructionText);
-
-        // Display the window
         window.display();
 
-        // Event handling
+
+		//------------------ Event Handling for leaderboard -----------------//
         Event e;
         bool exitLeaderboard = false;
         while (window.pollEvent(e)) {
@@ -1002,17 +1154,18 @@ void Menu::showLeaderboard()
                 window.close();
 
             if (e.type == Event::KeyPressed) {
-                if (e.key.code == Keyboard::Escape) {
-                    // Go back to main menu
+                if (e.key.code == Keyboard::Escape) 
+                {
                     showingMainMenu = true;
                     exitLeaderboard = true;
                     break;
                 }
 
-                if (e.key.code == Keyboard::Space) {
-                    // Cycle through leaderboard modes
+                if (e.key.code == Keyboard::Space) 
+                {
+                  
                     currentMode = (currentMode + 1) % 3;
-                    break;  // Break inner event loop to redraw
+                    break;  
                 }
             }
         }
@@ -1027,34 +1180,59 @@ void Menu::displayEndMenu(int score1, int score2)
 {
     window.clear();
 
-    // Get proper player names for display, ensuring they're never empty
+   Texture texture;
+    if (!texture.loadFromFile("images/end1.jpg")) {  
+        cout << "Error loading texture" << endl;
+     
+    }
+   Sprite sprite(texture);
+    window.draw(sprite);
+
+
+   Font font;
+    if (!font.loadFromFile("Courier Prime Bold.ttf")) {
+        cout << "Error loading font" << endl;
+    }
+
     string player1DisplayName = matchedPlayer1.empty() ? currentProfile->getUsername() : matchedPlayer1;
     string player2DisplayName = matchedPlayer2.empty() ? "Player2" : matchedPlayer2;
 
-    // Determine winner text
+
+    
+   Text winnerText;
+    
+   //------------------ winner Text -----------------//
+
     if (!isSinglePlayerSelected) {
         if (score1 > score2) {
-            endText.setString(player1DisplayName + " Wins!");
-            endText.setFillColor(Color::Green);
+            winnerText.setString(player1DisplayName + " Wins!");
+            winnerText.setFillColor(Color::White);
         }
         else if (score2 > score1) {
-            endText.setString(player2DisplayName + " Wins!");
-            endText.setFillColor(Color::Green);
+            winnerText.setString(player2DisplayName + " Wins!");
+            winnerText.setFillColor(Color::White);
         }
         else {
-            endText.setString("It's a Tie!");
-            endText.setFillColor(Color::Yellow);
+            winnerText.setString("It's a Tie!");
+            winnerText.setFillColor(Color::White);
         }
     }
     else {
-        endText.setString("Game Over");
+       // endText.setString("Game Over");
+    
     }
 
-    // Set end text properties
+  
     endText.setCharacterSize(40);
-    endText.setPosition(200, 100);
+    endText.setPosition(300, 200);
 
-    // Set final score text with proper player names
+
+    winnerText.setFont(font);
+    winnerText.setCharacterSize(50);
+   winnerText.setPosition(350, 350);
+
+
+   //------------------- Final Score Text -----------------//
     if (!isSinglePlayerSelected) {
         finalScoreText.setString(
             player1DisplayName + " Score: " + to_string(score1) + "\n" +
@@ -1064,52 +1242,43 @@ void Menu::displayEndMenu(int score1, int score2)
     else {
         finalScoreText.setString("Your Score: " + to_string(score1));
     }
+    finalScoreText.setFont(font);
     finalScoreText.setCharacterSize(30);
     finalScoreText.setFillColor(Color::White);
-    finalScoreText.setPosition(200, 150);
+    finalScoreText.setPosition(380, 200);
 
-    // Record multiplayer result with validated player names
+   
+	//------------------- Record Game Result -----------------//
     if (!isSinglePlayerSelected) {
-        leaderboard.recordGameResult(
-            player1DisplayName,  // First player's name
-            score1,              // First player's score
-            player2DisplayName,  // Second player's name
-            score2,              // Second player's score
-            true,                // Is multiplayer
-            currentLevel         // Game level
-        );
+        leaderboard.recordGameResult(player1DisplayName,score1,player2DisplayName,score2,true,currentLevel);
     }
     else {
-        // For single-player, use the current username
+       
         string currentUsername = currentProfile->getUsername();
-        leaderboard.recordGameResult(
-            currentUsername,     // Player's name
-            score1,              // Player's score
-            "",                  // No second player
-            0,                   // No second player score
-            false,               // Not multiplayer
-            currentLevel         // Game level
-        );
+        leaderboard.recordGameResult(currentUsername, score1, "", 0, false, currentLevel);
     }
 
-    // Restart and Exit texts
+  
+	//------------------- Restart and Exit Text -----------------//
+  
     Text restartText;
     restartText.setFont(font);
     restartText.setString("Press R to restart");
-    restartText.setCharacterSize(30);
+    restartText.setCharacterSize(20);
     restartText.setFillColor(Color::White);
-    restartText.setPosition(200, 250);
+    restartText.setPosition(400, 470);
 
     Text exitText;
     exitText.setFont(font);
     exitText.setString("Press ESC to exit");
-    exitText.setCharacterSize(30);
+    exitText.setCharacterSize(20);
     exitText.setFillColor(Color::White);
-    exitText.setPosition(200, 300);
+    exitText.setPosition(400, 500);
 
-    // Draw all elements
+
     window.draw(endText);
     window.draw(finalScoreText);
+    window.draw(winnerText);
     window.draw(restartText);
     window.draw(exitText);
 
@@ -1120,31 +1289,48 @@ void Menu::startGame()
     cout << "Starting game process!" << endl;
     showingMainMenu = false;
     showingModeSelection = true;
-    // Note: gameStarted will be set to true after mode selection
+   
 }
 
-// Restart the Game
+
 void Menu::restartGame()
 {
     cout << "Game Restarted" << endl;
     gameStarted = false;
     showingMainMenu = true;
-    restartRequested = true;  // Set the flag to true
-
-    // Reset scores when restarting
+    restartRequested = true;  
     player1Score = 0;
     player2Score = 0;
 }
 
-// Exit the Game
+
 void Menu::exitGame()
 {
     cout << "Exiting Game" << endl;
     window.close();
 }
+
+
 void Menu::displayLevelSelection()
 {
     window.clear();
+
+
+   Texture texture;
+    if (!texture.loadFromFile("images/lvl.jpg")) {  
+        cout<< "Error loading texture" << endl;
+     
+    }
+
+
+   Sprite sprite(texture);
+
+
+    window.draw(sprite);
+
+
+
+	//------------------ Level Selection Text -----------------//
 
     Text levelSelectionText;
     levelSelectionText.setFont(font);
@@ -1181,7 +1367,7 @@ void Menu::displayLevelSelection()
     backText.setFillColor(Color::White);
     backText.setPosition(350, 350);
 
-	bgLevel.Draw(window);  // Draw background sprite
+	bgLevel.Draw(window);  
     window.draw(levelSelectionText);
     window.draw(level1Text);
     window.draw(level2Text);
@@ -1190,7 +1376,9 @@ void Menu::displayLevelSelection()
     window.display();
 }
 
-// Handles user input for level selection
+
+//------------------- Handle Level Selection Input -----------------//
+
 void Menu::handleLevelSelection()
 {
     Event e;
@@ -1199,44 +1387,49 @@ void Menu::handleLevelSelection()
         if (e.type == Event::Closed)
             window.close();
 
+		//---------------- Keyboard Input Handling -----------------//
         if (e.type == Event::KeyPressed)
         {
+			//---------------- Level 1 Selection -----------------//
             if (e.key.code == Keyboard::Num1 || e.key.code == Keyboard::Numpad1) {
-                currentLevel = 0;  // Level 1
-                level.setLevel(currentLevel);  // Update level settings
+                currentLevel = 0; 
+                level.setLevel(currentLevel);  
                 cout << "Level 1 selected!" << endl;
                 showingLevelSelection = false;
                 showingMainMenu = true;
             }
+			//---------------- Level 2 Selection -----------------//
             else if (e.key.code == Keyboard::Num2 || e.key.code == Keyboard::Numpad2) {
-                currentLevel = 1;  // Level 2
-                level.setLevel(currentLevel);  // Update level settings
+                currentLevel = 1;  
+                level.setLevel(currentLevel);  
                 cout << "Level 2 selected!" << endl;
                 showingLevelSelection = false;
                 showingMainMenu = true;
 
 
             }
+			//---------------- Level 3 Selection -----------------//
             else if (e.key.code == Keyboard::Num3 || e.key.code == Keyboard::Numpad3) {
-                currentLevel = 2;  // Level 3
-                level.setLevel(currentLevel);  // Update level settings
+                currentLevel = 2; 
+                level.setLevel(currentLevel); 
                 cout << "Level 3 selected!" << endl;
                 showingLevelSelection = false;
                 showingMainMenu = true;
             }
-            else if (e.key.code == Keyboard::Escape) {
-                // Go back to main menu without changing level
+            else if (e.key.code == Keyboard::Escape) 
+            {
+                
                 showingLevelSelection = false;
                 showingMainMenu = true;
             }
         }
 
-        // Add mouse click handling
+		//---------------- Mouse Click Handling -----------------//
         if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left)
         {
             Vector2i mousePosition = Mouse::getPosition(window);
 
-            // Check if Level 1 option is clicked
+			//---------------- Check if Level 1 option is clicked -----------------//
             if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 150 && mousePosition.y <= 180) {
                 currentLevel = 0;
@@ -1245,7 +1438,10 @@ void Menu::handleLevelSelection()
                 showingLevelSelection = false;
                 showingMainMenu = true;
             }
-            // Check if Level 2 option is clicked
+
+
+
+			//---------------- Check if Level 2 option is clicked -----------------//
             else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 200 && mousePosition.y <= 230) {
                 currentLevel = 1;
@@ -1254,7 +1450,9 @@ void Menu::handleLevelSelection()
                 showingLevelSelection = false;
                 showingMainMenu = true;
             }
-            // Check if Level 3 option is clicked
+
+
+			//---------------- Check if Level 3 option is clicked -----------------//
             else if (mousePosition.x >= 200 && mousePosition.x <= 350 &&
                 mousePosition.y >= 250 && mousePosition.y <= 280) {
                 currentLevel = 2;
@@ -1268,17 +1466,18 @@ void Menu::handleLevelSelection()
 }
 void Menu::showProfile()
 {
-    // Set menu state
+    
     showingMainMenu = false;
 
-    // Clear the window
+   
     window.clear();
-    bgSprite.Draw(window);
 
-    // Display the profile
-    currentProfile->displayProfile(window,bgSprite);
+    bgPlayer.Draw(window);
 
-    // Event loop for profile screen
+    
+    currentProfile->displayProfile(window,bgPlayer);
+
+	//------------------ Profile Text -----------------//
     Event e;
     bool inProfileView = true;
     while (inProfileView) {
@@ -1287,27 +1486,26 @@ void Menu::showProfile()
             if (e.type == Event::Closed)
                 window.close();
 
-            // Handle profile input
+
             if (!currentProfile->handleProfileInput(e)) {
-                // Return to main menu
+
                 inProfileView = false;
                 showingMainMenu = true;
                 break;
             }
         }
 
-        // Optional: allow redrawing or other interactions
-        if (!inProfileView) break;
+
+        if (!inProfileView)
+            break;
     }
 
-    // Redraw main menu when exiting profile
     if (showingMainMenu) {
         displayMainMenu();
     }
 }
 
 
-// Add destructor
 Menu::~Menu()
 {
     if (currentProfile) {
@@ -1315,16 +1513,18 @@ Menu::~Menu()
     }
 }
 
-void Menu::sendFriendRequestToUser(const string& sender, const string& receiver) {
-    // Create receiver's friend request file
-    std::string requestFileName = receiver + "_friend_requests.txt";
+//------------------ Send Friend Request -----------------//
 
-    // Open file in append mode to add new friend request
-    std::ofstream requestFile(requestFileName, std::ios_base::app);
+void Menu::sendFriendRequestToUser(const string& sender, const string& receiver) {
+
+    string requestFileName = receiver + "_friend_requests.txt";
+
+
+    ofstream requestFile(requestFileName, ios_base::app);
 
     if (requestFile.is_open()) {
-        // Write the sender's username to the receiver's friend requests file
-        requestFile << sender << std::endl;
+
+        requestFile << sender << endl;
         requestFile.close();
 
         cout << sender << " sent a friend request to " << receiver << endl;
@@ -1335,62 +1535,86 @@ void Menu::sendFriendRequestToUser(const string& sender, const string& receiver)
 }
 
 void Menu::showFriendList() {
-    // Set screen state
+   
     showingMainMenu = false;
     showingFriendList = true;
 
-    // Get current logged-in username
     string currentUsername = currentProfile->getUsername();
 
-    // Use PlayerHashTable to get or create friend list
+   
+	//------------------- Load Friend List -----------------//
     FriendList* friendList = playerHashTable.getFriendList(currentUsername);
+
+	//------------------- If friend list doesn't exist, create one -----------------//
     if (!friendList) {
-        // If no friend list exists, add player to hash table
+      
         playerHashTable.addPlayer(currentUsername);
         friendList = playerHashTable.getFriendList(currentUsername);
     }
 
-    // Attempt to load existing friends and friend requests
-    std::string friendsFilename = currentUsername + "_friends.txt";
-    std::string requestsFilename = currentUsername + "_friend_requests.txt";
+  
+    string friendsFilename = currentUsername + "_friends.txt";
+    string requestsFilename = currentUsername + "_friend_requests.txt";
 
-    // Load friends and requests from files
+
+	//-------------------- Load Friends and Requests from Files -----------------//
     friendList->loadFriendsFromFile(currentUsername);
     friendList->loadFriendRequestsFromFile(currentUsername);
 
-    while (showingFriendList) {
-        window.clear(Color(50, 50, 50));  // Dark background
-        bgSprite.Draw(window);
 
-        // Title
+	//------------------ Background and Textures -----------------//
+    while (showingFriendList) 
+    {
+        window.clear();  
+
+
+       Texture texture;
+        if (!texture.loadFromFile("images/frndz.jpg")) 
+        {  
+            cout<< "Error loading texture" << endl;
+            
+        }
+
+
+       Sprite sprite(texture);
+
+
+        window.draw(sprite);
+
+        bgFriends.Draw(window);
+
+
+		
+   
         Text titleText;
         titleText.setFont(font);
         titleText.setString("Friends List");
         titleText.setCharacterSize(40);
-        titleText.setFillColor(Color::White);
-        titleText.setPosition(100, 50);
+        titleText.setFillColor(Color(214, 46, 155));
+        titleText.setPosition(400, 50);
 
-        // Friends Section
         Text friendsHeaderText;
         friendsHeaderText.setFont(font);
-        friendsHeaderText.setString("Your Friends:");
+        friendsHeaderText.setString("Friends:");
         friendsHeaderText.setCharacterSize(30);
-        friendsHeaderText.setFillColor(Color::Green);
-        friendsHeaderText.setPosition(100, 120);
+        friendsHeaderText.setFillColor(Color::Black);
+        friendsHeaderText.setPosition(400, 120);
 
-        // Friends List Text
+      
         Text friendsListText;
         friendsListText.setFont(font);
         friendsListText.setCharacterSize(20);
-        friendsListText.setFillColor(Color::White);
-        friendsListText.setPosition(100, 160);
+        friendsListText.setFillColor(Color(0, 0, 139));
+        friendsListText.setPosition(400, 160);
 
-        // Read and display friends
-        std::string friends[100];
+        
+
+		//------------------- Get Friends List -----------------//
+        string friends[100];
         int friendCount = 0;
         friendList->getFriendsList(friends, friendCount);
 
-        std::string friendsDisplay;
+        string friendsDisplay;
         for (int i = 0; i < friendCount; ++i) {
             friendsDisplay += friends[i] + "\n";
         }
@@ -1400,27 +1624,28 @@ void Menu::showFriendList() {
         }
         friendsListText.setString(friendsDisplay);
 
-        // Friend Requests Section
+		//------------------ Friend Requests Header -----------------//
+     
         Text requestHeaderText;
         requestHeaderText.setFont(font);
         requestHeaderText.setString("Friend Requests:");
         requestHeaderText.setCharacterSize(30);
-        requestHeaderText.setFillColor(Color::Yellow);
-        requestHeaderText.setPosition(100, 300);
+        requestHeaderText.setFillColor(Color::Black);
+        requestHeaderText.setPosition(400, 300);
 
-        // Friend Requests List Text
         Text requestsListText;
         requestsListText.setFont(font);
         requestsListText.setCharacterSize(20);
-        requestsListText.setFillColor(Color::White);
-        requestsListText.setPosition(100, 340);
+        requestsListText.setFillColor(Color(0, 0, 139));
+        requestsListText.setPosition(400, 340);
 
-        // Read and display friend requests
-        std::string requests[100];
+        
+		//------------------- Get Friend Requests List -----------------//
+        string requests[100];
         int requestCount = 0;
         friendList->getFriendRequestsList(requests, requestCount);
 
-        std::string requestsDisplay;
+        string requestsDisplay;
         for (int i = 0; i < requestCount; ++i) {
             requestsDisplay += requests[i] + "\n";
         }
@@ -1430,20 +1655,15 @@ void Menu::showFriendList() {
         }
         requestsListText.setString(requestsDisplay);
 
-        // Action Instructions
+     
         Text instructionText;
         instructionText.setFont(font);
-        instructionText.setString(
-            "S: Send Friend Request\n"
-            "A: Accept Request\n"
-            "R: Reject Request\n"
-            "ESC: Back to Menu"
-        );
-        instructionText.setCharacterSize(20);
-        instructionText.setFillColor(Color::White);
-        instructionText.setPosition(100, 500);
+        instructionText.setString("S: Send Friend Request\nA: Accept Request\nR: Reject Request\nESC: Back to Menu");
+            instructionText.setCharacterSize(20);
+        instructionText.setFillColor(Color::Red);
+        instructionText.setPosition(400, 435);
 
-        // Draw all elements
+       
         window.draw(titleText);
         window.draw(friendsHeaderText);
         window.draw(friendsListText);
@@ -1453,63 +1673,71 @@ void Menu::showFriendList() {
 
         window.display();
 
-        // Event Handling
+        
+		//------------------ Event Handling for Friend List -----------------//
         Event e;
         while (window.pollEvent(e)) {
             if (e.type == Event::Closed)
                 window.close();
 
+           
             if (e.type == Event::KeyPressed) {
-                switch (e.key.code) {
+                switch (e.key.code) 
+                {
+					//------------------ Escape Key -----------------//
                 case Keyboard::Escape:
-                    // Return to main menu
+                  
                     showingFriendList = false;
                     showingMainMenu = true;
                     return;
 
+					//------------------ Send Friend Request -----------------//
                 case Keyboard::S:
-                    // Send Friend Request
+                    
                     sendFriendRequest();
-                    // Reload friends and requests after sending
                     friendList->loadFriendsFromFile(currentUsername);
                     friendList->loadFriendRequestsFromFile(currentUsername);
                     break;
 
+					//------------------ Accept Friend Request -----------------//
                 case Keyboard::A:
-                    // Accept Friend Request
+                 
                 {
-                    // Read first friend request
-                    std::ifstream requestFile(requestsFilename);
-                    std::string firstRequest;
-                    if (std::getline(requestFile, firstRequest)) {
+                    ifstream requestFile(requestsFilename);
+                    string firstRequest;
+                    if (getline(requestFile, firstRequest)) 
+                    {
                         requestFile.close();
 
-                        // Temporary file for rewriting requests
-                        std::string tempFilename = currentUsername + "_temp_requests.txt";
-                        std::ofstream tempFile(tempFilename);
+                       
+						//----- Temporary file for rewriting requests-----//
+                        string tempFilename = currentUsername + "_temp_requests.txt";
+                        ofstream tempFile(tempFilename);
 
-                        // Reopen original requests file to copy remaining requests
-                        std::ifstream oldRequestFile(requestsFilename);
-                        std::string tempRequest;
+                       
+                        ifstream oldRequestFile(requestsFilename);
+                        string tempRequest;
                         bool firstSkipped = false;
 
-                        // Copy all requests except the first one
-                        while (std::getline(oldRequestFile, tempRequest)) {
+						//-- Copy all requests except the first one
+                        while (getline(oldRequestFile, tempRequest)) 
+                        {
                             if (!firstSkipped) {
                                 firstSkipped = true;
                                 continue;
                             }
-                            tempFile << tempRequest << std::endl;
+                            tempFile << tempRequest << endl;
                         }
 
                         oldRequestFile.close();
                         tempFile.close();
 
-                        // Replace original requests file
-                        std::remove(requestsFilename.c_str());
-                        std::rename(tempFilename.c_str(), requestsFilename.c_str());
+						//-- Replace original requests file
+                        remove(requestsFilename.c_str());
+                        rename(tempFilename.c_str(), requestsFilename.c_str());
 
-                        // Use FriendList method to accept friend request
+                       
+						//-------------- Accept the friend request-----------------------//
                         bool accepted = friendList->acceptFriendRequestWithFile(currentUsername, firstRequest);
 
                         if (accepted) {
@@ -1520,7 +1748,7 @@ void Menu::showFriendList() {
                                 requesterFriendList->saveFriendsToFile(firstRequest);
                             }
 
-                            // Reload friends and requests
+							//-------------RELOAD FRIENDS AND REQUESTS-----------------//
                             friendList->loadFriendsFromFile(currentUsername);
                             friendList->loadFriendRequestsFromFile(currentUsername);
 
@@ -1530,41 +1758,45 @@ void Menu::showFriendList() {
                 }
                 break;
 
+				//------------------ Reject Friend Request -----------------//
                 case Keyboard::R:
-                    // Reject Friend Request
+                   
                 {
-                    // Read first friend request
-                    std::ifstream requestFile(requestsFilename);
-                    std::string firstRequest;
-                    if (std::getline(requestFile, firstRequest)) {
+         
+                    ifstream requestFile(requestsFilename);
+                    string firstRequest;
+					//-- Read the first request
+                    if (getline(requestFile, firstRequest)) 
+                    {
                         requestFile.close();
 
-                        // Temporary file for rewriting requests
-                        std::string tempFilename = currentUsername + "_temp_requests.txt";
-                        std::ofstream tempFile(tempFilename);
+                        
+                        string tempFilename = currentUsername + "_temp_requests.txt";
+                        ofstream tempFile(tempFilename);
 
-                        // Reopen original requests file to copy remaining requests
-                        std::ifstream oldRequestFile(requestsFilename);
-                        std::string tempRequest;
+                     
+                        ifstream oldRequestFile(requestsFilename);
+                        string tempRequest;
                         bool firstSkipped = false;
 
-                        // Copy all requests except the first one
-                        while (std::getline(oldRequestFile, tempRequest)) {
+                     
+						//-- Copy all requests except the first one
+                        while (getline(oldRequestFile, tempRequest)) {
                             if (!firstSkipped) {
                                 firstSkipped = true;
                                 continue;
                             }
-                            tempFile << tempRequest << std::endl;
+                            tempFile << tempRequest << endl;
                         }
 
                         oldRequestFile.close();
                         tempFile.close();
 
-                        // Replace original requests file
-                        std::remove(requestsFilename.c_str());
-                        std::rename(tempFilename.c_str(), requestsFilename.c_str());
+                        remove(requestsFilename.c_str());
+                        rename(tempFilename.c_str(), requestsFilename.c_str());
 
-                        // Reload friend requests
+                       
+						//-------------- Reject the friend request-----------------------//
                         friendList->loadFriendRequestsFromFile(currentUsername);
 
                         cout << "Rejected friend request from: " << firstRequest << endl;
@@ -1580,10 +1812,10 @@ void Menu::showFriendList() {
 void Menu::sendFriendRequest() {
     RenderWindow usersWindow(VideoMode(600, 500), "Send Friend Request");
 
-    // Font setup
+   
     Font windowFont;
     if (!windowFont.loadFromFile("arial.ttf")) {
-        std::cerr << "Error loading font" << std::endl;
+        cout<< "Error loading font" << endl;
         return;
     }
 
@@ -1594,29 +1826,34 @@ void Menu::sendFriendRequest() {
     titleText.setFillColor(Color::White);
     titleText.setPosition(50, 50);
 
-    // Get current logged-in username
+  
+	//------------------ Get current user and valid usernames -----------------//
     string currentUsername = currentProfile->getUsername();
-
-    // Prepare arrays to store valid users
-    string validUsernames[100];  // Assuming max 100 users
+    string validUsernames[100];  
     int userCount = 0;
 
-    // Go through all users
+    
+
+	//------------------ Get the list of users from the authentication system -----------------//
+
     UserNode* current = auth.getUserListHead();
-    while (current != nullptr) {
-        // Skip current user
+    while (current != NULL) 
+    {
+       
         if (current->username != currentUsername) {
-            // Use PlayerHashTable to get friend list
+           
+			//-------- Check if the user is already a friend or has sent/received requests -----------------//
             FriendList* currentUserFriendList = playerHashTable.getFriendList(currentUsername);
 
-            if (currentUserFriendList) {
-                // Check if already friends
-                bool isFriend = false;
-                std::string friendsFilename = currentUsername + "_friends.txt";
-                std::ifstream friendsFile(friendsFilename);
-                std::string friendLine;
 
-                while (std::getline(friendsFile, friendLine)) {
+            if (currentUserFriendList) {
+                
+                bool isFriend = false;
+                string friendsFilename = currentUsername + "_friends.txt";
+                ifstream friendsFile(friendsFilename);
+                string friendLine;
+
+                while (getline(friendsFile, friendLine)) {
                     if (friendLine == current->username) {
                         isFriend = true;
                         break;
@@ -1624,29 +1861,32 @@ void Menu::sendFriendRequest() {
                 }
                 friendsFile.close();
 
-                // If not a friend, check for existing requests
+				//-------Check if the user is already a friend or has sent/received requests-----------------//
                 if (!isFriend) {
-                    // Check outgoing requests
+                  
                     bool outgoingRequestExists = false;
-                    std::string outgoingRequestsFilename = currentUsername + "_friend_requests.txt";
-                    std::ifstream outgoingRequestsFile(outgoingRequestsFilename);
-                    std::string outgoingRequestLine;
+                    string outgoingRequestsFilename = currentUsername + "_friend_requests.txt";
+                    ifstream outgoingRequestsFile(outgoingRequestsFilename);
+                    string outgoingRequestLine;
 
-                    while (std::getline(outgoingRequestsFile, outgoingRequestLine)) {
-                        if (outgoingRequestLine == current->username) {
+                    while (getline(outgoingRequestsFile, outgoingRequestLine)) 
+                    {
+                        if (outgoingRequestLine == current->username) 
+                        {
                             outgoingRequestExists = true;
                             break;
                         }
                     }
                     outgoingRequestsFile.close();
 
-                    // Check incoming requests
+                    
+					//------------------ Check if the user has sent a request to the current user -----------------//
                     bool incomingRequestExists = false;
-                    std::string incomingRequestsFilename = current->username + "_friend_requests.txt";
-                    std::ifstream incomingRequestsFile(incomingRequestsFilename);
-                    std::string incomingRequestLine;
+                    string incomingRequestsFilename = current->username + "_friend_requests.txt";
+                    ifstream incomingRequestsFile(incomingRequestsFilename);
+                    string incomingRequestLine;
 
-                    while (std::getline(incomingRequestsFile, incomingRequestLine)) {
+                    while (getline(incomingRequestsFile, incomingRequestLine)) {
                         if (incomingRequestLine == currentUsername) {
                             incomingRequestExists = true;
                             break;
@@ -1654,7 +1894,7 @@ void Menu::sendFriendRequest() {
                     }
                     incomingRequestsFile.close();
 
-                    // Add to valid users if no requests exist
+					//------------------ If the user is not a friend and has not sent/received requests, add to valid usernames -----------------//
                     if (!outgoingRequestExists && !incomingRequestExists) {
                         validUsernames[userCount++] = current->username;
                     }
@@ -1664,9 +1904,12 @@ void Menu::sendFriendRequest() {
         current = current->next;
     }
 
-    // Validate user count
-    if (userCount == 0) {
-        // Show message that no other users exist
+
+	//------------------ If no valid users, show message -----------------//
+
+    if (userCount == 0) 
+    {
+       
         Text noUsersText;
         noUsersText.setFont(windowFont);
         noUsersText.setString("No users available to send friend request.");
@@ -1679,17 +1922,18 @@ void Menu::sendFriendRequest() {
         usersWindow.draw(noUsersText);
         usersWindow.display();
 
-        // Wait for a moment
-        sf::sleep(sf::milliseconds(2000));
+      
+       sleep(milliseconds(2000));
         return;
     }
 
-    // Dynamically allocate text objects
+   
     Text* userTexts = new Text[userCount];
 
-    // Populate text objects
+  
+	//------------------ Create text objects for each valid username -----------------//
     for (int index = 0; index < userCount; ++index) {
-        // Configure text object
+        
         userTexts[index].setFont(windowFont);
         userTexts[index].setString("\t" + validUsernames[index] + " (SEND)");
         userTexts[index].setCharacterSize(25);
@@ -1697,39 +1941,47 @@ void Menu::sendFriendRequest() {
         userTexts[index].setPosition(50, 150 + index * 40);
     }
 
-    // Selected user index
+ 
     int selectedIndex = 0;
 
+	//------------------ Main loop for user selection -----------------//
     while (usersWindow.isOpen()) {
         Event e;
         while (usersWindow.pollEvent(e)) {
             if (e.type == Event::Closed)
                 usersWindow.close();
 
-            // Keyboard navigation
-            if (e.type == Event::KeyPressed) {
+   
+            if (e.type == Event::KeyPressed) 
+            {
+				//------------------ Move selection down -----------------//
                 if (e.key.code == Keyboard::Down) {
-                    // Move selection down
+                    
                     selectedIndex = (selectedIndex + 1) % userCount;
                 }
+				//------------------ Move selection up -----------------//
                 else if (e.key.code == Keyboard::Up) {
                     // Move selection up
                     selectedIndex = (selectedIndex - 1 + userCount) % userCount;
                 }
-                else if (e.key.code == Keyboard::Return) {
-                    // Get selected user
+
+				//------------------ Send friend request -----------------//
+                else if (e.key.code == Keyboard::Return) 
+                {
+                    
                     string selectedUser = validUsernames[selectedIndex];
 
-                    // Send friend request
                     sendFriendRequestToUser(currentUsername, selectedUser);
 
-                    // Add to hash table's friend list
+					//------------------ Update the friend list of the current user -----------------//
                     FriendList* currentUserFriendList = playerHashTable.getFriendList(currentUsername);
                     if (currentUserFriendList) {
                         currentUserFriendList->sendFriendRequest(selectedUser);
                     }
 
-                    // Confirmation message
+                    
+					//------------------ Update the friend list of the selected user -----------------//
+
                     Text confirmText;
                     confirmText.setFont(windowFont);
                     confirmText.setString("Friend request sent to " + selectedUser);
@@ -1739,34 +1991,39 @@ void Menu::sendFriendRequest() {
 
                     usersWindow.clear(Color(50, 50, 50));
                     usersWindow.draw(titleText);
-                    for (int i = 0; i < userCount; ++i) {
+
+
+					//------------------ Draw usernames with highlighting -----------------//
+                    for (int i = 0; i < userCount; ++i) 
+                    {
                         usersWindow.draw(userTexts[i]);
                     }
                     usersWindow.draw(confirmText);
                     usersWindow.display();
 
-                    // Wait for a moment
-                    sf::sleep(sf::milliseconds(2000));
+             
+                   sleep(milliseconds(2000));
 
-                    // Close the window after sending request
+                   
                     usersWindow.close();
                 }
                 else if (e.key.code == Keyboard::Escape) {
-                    // Cancel and close window
+                    
                     usersWindow.close();
                 }
             }
         }
 
-        // Clear the window
+       
         usersWindow.clear(Color(50, 50, 50));
 
-        // Draw title
+    
         usersWindow.draw(titleText);
 
-        // Draw usernames with highlighting
+		//------------------ Draw usernames with highlighting -----------------//
+
         for (int i = 0; i < userCount; ++i) {
-            // Highlight selected user
+           
             if (i == selectedIndex) {
                 userTexts[i].setFillColor(Color::Yellow);
             }
@@ -1776,48 +2033,43 @@ void Menu::sendFriendRequest() {
             usersWindow.draw(userTexts[i]);
         }
 
-        // Display the window
+      
         usersWindow.display();
     }
 
-    // Clean up dynamically allocated memory
     delete[] userTexts;
 }
 
 void Menu::displayFriendRequests() {
-    // Get current logged-in username
+   
+    //-----------------------VARIABLES--------------------------//
     string currentUsername = currentProfile->getUsername();
-
-    // Create friend list for current user
     FriendList friendList;
-
-    // Load friend requests from file
-    std::string requestsFilename = currentUsername + "_friend_requests.txt";
-
-    // Read friend requests
-    std::ifstream requestsFile(requestsFilename);
-
-    // Dynamically allocate array for requests
-    string* requestsList = new string[100];  // Assuming max 100 requests
+    string requestsFilename = currentUsername + "_friend_requests.txt";
+    ifstream requestsFile(requestsFilename);
+    string* requestsList = new string[100];  
     int requestCount = 0;
+    string request;
 
-    // Read requests from file
-    std::string request;
-    while (std::getline(requestsFile, request) && requestCount < 100) {
+
+	//------------------ Read friend requests from file -----------------//
+    while (getline(requestsFile, request) && requestCount < 100) {
         requestsList[requestCount++] = request;
     }
     requestsFile.close();
 
     RenderWindow requestsWindow(VideoMode(400, 300), "Friend Requests");
 
-    // Font setup
+ 
     Font windowFont;
-    if (!windowFont.loadFromFile("arial.ttf")) {
-        std::cerr << "Error loading font" << std::endl;
+    if (!windowFont.loadFromFile("arial.ttf")) 
+    {
+        cout<< "Error loading font" << endl;
         delete[] requestsList;
         return;
     }
 
+    //
     Text titleText, instructionText;
     titleText.setFont(windowFont);
     instructionText.setFont(windowFont);
@@ -1827,124 +2079,134 @@ void Menu::displayFriendRequests() {
     titleText.setFillColor(Color::White);
     titleText.setPosition(50, 50);
 
-    instructionText.setString(
-        "Use Arrow Keys to Navigate\n"
-        "Enter to Accept\n"
-        "Backspace to Reject"
-    );
+    instructionText.setString("Use Arrow Keys to Navigate\nEnter to Accept\nBackspace to Reject");
     instructionText.setCharacterSize(20);
     instructionText.setFillColor(Color::White);
     instructionText.setPosition(50, 250);
 
-    // Selected request index
+  
+
+	//------------------ Highlight selected request -----------------//
     int selectedIndex = 0;
 
     while (requestsWindow.isOpen()) {
         Event e;
-        while (requestsWindow.pollEvent(e)) {
+        while (requestsWindow.pollEvent(e)) 
+        {
             if (e.type == Event::Closed)
                 requestsWindow.close();
-
+            
             if (e.type == Event::KeyPressed) {
                 if (requestCount > 0) {
                     if (e.key.code == Keyboard::Down) {
-                        // Move selection down
+                        
                         selectedIndex = (selectedIndex + 1) % requestCount;
                     }
                     else if (e.key.code == Keyboard::Up) {
-                        // Move selection up
+                       
                         selectedIndex = (selectedIndex - 1 + requestCount) % requestCount;
                     }
-                    else if (e.key.code == Keyboard::Return) {
-                        // Accept friend request
-                        string selectedUser = requestsList[selectedIndex];
 
-                        // Accept request and update files
+					//---------------- Accept friend request -----------------//
+                    else if (e.key.code == Keyboard::Return) {
+                      
+
+                        
+                        string selectedUser = requestsList[selectedIndex];
                         bool accepted = friendList.acceptFriendRequestWithFile(currentUsername, selectedUser);
 
-                        if (accepted) {
-                            // Remove the accepted request from the list
+                        if (accepted) 
+                        {
+                            
                             for (int i = selectedIndex; i < requestCount - 1; i++) {
                                 requestsList[i] = requestsList[i + 1];
                             }
                             requestCount--;
 
-                            // Adjust selected index if needed
+							//------------------ Update the friend list of the selected user -----------------//
                             if (selectedIndex >= requestCount) {
                                 selectedIndex = requestCount > 0 ? requestCount - 1 : 0;
                             }
 
-                            // Optional: Show confirmation
+                            
                             cout << "Accepted friend request from: " << selectedUser << endl;
                         }
                     }
+
+					//---------------- Reject friend request -----------------//
+
                     else if (e.key.code == Keyboard::Backspace) {
-                        // Reject friend request
+                        
                         string selectedUser = requestsList[selectedIndex];
 
-                        // Remove the request from file
-                        std::string requestsFilename = currentUsername + "_friend_requests.txt";
+                        string requestsFilename = currentUsername + "_friend_requests.txt";
 
-                        // Read all requests except the rejected one
-                        std::ifstream inputFile(requestsFilename);
-                        std::ofstream tempFile("temp_requests.txt");
+                      
+                        ifstream inputFile(requestsFilename);
+                        ofstream tempFile("temp_requests.txt");
 
-                        std::string line;
-                        while (std::getline(inputFile, line)) {
+                        string line;
+                        while (getline(inputFile, line)) {
                             if (line != selectedUser) {
-                                tempFile << line << std::endl;
+                                tempFile << line << endl;
                             }
                         }
 
                         inputFile.close();
                         tempFile.close();
 
-                        // Replace the original file
-                        std::remove(requestsFilename.c_str());
-                        std::rename("temp_requests.txt", requestsFilename.c_str());
+          
+                        remove(requestsFilename.c_str());
+                        rename("temp_requests.txt", requestsFilename.c_str());
 
-                        // Remove the rejected request from the list
-                        for (int i = selectedIndex; i < requestCount - 1; i++) {
+                       
+
+						//------------------ Update the friend list of the selected user -----------------//
+
+                        for (int i = selectedIndex; i < requestCount - 1; i++) 
+                        {
                             requestsList[i] = requestsList[i + 1];
                         }
                         requestCount--;
 
-                        // Adjust selected index if needed
+                      
+						//------------------ Update selected index -----------------//
                         if (selectedIndex >= requestCount) {
                             selectedIndex = requestCount > 0 ? requestCount - 1 : 0;
                         }
 
-                        // Optional: Show confirmation
+                      
                         cout << "Rejected friend request from: " << selectedUser << endl;
                     }
                 }
 
-                // Exit on Escape
+               
                 if (e.key.code == Keyboard::Escape) {
                     requestsWindow.close();
                 }
             }
         }
 
-        // Clear the window
+      
         requestsWindow.clear(Color(50, 50, 50));
-
-        // Draw title and instructions
         requestsWindow.draw(titleText);
         requestsWindow.draw(instructionText);
 
-        // Draw friend requests
+
+		//------------------ Draw friend requests header -----------------//
         for (int i = 0; i < requestCount; i++) {
             Text requestText;
             requestText.setFont(windowFont);
             requestText.setString(requestsList[i]);
             requestText.setCharacterSize(25);
 
-            // Highlight selected request
-            if (i == selectedIndex) {
+			//------------------ Highlight selected request -----------------//
+            if (i == selectedIndex) 
+            {
                 requestText.setFillColor(Color::Yellow);
             }
-            else {
+            else 
+            {
                 requestText.setFillColor(Color::White);
             }
 
@@ -1952,11 +2214,10 @@ void Menu::displayFriendRequests() {
             requestsWindow.draw(requestText);
         }
 
-        // Display the window
+        
         requestsWindow.display();
     }
 
-    // Clean up dynamically allocated memory
     delete[] requestsList;
 }
 
@@ -1964,79 +2225,84 @@ void Menu::displayFriendRequests() {
 
 void Menu::acceptFriendRequest() {
     string currentUsername = currentProfile->getUsername();
-    std::string requestsFileName = currentUsername + "_friend_requests.txt";
-    std::string friendsFileName = currentUsername + "_friends.txt";
+    string requestsFileName = currentUsername + "_friend_requests.txt";
+    string friendsFileName = currentUsername + "_friends.txt";
 
-    // Read requests
-    std::ifstream requestsFile(requestsFileName);
-    std::string requester;
+    
+    ifstream requestsFile(requestsFileName);
+    string requester;
 
-    // Read first requester
-    if (std::getline(requestsFile, requester)) {
+    if (getline(requestsFile, requester)) 
+    {
         requestsFile.close();
 
-        // Add to friends file
-        std::ofstream friendsFile(friendsFileName, std::ios_base::app);
-        friendsFile << requester << std::endl;
+        
+		//------------------- Add requester to friends file -----------------//
+        ofstream friendsFile(friendsFileName, ios_base::app);
+        friendsFile << requester << endl;
         friendsFile.close();
 
-        // Remove the request from requests file
-        std::ifstream inputFile(requestsFileName);
-        std::ofstream tempFile("temp_requests.txt");
-        std::string line;
+      
+		//------------------ Remove the request from requests file -----------------//
+        ifstream inputFile(requestsFileName);
+        ofstream tempFile("temp_requests.txt");
+        string line;
         bool firstLineSkipped = false;
 
-        while (std::getline(inputFile, line)) {
+        while (getline(inputFile, line)) {
             if (!firstLineSkipped) {
                 firstLineSkipped = true;
                 continue;
             }
-            tempFile << line << std::endl;
+            tempFile << line << endl;
         }
 
         inputFile.close();
         tempFile.close();
 
-        // Replace original file
-        std::remove(requestsFileName.c_str());
-        std::rename("temp_requests.txt", requestsFileName.c_str());
+        remove(requestsFileName.c_str());
+        rename("temp_requests.txt", requestsFileName.c_str());
 
         cout << "Accepted friend request from: " << requester << endl;
     }
 }
 
-void Menu::rejectFriendRequest() {
+void Menu::rejectFriendRequest() 
+{
     string currentUsername = currentProfile->getUsername();
-    std::string requestsFileName = currentUsername + "_friend_requests.txt";
+    string requestsFileName = currentUsername + "_friend_requests.txt";
 
-    // Read requests
-    std::ifstream requestsFile(requestsFileName);
-    std::string requester;
+    
+    ifstream requestsFile(requestsFileName);
+    string requester;
 
-    // Read first requester
-    if (std::getline(requestsFile, requester)) {
+	// ------------------ Read the first request -----------------//
+    if (getline(requestsFile, requester)) {
         requestsFile.close();
 
-        // Remove the request from requests file
-        std::ifstream inputFile(requestsFileName);
-        std::ofstream tempFile("temp_requests.txt");
-        std::string line;
+        
+        ifstream inputFile(requestsFileName);
+        ofstream tempFile("temp_requests.txt");
+        string line;
         bool firstLineSkipped = false;
 
-        while (std::getline(inputFile, line)) {
+
+
+		//------------------ Remove the request from requests file -----------------//
+        while (getline(inputFile, line)) {
             if (!firstLineSkipped) {
                 firstLineSkipped = true;
                 continue;
             }
-            tempFile << line << std::endl;
+            tempFile << line << endl;
         }
 
         inputFile.close();
         tempFile.close();
 
-        // Replace original file
-        std::remove(requestsFileName.c_str());
-        std::rename("temp_requests.txt", requestsFileName.c_str());
+       
+        remove(requestsFileName.c_str());
+        rename("temp_requests.txt", requestsFileName.c_str());
 
         cout << "Rejected friend request from: " << requester << endl;
     }
@@ -2044,18 +2310,15 @@ void Menu::rejectFriendRequest() {
 
 
 
-void Menu::syncPlayerNames() {
-    // If matchedPlayer1 is empty, use current user
+void Menu::syncPlayerNames() 
+{
+    
     if (matchedPlayer1.empty()) {
         matchedPlayer1 = currentProfile->getUsername();
     }
-
-    // If matchedPlayer2 is empty in multiplayer, use default
     if (!isSinglePlayerSelected && matchedPlayer2.empty()) {
         matchedPlayer2 = "Player2";
     }
-
-    // Set secondPlayerName to match matchedPlayer2
     secondPlayerName = matchedPlayer2;
 }
 
@@ -2064,32 +2327,46 @@ int Menu::themeSelection()
     showingMainMenu = false;
     Text titleText, theme1Text, theme2Text, theme3Text;
 
+
+	//------------------ Load font -----------------//
     titleText.setFont(font);
-    titleText.setString("Select Your Desired Theme");
-    titleText.setCharacterSize(40);
+    titleText.setString("Select Theme");
+    titleText.setCharacterSize(30);
     titleText.setFillColor(Color::White);
-    titleText.setPosition(265, 50);
+    titleText.setPosition(400, 100);
 
     theme1Text.setFont(font);
     theme1Text.setString("1. Ocean Theme");
-    theme1Text.setCharacterSize(30);
+    theme1Text.setCharacterSize(20);
     theme1Text.setFillColor(Color::White);
-    theme1Text.setPosition(200, 150);
+    theme1Text.setPosition(410, 180);
 
     theme2Text.setFont(font);
     theme2Text.setString("2. Forest Theme");
-    theme2Text.setCharacterSize(30);
+    theme2Text.setCharacterSize(20);
     theme2Text.setFillColor(Color::White);
-    theme2Text.setPosition(200, 200);
+    theme2Text.setPosition(410, 250);
 
     theme3Text.setFont(font);
-    theme3Text.setString("3. Space Theme");
-    theme3Text.setCharacterSize(30);
+    theme3Text.setString("3.Spooky Theme");
+    theme3Text.setCharacterSize(20);
     theme3Text.setFillColor(Color::White);
-    theme3Text.setPosition(200, 250);
+    theme3Text.setPosition(410, 320);
 
     while (window.isOpen()) {
-        window.clear(Color(50, 50, 50));
+
+
+        window.clear();
+       Texture texture;
+        if (!texture.loadFromFile("images/mm.jpg")) {  
+            cout<< "Error loading texture" << endl;
+        }
+
+
+       Sprite sprite(texture);
+
+
+        window.draw(sprite);
         window.draw(titleText);
         window.draw(theme1Text);
         window.draw(theme2Text);
@@ -2097,19 +2374,205 @@ int Menu::themeSelection()
         window.display();
 
         Event e;
+		//------------------ Event Handling -----------------//
         while (window.pollEvent(e)) {
             if (e.type == Event::Closed)
                 window.close();
 
-            if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left) {
-                sf::Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+            if (e.type == Event::KeyPressed) {
+                if (e.key.code == Keyboard::Escape) {
+                    showingMainMenu = true;
+                    return -1;
+                }
+            }
 
-                if (theme1Text.getGlobalBounds().contains(mousePos)) return 1;
-                if (theme2Text.getGlobalBounds().contains(mousePos)) return 2;
-                if (theme3Text.getGlobalBounds().contains(mousePos)) return 3;
+			//------------------ Mouse Click Handling -----------------//
+            if (e.type == Event::MouseButtonReleased && e.mouseButton.button == Mouse::Left) {
+               Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+
+                if (theme1Text.getGlobalBounds().contains(mousePos)) 
+                    return 1;
+                if (theme2Text.getGlobalBounds().contains(mousePos))
+                    return 2;
+                if (theme3Text.getGlobalBounds().contains(mousePos)) 
+                    return 3;
             }
         }
     }
 
     return -1; 
+}
+
+
+void Menu::showFriendsForMultiplayer() {
+    
+   Font font;
+    if (!font.loadFromFile("Courier Prime Bold.ttf")) {
+        cout<< "Error loading font" << endl;
+     
+    }
+
+
+    string currentUsername = currentProfile->getUsername();
+
+    FriendList* friendList = playerHashTable.getFriendList(currentUsername);
+	//------------------- If friend list doesn't exist, create one -----------------//
+    if (!friendList) 
+    {
+        playerHashTable.addPlayer(currentUsername);
+        friendList = playerHashTable.getFriendList(currentUsername);
+    }
+    friendList->loadFriendsFromFile(currentUsername);
+
+
+
+    string friendsList[100];
+    int friendCount = 0;
+    friendList->getFriendsList(friendsList, friendCount);
+
+   
+    RenderWindow friendsWindow(VideoMode(600, 500), "Select Friend for Multiplayer");
+
+    //// Font setup
+    //Font font;
+    //if (!font.loadFromFile("arial.ttf")) {
+    //    cout<< "Error loading font" << endl;
+    //    return;
+    //}
+
+ 
+	//------------------ Background and Textures -----------------//
+    Text titleText;
+    titleText.setFont(font);
+    titleText.setString("Select a Friend to Play With");
+    titleText.setCharacterSize(30);
+    titleText.setFillColor(Color::White);
+    titleText.setPosition(50, 50);
+
+    
+    Text noFriendsText;
+    noFriendsText.setFont(font);
+    noFriendsText.setString("No friends found. Add friends first!");
+    noFriendsText.setCharacterSize(20);
+    noFriendsText.setFillColor(Color::Red);
+    noFriendsText.setPosition(50, 150);
+
+
+
+
+	//------------------ Create text objects for each friend -----------------//
+    Text friendTexts[100];
+
+    // Populate text objects
+    for (int index = 0; index < friendCount; ++index) {
+        friendTexts[index].setFont(font);
+        friendTexts[index].setString(to_string(index + 1) + ". " + friendsList[index]);
+        friendTexts[index].setCharacterSize(25);
+        friendTexts[index].setFillColor(Color::White);
+        friendTexts[index].setPosition(50, 150 + index * 40);
+    }
+
+    
+    int selectedIndex = 0;
+
+    //// Instructions text
+    //Text instructionText;
+    //instructionText.setFont(font);
+    //instructionText.setString("Use Arrow Keys to Navigate\nENTER to Select\nESC to Cancel");
+    //instructionText.setCharacterSize(20);
+    //instructionText.setFillColor(Color::Yellow);
+    //instructionText.setPosition(50, 450);
+
+    while (friendsWindow.isOpen()) {
+        Event e;
+
+
+        while (friendsWindow.pollEvent(e)) {
+            if (e.type == Event::Closed)
+                friendsWindow.close();
+
+            
+            if (e.type == Event::KeyPressed) {
+                if (friendCount > 0) {
+
+                   
+                    if (e.key.code == Keyboard::Down) {
+                        
+						//------------------ Move selection down -----------------//
+                        selectedIndex = (selectedIndex + 1) % friendCount;
+                    }
+                    else if (e.key.code == Keyboard::Up) 
+                    {
+						//------------------ Move selection up -----------------//
+                        selectedIndex = (selectedIndex - 1 + friendCount) % friendCount;
+                    }
+					//------------------ Select friend for multiplayer -----------------//
+                    else if (e.key.code == Keyboard::Return) {
+                        
+						//------------------ Check if the selected friend is valid -----------------//
+                        if (friendCount > 0) {
+                            matchedPlayer1 = currentUsername;
+                            matchedPlayer2 = friendsList[selectedIndex];
+
+                           
+
+							//------------------ Set multiplayer mode and start game -----------------//
+                            isSinglePlayerSelected = false;
+                            showingModeSelection = false;
+                            gameStarted = true;
+
+                            cout << "Multiplayer with friend: " << matchedPlayer2 << endl;
+
+                            
+                            friendsWindow.close();
+                            return;
+                        }
+                    }
+                }
+
+   
+                if (e.key.code == Keyboard::Escape) 
+                {
+                    showingModeSelection = true;
+                    friendsWindow.close();
+                    return;
+                }
+            }
+        }
+
+       
+        friendsWindow.clear(Color::Black);
+
+    
+        friendsWindow.draw(titleText);
+
+		
+        
+        if (friendCount > 0) {
+           
+			//------------------ Draw friend list header -----------------//
+            for (int i = 0; i < friendCount; ++i) {
+              
+                if (i == selectedIndex) 
+                {
+                    friendTexts[i].setFillColor(Color::Magenta);
+                }
+                else 
+                {
+                    friendTexts[i].setFillColor(Color::White);
+                }
+                friendsWindow.draw(friendTexts[i]);
+            }
+        }
+        else 
+        {
+            friendsWindow.draw(noFriendsText);
+        }
+
+        // Draw instructions
+     /*   friendsWindow.draw(instructionText);*/
+
+       
+        friendsWindow.display();
+    }
 }

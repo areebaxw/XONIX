@@ -16,9 +16,9 @@ struct AVLNode
 	AVLNode(int id)
 	{
 		themeId = id;
-		left = nullptr;
-		right = nullptr;
-		height = 1; // Initialize height to 1 for leaf nodes
+		left = NULL;
+		right = NULL;
+		height = 1; 
 	}
 
 	string getThemePath(int index)
@@ -30,13 +30,15 @@ struct AVLNode
 	}
 };
 
+
 class AVLTree
 {
 	AVLNode* root;
 public:
+	//----------------------------------------Constructor and initialization of themes----------------------------------------
 	AVLTree()
 	{
-		root = nullptr;
+		root = NULL;
 		initializeOceanTheme();
 		initializeForestTheme();
 		initializeSpaceTheme();
@@ -44,9 +46,10 @@ public:
 		this->printPreOrder(root);
 	}
 
+	//----------------------------------------AVLTree height and balancing methods----------------------------------------
 	int getHeight(AVLNode* node)
 	{
-		if (node == nullptr)
+		if (node == NULL)
 			return 0;
 
 		return node->height;
@@ -59,32 +62,33 @@ public:
 
 	void updateHeight(AVLNode* node)
 	{
-		if (node != nullptr)
+		if (node != NULL)
 			node->height = 1 + max(getHeight(node->left), getHeight(node->right));
 	}
 
 	int getBalance(AVLNode* node)
 	{
-		if (node == nullptr)
+		if (node == NULL)
 			return 0;
 
 		return getHeight(node->left) - getHeight(node->right);
 	}
 
+	//----------------------------------------Rotation methods (left and right)----------------------------------------
 	AVLNode* rightRotate(AVLNode* y)
 	{
 		AVLNode* x = y->left;
 		AVLNode* T2 = x->right;
 
-		// Perform rotation
+		
 		x->right = y;
 		y->left = T2;
 
-		// Update heights
+		
 		updateHeight(y);
 		updateHeight(x);
 
-		// Return new root
+
 		return x;
 	}
 
@@ -93,160 +97,155 @@ public:
 		AVLNode* y = x->right;
 		AVLNode* T2 = y->left;
 
-		// Perform rotation
+		
 		y->left = x;
 		x->right = T2;
 
-		// Update heights
 		updateHeight(x);
 		updateHeight(y);
 
-		// Return new root
+		
 		return y;
 	}
 
-	// Recursive insert function that maintains AVL properties
+	//----------------------------------------Recursive insert method for AVL balancing----------------------------------------
 	AVLNode* insertNode(AVLNode* node, AVLNode* newNode)
 	{
-		// Perform normal BST insertion
-		if (node == nullptr)
+	
+		if (node == NULL)
 			return newNode;
 
 		if (newNode->themeId < node->themeId)
 			node->left = insertNode(node->left, newNode);
 		else if (newNode->themeId > node->themeId)
 			node->right = insertNode(node->right, newNode);
-		else // Equal keys not allowed
+		else 
 			return node;
 
-		// Update height of this ancestor node
+		
 		updateHeight(node);
 
-		// Get the balance factor to check if this node became unbalanced
+
 		int balance = getBalance(node);
 
-		// Left Left Case
 		if (balance > 1 && newNode->themeId < node->left->themeId)
 			return rightRotate(node);
 
-		// Right Right Case
+	
 		if (balance < -1 && newNode->themeId > node->right->themeId)
 			return leftRotate(node);
 
-		// Left Right Case
 		if (balance > 1 && newNode->themeId > node->left->themeId)
 		{
 			node->left = leftRotate(node->left);
 			return rightRotate(node);
 		}
 
-		// Right Left Case
 		if (balance < -1 && newNode->themeId < node->right->themeId)
 		{
 			node->right = rightRotate(node->right);
 			return leftRotate(node);
 		}
 
-		// Return the (unchanged) node pointer
+	
 		return node;
 	}
 
+	//----------------------------------------Public insert method----------------------------------------
 	void insert(AVLNode* newNode)
 	{
 		// Use recursive insertion instead
 		root = insertNode(root, newNode);
 	}
 
-	// Find the node with minimum value
+	//----------------------------------------Method to find minimum value node----------------------------------------
 	AVLNode* minValueNode(AVLNode* node)
 	{
 		AVLNode* current = node;
 
 		// Loop down to find the leftmost leaf
-		while (current->left != nullptr)
+		while (current->left != NULL)
 			current = current->left;
 
 		return current;
 	}
 
-	// Recursive function to delete a node
+	//----------------------------------------Recursive function to delete a node----------------------------------------
 	AVLNode* deleteNode(AVLNode* root, int themeId)
 	{
-		// Standard BST delete
-		if (root == nullptr)
+		
+		if (root == NULL)
 			return root;
 
-		// If the key to be deleted is smaller than the root's key,
-		// then it lies in left subtree
+		
 		if (themeId < root->themeId)
 			root->left = deleteNode(root->left, themeId);
 
-		// If the key to be deleted is greater than the root's key,
-		// then it lies in right subtree
+	
 		else if (themeId > root->themeId)
 			root->right = deleteNode(root->right, themeId);
 
-		// If key is same as root's key, then this is the node to be deleted
+		
 		else
 		{
-			// Node with only one child or no child
-			if ((root->left == nullptr) || (root->right == nullptr))
+			
+			if ((root->left == NULL) || (root->right == NULL))
 			{
 				AVLNode* temp = root->left ? root->left : root->right;
 
-				// No child case
-				if (temp == nullptr)
+			
+				if (temp == NULL)
 				{
 					temp = root;
-					root = nullptr;
+					root = NULL;
 				}
-				else // One child case
-					*root = *temp; // Copy the contents of the non-empty child
+				else 
+					*root = *temp; 
 
 				delete temp;
 			}
 			else
 			{
-				// Node with two children: Get the inorder successor
+				
 				AVLNode* temp = minValueNode(root->right);
 
-				// Copy the inorder successor's data to this node
+			
 				root->themeId = temp->themeId;
-				// Copy theme paths as well
+			
 				for (int i = 0; i < 20; i++)
 					root->themepaths[i] = temp->themepaths[i];
 
-				// Delete the inorder successor
+				
 				root->right = deleteNode(root->right, temp->themeId);
 			}
 		}
 
-		// If the tree had only one node then return
-		if (root == nullptr)
+		
+		if (root == NULL)
 			return root;
 
-		// Update height of the current node
+	
 		updateHeight(root);
 
-		// Get the balance factor
+	
 		int balance = getBalance(root);
 
-		// Left Left Case
+	
 		if (balance > 1 && getBalance(root->left) >= 0)
 			return rightRotate(root);
 
-		// Left Right Case
+
 		if (balance > 1 && getBalance(root->left) < 0)
 		{
 			root->left = leftRotate(root->left);
 			return rightRotate(root);
 		}
 
-		// Right Right Case
+
 		if (balance < -1 && getBalance(root->right) <= 0)
 			return leftRotate(root);
 
-		// Right Left Case
+		
 		if (balance < -1 && getBalance(root->right) > 0)
 		{
 			root->right = rightRotate(root->right);
@@ -256,14 +255,16 @@ public:
 		return root;
 	}
 
+	//----------------------------------------Public remove method----------------------------------------
 	void remove(int removeItem)
 	{
 		root = deleteNode(root, removeItem);
 	}
 
+	//----------------------------------------Methods for tree traversal (InOrder, PreOrder, PostOrder)----------------------------------------
 	void printInOrder(AVLNode* root)
 	{
-		if (root == nullptr)
+		if (root == NULL)
 			return;
 
 		printInOrder(root->left);
@@ -273,7 +274,7 @@ public:
 
 	void printPreOrder(AVLNode* root)
 	{
-		if (root == nullptr)
+		if (root == NULL)
 			return;
 
 		cout << root->themeId << " ";
@@ -283,7 +284,7 @@ public:
 
 	void printPostOrder(AVLNode* root)
 	{
-		if (root == nullptr)
+		if (root == NULL)
 			return;
 
 		printPostOrder(root->left);
@@ -291,13 +292,14 @@ public:
 		cout << root->themeId << " ";
 	}
 
+	//----------------------------------------Methods to find Min and Max value nodes----------------------------------------
 	int findMin()
 	{
 		AVLNode* temp = root;
-		if (temp == nullptr)
+		if (temp == NULL)
 			return -1;
 
-		while (temp->left != nullptr)
+		while (temp->left != NULL)
 			temp = temp->left;
 
 		return temp->themeId;
@@ -306,54 +308,86 @@ public:
 	int findMax()
 	{
 		AVLNode* temp = root;
-		if (temp == nullptr)
+		if (temp == NULL)
 			return -1;
 
-		while (temp->right != nullptr)
+		while (temp->right != NULL)
 			temp = temp->right;
 
 		return temp->themeId;
 	}
+
 
 	AVLNode* getRoot()
 	{
 		return root;
 	}
 
+	//----------------------------------------Theme initialization methods----------------------------------------
 	void initializeOceanTheme()
 	{
 		AVLNode* oceanTheme = new AVLNode(1);
 		oceanTheme->themepaths[0] = "images/Oceantheme.jpg";
-		oceanTheme->themepaths [1] = "images/mode.jpg";
+		oceanTheme->themepaths[1] = "images/mode.jpg";
 		oceanTheme->themepaths[2] = "images/level.jpg";
 		oceanTheme->themepaths[3] = "images/leaderboard.jpg";
-
+		oceanTheme->themepaths[4] = "images/friends.jpg";
+		oceanTheme->themepaths[5] = "images/player.jpg";
 		insert(oceanTheme);
 	}
 
 	void initializeForestTheme()
+
 	{
+
 		AVLNode* forestTheme = new AVLNode(2);
-		/*forestTheme->themepaths[0] = "forest_theme_path_1";
-		forestTheme->themepaths[1] = "forest_theme_path_2";
-		forestTheme->themepaths[2] = "forest_theme_path_3";*/
+
+		forestTheme->themepaths[0] = "images/jungle.jpg";
+
+		forestTheme->themepaths[1] = "images/mode1.jpg";
+
+		forestTheme->themepaths[2] = "images/level1.jpg";
+
+		forestTheme->themepaths[3] = "images/leaderboard1.jpg";
+
+		forestTheme->themepaths[4] = "images/friends2.jpg";
+		forestTheme->themepaths[5] = "images/player2.jpg";
+
+
 		insert(forestTheme);
+
 	}
+
+
 
 	void initializeSpaceTheme()
+
 	{
+
 		AVLNode* spaceTheme = new AVLNode(3);
-		/*spaceTheme->themepaths[0] = "space_theme_path_1";
-		spaceTheme->themepaths[1] = "space_theme_path_2";
-		spaceTheme->themepaths[2] = "space_theme_path_3";*/
+
+		spaceTheme->themepaths[0] = "images/spooky.jpg";
+
+		spaceTheme->themepaths[1] = "images/mode2.jpg";
+
+		spaceTheme->themepaths[2] = "images/level2.jpg";
+
+		spaceTheme->themepaths[3] = "images/leaderboard2.jpg";
+
+		spaceTheme->themepaths[4] = "images/friends1.jpg";
+		spaceTheme->themepaths[5] = "images/player1.jpg";
+
+
 		insert(spaceTheme);
+
 	}
 
+	//----------------------------------------Search method for a theme----------------------------------------
 	AVLNode* search(int themeId)
 	{
 		AVLNode* temp = root;
 
-		while (temp != nullptr)
+		while (temp != NULL)
 		{
 			if (themeId == temp->themeId)
 				return temp;
@@ -362,7 +396,7 @@ public:
 			else
 				temp = temp->right;
 		}
-		return nullptr;
+		return NULL;
 	}
 
 };

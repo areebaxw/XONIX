@@ -5,62 +5,53 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-using namespace std;
 
+using namespace std;
 
 class Matchmaking {
 public:
-    // Constants
+    //---------------------Constants---------------------
     static const int MAX_USERNAME_LENGTH = 50;
     static const int MAX_QUEUE_SIZE = 100;
 
-    // Player structure for matchmaking
-    struct MatchPlayer {
+    //---------------------Match Player Structure---------------------
+    struct MatchPlayer
+    {
         char username[MAX_USERNAME_LENGTH];
         int highestScore;
         int queueEntryOrder;
     };
 
-    // Queue storage
+    //---------------------Queue Management---------------------
     MatchPlayer players[MAX_QUEUE_SIZE];
     int frontIndex;
     int rearIndex;
     int currentSize;
     int nextEntryOrder;
 
-    // Private utility methods
-    void copyString(char* destination, const std::string& source);
-    int stringToInt(const std::string& str);
-    int readUserHighestScore(const std::string& username);
+    //---------------------Helper Methods---------------------
+    void copyString(char* destination, const string& source);
+    int stringToInt(const string& str);
+    int readUserHighestScore(const string& username);
     void sortQueueByPriority();
     bool arePlayersUnique(const MatchPlayer& p1, const MatchPlayer& p2);
 
-    void populateQueueFromLeaderboard(const std::string& loggedInUser);
-
-    void logMatchmakingEvent(const std::string& eventDescription);
-
-
-
+    //---------------------Queue Population---------------------
+    void populateQueueFromLeaderboard(const string& loggedInUser);
 
 public:
-    // Constructor
+    //---------------------Constructor---------------------
     Matchmaking();
-    void debugPrintQueue();
-    // Enter a player into the matchmaking queue
-    bool enterQueue(const std::string& username, int hs);
 
-    // void populateQueueFromLeaderboard();
-
-     // Match players
-    bool matchPlayers(std::string& player1Username, std::string& player2Username);
-
-    // Get current queue size
+    //---------------------Queue Management Methods---------------------
+    bool enterQueue(const string& username, int hs);
+    bool matchPlayers(string& player1Username, string& player2Username);
     int getQueueSize() const;
-
-    // Clear the queue
     void clearQueue();
+
+    //---------------------Leaderboard Interaction---------------------
     string getNextTopPlayerFromLeaderboard(const string& topPlayerUsername);
-    std::string getTopPlayerFromLeaderboard();
+    string getTopPlayerFromLeaderboard();
 };
 
-#endif // MATCHMAKING_H
+#endif

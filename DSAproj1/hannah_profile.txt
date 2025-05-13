@@ -1,0 +1,8 @@
+Username: hannah
+Highest Score: 171
+Friends Count: 0
+Match History Count: 0
+Most Recent Game Mode: Multiplayer
+Most Recent Bonus Level: 1
+Most Recent Power-Ups Collected: 0
+Most Recent Power-Up Status: None

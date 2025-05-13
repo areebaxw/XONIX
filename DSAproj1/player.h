@@ -10,80 +10,82 @@
 const int MAX_FRIENDS = 10;
 const int MAX_MATCH_HISTORY = 20;
 
+using namespace std;
+using namespace sf;
+
 struct MatchRecord {
-    std::string date;
+    //---------------------Match Record Information---------------------
+    string date;
     bool isWin;
     int score;
-    std::string gameMode;
+    string gameMode;
 };
 
 class PlayerProfile {
 private:
-    std::string username;
-    std::string friends[MAX_FRIENDS];
+    //---------------------Profile Data---------------------
+    string username;
+    string friends[MAX_FRIENDS];
     int friendCount;
     MatchRecord matchHistory[MAX_MATCH_HISTORY];
     int matchHistoryCount;
     int highestScore;
-    sf::Font font;
-    sf::Text profileText;
+   Font font;
+   Text profileText;
 
-    // Private method to save profile data
-    void saveProfileData();
-
-    // Private method to load profile data
-    void loadProfileData();
+    //---------------------Private Methods---------------------
+    void saveProfileData(); 
+    void loadProfileData(); 
 
 public:
-    PlayerProfile(const std::string& username);
+    //---------------------Constructor---------------------
+    PlayerProfile(const string& username);
 
-    // Getters
-    std::string getUsername() const;
+    //---------------------Getters---------------------
+    string getUsername() const;
     int getHighestScore() const;
     int getFriendCount() const;
     int getMatchHistoryCount() const;
-    void getFriendsList(std::string friendsList[]) const;
+    void getFriendsList(string friendsList[]) const;
     void getMatchHistory(MatchRecord matchList[]) const;
 
-    // Methods to modify profile
-    bool addFriend(const std::string& friendUsername);
-    bool removeFriend(const std::string& friendUsername);
+    //---------------------Profile Modification Methods---------------------
+    bool addFriend(const string& friendUsername);
+    bool removeFriend(const string& friendUsername);
     void recordMatch(const MatchRecord& match);
     void updateHighestScore(int newScore);
 
-    // Method to display profile
-    void displayProfile(sf::RenderWindow& window, MySprite& bgSprite);
+    //---------------------Profile Display and Interaction---------------------
+    void displayProfile(RenderWindow& window, MySprite& bgSprite);
+    bool handleProfileInput(Event& event);
 
-    // Method to handle profile interactions
-    bool handleProfileInput(sf::Event& event);
+    //---------------------Friend List Management---------------------
+    FriendList* friendList;
 
-
-
-    FriendList* friendList;  // Instance of FriendList
-    void loadFriendRequestsFromFile(const std::string& username) {
-        friendList->loadFriendRequestsFromFile(username);  // Delegate to FriendList
-    }
-
-    void getFriendRequestsList(std::string requestsList[], int& count) const {
-        friendList->getFriendRequestsList(requestsList, count);  // Delegate to FriendList
-    }
-
-    void acceptFriendRequest(const std::string& username) {
-        friendList->acceptFriendRequest(username);  // Delegate the request to FriendList
-    }
-
-    void rejectFriendRequest(const std::string& username) {
-        friendList->rejectFriendRequest(username);  // Delegate the request to FriendList
+    void loadFriendRequestsFromFile(const string& username) {
+        friendList->loadFriendRequestsFromFile(username);  
     }
 
 
+    void getFriendRequestsList(string requestsList[], int& count) const {
+        friendList->getFriendRequestsList(requestsList, count);  
+    }
 
-    // Function to save friends list to file
-    void saveFriendsToFile(const std::string& username);
+    void acceptFriendRequest(const string& username) {
+        friendList->acceptFriendRequest(username);  
+    }
 
-    // Function to save friend requests list to file
-    void saveFriendRequestsToFile(const std::string& username);  // Function declaration
+    void rejectFriendRequest(const string& username) {
+        friendList->rejectFriendRequest(username);  
+    }
 
+    //---------------------File Management Methods---------------------
+    void saveFriendsToFile(const string& username);
+    void saveFriendRequestsToFile(const string& username);  
+
+
+    //---------------------Helper Method---------------------
+    int extractNumber(const string& str, int startPos);
 };
 
 #endif // PLAYERPROFILE_H

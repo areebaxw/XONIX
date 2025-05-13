@@ -1,69 +1,70 @@
 #include "friendlist.h"
+using namespace std;
 
-// Friend Node Constructor
-FriendList::FriendNode::FriendNode(const std::string& username) :
-    friendUsername(username), next(nullptr) {}
+FriendList::FriendNode::FriendNode(const string& username) : friendUsername(username), next(NULL) {}
 
-// Friend Request Node Constructor
-FriendList::FriendRequestNode::FriendRequestNode(const std::string& username) :
-    requestUsername(username), next(nullptr) {}
+FriendList::FriendRequestNode::FriendRequestNode(const string& username) : requestUsername(username), next(NULL) {}
 
-// Constructor
-FriendList::FriendList() : friendsHead(nullptr), friendRequestsHead(nullptr) {}
+FriendList::FriendList() : friendsHead(NULL), friendRequestsHead(NULL) {}
 
-// Destructor
-FriendList::~FriendList() {
-    // Clear friends list
-    while (friendsHead != nullptr) {
+FriendList::~FriendList()
+{
+    while (friendsHead != NULL)
+    {
         FriendNode* temp = friendsHead;
         friendsHead = friendsHead->next;
         delete temp;
     }
-
-    // Clear friend requests list
-    while (friendRequestsHead != nullptr) {
+    while (friendRequestsHead != NULL)
+    {
         FriendRequestNode* temp = friendRequestsHead;
         friendRequestsHead = friendRequestsHead->next;
         delete temp;
     }
 }
 
-// Add a friend
-void FriendList::addFriend(const std::string& username) {
-    // Prevent duplicate friends
-    if (hasFriend(username)) return;
-
+void FriendList::addFriend(const string& username)
+{
+    if (hasFriend(username))
+    {
+        return;
+    }
     FriendNode* newNode = new FriendNode(username);
 
-    if (friendsHead == nullptr) {
+    if (friendsHead == NULL)
+    {
         friendsHead = newNode;
         return;
     }
 
     FriendNode* current = friendsHead;
-    while (current->next != nullptr) {
+    while (current->next != NULL)
+    {
         current = current->next;
     }
     current->next = newNode;
 }
 
-// Remove a friend
-void FriendList::removeFriend(const std::string& username) {
-    // If list is empty
-    if (friendsHead == nullptr) return;
+void FriendList::removeFriend(const string& username)
+{
+    if (friendsHead == NULL)
+    {
+        return;
+    }
 
-    // If first node is the one to remove
-    if (friendsHead->friendUsername == username) {
+    if (friendsHead->friendUsername == username)
+    {
         FriendNode* temp = friendsHead;
         friendsHead = friendsHead->next;
         delete temp;
         return;
     }
 
-    // Traverse and remove
     FriendNode* current = friendsHead;
-    while (current->next != nullptr) {
-        if (current->next->friendUsername == username) {
+    while (current->next != NULL)
+    {
+        if (current->next->friendUsername == username)
+        {
             FriendNode* temp = current->next;
             current->next = current->next->next;
             delete temp;
@@ -73,11 +74,13 @@ void FriendList::removeFriend(const std::string& username) {
     }
 }
 
-// Check if a user is a friend
-bool FriendList::hasFriend(const std::string& username) const {
+
+bool FriendList::hasFriend(const string& username) const
+{
     FriendNode* current = friendsHead;
-    while (current != nullptr) {
-        if (current->friendUsername == username) {
+    while (current != NULL) {
+        if (current->friendUsername == username)
+        {
             return true;
         }
         current = current->next;
@@ -85,55 +88,52 @@ bool FriendList::hasFriend(const std::string& username) const {
     return false;
 }
 
-// Send a friend request
-void FriendList::sendFriendRequest(const std::string& username) {
-    // Prevent duplicate requests
-    if (friendRequestsHead == nullptr) {
+void FriendList::sendFriendRequest(const string& username)
+{
+    if (friendRequestsHead == NULL)       // duplicates prvention
+    {
         friendRequestsHead = new FriendRequestNode(username);
         return;
     }
 
-    // Check if request already exists
     FriendRequestNode* current = friendRequestsHead;
-    while (current != nullptr) {
-        if (current->requestUsername == username) {
-            return; // Request already exists
+    while (current != NULL)
+    {
+        if (current->requestUsername == username)
+        {
+            return;
         }
         current = current->next;
     }
 
-    // Add new request
-    current = friendRequestsHead;
-    while (current->next != nullptr) {
+    current = friendRequestsHead;     //new requests
+    while (current->next != NULL)
+    {
         current = current->next;
     }
     current->next = new FriendRequestNode(username);
 }
 
-bool FriendList::acceptFriendRequest(const std::string& username) {
-    // Find and remove the request
-    if (friendRequestsHead == nullptr) return false;
+bool FriendList::acceptFriendRequest(const string& username)
+{
+    if (friendRequestsHead == NULL) return false;
 
-    // If first node is the request to accept
-    if (friendRequestsHead->requestUsername == username) {
-        // Add to friends
+    if (friendRequestsHead->requestUsername == username)
+    {
         addFriend(username);
 
-        // Remove from friend requests
-        FriendRequestNode* temp = friendRequestsHead;
+        FriendRequestNode* temp = friendRequestsHead; // removing reqs
         friendRequestsHead = friendRequestsHead->next;
         delete temp;
         return true;
     }
 
-    // Traverse to find the request
     FriendRequestNode* current = friendRequestsHead;
-    while (current->next != nullptr) {
-        if (current->next->requestUsername == username) {
-            // Add to friends
+    while (current->next != NULL)     // traversing to find reqs
+    {
+        if (current->next->requestUsername == username)
+        {
             addFriend(username);
-
-            // Remove from friend requests
             FriendRequestNode* temp = current->next;
             current->next = current->next->next;
             delete temp;
@@ -145,61 +145,60 @@ bool FriendList::acceptFriendRequest(const std::string& username) {
 }
 
 
-bool FriendList::acceptFriendRequestWithFile(const std::string& currentUsername, const std::string& username) {
-    // Attempt to accept the friend request
-    bool accepted = acceptFriendRequest(username);
+bool FriendList::acceptFriendRequestWithFile(const string& currentUsername, const string& username)
+{
+    bool accepted = acceptFriendRequest(username); /// accepting
 
-    if (accepted) {
-        // Save updated friends list to file
-        std::string friendsFilename = currentUsername + "_friends.txt";
-        std::ofstream friendsFile(friendsFilename, std::ios_base::app);
-        if (friendsFile.is_open()) {
-            friendsFile << username << std::endl;
+    if (accepted)
+    {
+        string friendsFilename = currentUsername + "_friends.txt";
+        ofstream friendsFile(friendsFilename, ios_base::app);
+
+        if (friendsFile.is_open())
+        {
+            friendsFile << username <<endl;
             friendsFile.close();
         }
 
-        // Remove the request from file
-        std::string requestsFilename = currentUsername + "_friend_requests.txt";
+        string requestsFilename = currentUsername + "_friend_requests.txt";
+        ifstream inputFile(requestsFilename);
+        ofstream tempFile("temp_requests.txt");
+        string line;
 
-        // Read all requests except the accepted one
-        std::ifstream inputFile(requestsFilename);
-        std::ofstream tempFile("temp_requests.txt");
-
-        std::string line;
-        while (std::getline(inputFile, line)) {
-            if (line != username) {
-                tempFile << line << std::endl;
+        while (getline(inputFile, line))
+        {
+            if (line != username)
+            {
+                tempFile << line << endl;
             }
         }
 
         inputFile.close();
         tempFile.close();
-
-        // Replace the original file
-        std::remove(requestsFilename.c_str());
-        std::rename("temp_requests.txt", requestsFilename.c_str());
+        remove(requestsFilename.c_str());
+        rename("temp_requests.txt", requestsFilename.c_str());
     }
 
     return accepted;
 }
 
-// Reject a friend request
-void FriendList::rejectFriendRequest(const std::string& username) {
-    // If list is empty
-    if (friendRequestsHead == nullptr) return;
+void FriendList::rejectFriendRequest(const string& username)
+{
+    if (friendRequestsHead == NULL) return;
 
-    // If first node is the request to reject
-    if (friendRequestsHead->requestUsername == username) {
+    if (friendRequestsHead->requestUsername == username)
+    {
         FriendRequestNode* temp = friendRequestsHead;
         friendRequestsHead = friendRequestsHead->next;
         delete temp;
         return;
     }
 
-    // Traverse and remove
     FriendRequestNode* current = friendRequestsHead;
-    while (current->next != nullptr) {
-        if (current->next->requestUsername == username) {
+    while (current->next != NULL)
+    {
+        if (current->next->requestUsername == username)
+        {
             FriendRequestNode* temp = current->next;
             current->next = current->next->next;
             delete temp;
@@ -209,44 +208,48 @@ void FriendList::rejectFriendRequest(const std::string& username) {
     }
 }
 
-// Get total number of friends
-int FriendList::getFriendCount() const {
+int FriendList::getFriendCount() const
+{
     int count = 0;
     FriendNode* current = friendsHead;
-    while (current != nullptr) {
+    while (current != NULL)
+    {
         count++;
         current = current->next;
     }
     return count;
 }
 
-// Get total number of friend requests
-int FriendList::getFriendRequestCount() const {
+int FriendList::getFriendRequestCount() const
+{
     int count = 0;
     FriendRequestNode* current = friendRequestsHead;
-    while (current != nullptr) {
+    while (current != NULL)
+    {
         count++;
         current = current->next;
     }
     return count;
 }
 
-// Get list of friends
-void FriendList::getFriendsList(std::string friendsList[], int& count) const {
+void FriendList::getFriendsList(string friendsList[], int& count) const
+{
     count = 0;
     FriendNode* current = friendsHead;
-    while (current != nullptr && count < 100) {  // Assuming max 100 friends
+    while (current != NULL && count < 100)      /// setting friends max to 100
+    {
         friendsList[count] = current->friendUsername;
         count++;
         current = current->next;
     }
 }
 
-// Get list of friend requests
-void FriendList::getFriendRequestsList(std::string requestsList[], int& count) const {
+void FriendList::getFriendRequestsList(string requestsList[], int& count) const
+{
     count = 0;
     FriendRequestNode* current = friendRequestsHead;
-    while (current != nullptr && count < 100) {  // Assuming max 100 requests
+    while (current != NULL && count < 100)           /// setting friends requests max to 100
+    {
         requestsList[count] = current->requestUsername;
         count++;
         current = current->next;
@@ -254,84 +257,94 @@ void FriendList::getFriendRequestsList(std::string requestsList[], int& count) c
 }
 
 
-void FriendList::saveFriendsToFile(const std::string& username) {
-    std::string filename = username + "_friends.txt";
-    std::ofstream file(filename);
+void FriendList::saveFriendsToFile(const string& username)
+{
+    string filename = username + "_friends.txt";
+    ofstream file(filename);
 
-    if (!file.is_open()) {
-        std::cerr << "Unable to open friends file for " << username << std::endl;
+    if (!file.is_open())
+    {
+       cout << "Unable to open friends file for " << username << endl;
         return;
     }
 
     FriendNode* current = friendsHead;
-    while (current != nullptr) {
-        file << current->friendUsername << std::endl;
+    while (current != NULL)
+    {
+        file << current->friendUsername << endl;
         current = current->next;
     }
 
     file.close();
 }
 
-void FriendList::saveFriendRequestsToFile(const std::string& username) {
-    std::string filename = username + "_friend_requests.txt";
-    std::ofstream file(filename);
+void FriendList::saveFriendRequestsToFile(const string& username)
+{
+    string filename = username + "_friend_requests.txt";
+    ofstream file(filename);
 
-    if (!file.is_open()) {
-        std::cerr << "Unable to open friend requests file for " << username << std::endl;
+    if (!file.is_open())
+    {
+       cout << "Unable to open friend requests file for " << username << endl;
         return;
     }
 
     FriendRequestNode* current = friendRequestsHead;
-    while (current != nullptr) {
-        file << current->requestUsername << std::endl;
+    while (current != NULL)
+    {
+        file << current->requestUsername << endl;
         current = current->next;
     }
 
     file.close();
 }
 
-void FriendList::loadFriendsFromFile(const std::string& username) {
-    std::string filename = username + "_friends.txt";
-    std::ifstream file(filename);
+void FriendList::loadFriendsFromFile(const string& username)
+{
+    string filename = username + "_friends.txt";
+    ifstream file(filename);
 
-    if (!file.is_open()) {
-        std::cerr << "No friends file found for " << username << std::endl;
+    if (!file.is_open())
+    {
+       cout << "No friends file found for " << username << endl;
         return;
     }
-
-    // Clear existing friends list
-    while (friendsHead != nullptr) {
+    while (friendsHead != NULL)
+    {
         FriendNode* temp = friendsHead;
         friendsHead = friendsHead->next;
         delete temp;
     }
 
-    std::string friendUsername;
-    while (std::getline(file, friendUsername)) {
+   string friendUsername;
+    while (getline(file, friendUsername))
+    {
         addFriend(friendUsername);
     }
 
     file.close();
 }
 
-void FriendList::loadFriendRequestsFromFile(const std::string& username) {
-    std::string filename = username + "_friend_requests.txt";
-    std::ifstream file(filename);
+void FriendList::loadFriendRequestsFromFile(const string& username)
+{
+    string filename = username + "_friend_requests.txt";
+    ifstream file(filename);
 
-    if (!file.is_open()) {
-        std::cerr << "No friend requests file found for " << username << std::endl;
+    if (!file.is_open())
+    {
+        cout << "No friend requests file found for " << username << endl;
         return;
     }
-
-    // Clear existing friend requests list
-    while (friendRequestsHead != nullptr) {
+    while (friendRequestsHead != NULL)
+    {
         FriendRequestNode* temp = friendRequestsHead;
         friendRequestsHead = friendRequestsHead->next;
         delete temp;
     }
 
-    std::string requestUsername;
-    while (std::getline(file, requestUsername)) {
+    string requestUsername;
+    while (getline(file, requestUsername))
+    {
         sendFriendRequest(requestUsername);
     }
 

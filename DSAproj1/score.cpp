@@ -68,7 +68,7 @@ ScoreManager::ScoreManager() :
     player1LastPowerUpScore(0),
     player2LastPowerUpScore(0)
 {
-    // Initialize texts with default properties
+    
     player1ScoreText.setCharacterSize(24);
     player1ScoreText.setFillColor(sf::Color::White);
     player1ScoreText.setPosition(10.f, 10.f);
@@ -85,7 +85,7 @@ ScoreManager::ScoreManager() :
 }
 
 ScoreManager::~ScoreManager() {
-    // Clean up dynamically allocated stacks
+  
     delete player1TileStack;
     delete player2TileStack;
     delete player1PowerUpStack;
@@ -93,13 +93,13 @@ ScoreManager::~ScoreManager() {
 }
 
 bool ScoreManager::initializeFont(const string& fontPath) {
-    // Load font
+ 
     if (!font.loadFromFile(fontPath)) {
         cout << "Error loading font: " << fontPath << endl;
         return false;
     }
 
-    // Set font for both score texts
+ 
     player1ScoreText.setFont(font);
     player2ScoreText.setFont(font);
 
@@ -133,17 +133,23 @@ void ScoreManager::resetScores() {
 
 void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
 {
-    // Process Player 1 Score
+   
+
     int player1Multiplier = 1;
 
+
+	// Player 1 logic
     if (player1NewTiles > 0) {
-        // Push tiles to stack
+
+        
         player1TileStack->push(player1NewTiles);
 
-        // Calculate continuous tiles
+       
         int continuousTiles = 0;
         Stack* tempStack = new Stack();
 
+
+		// Calculating continuous tiles
         while (!player1TileStack->empty()) {
             int tile = player1TileStack->top();
             continuousTiles += tile;
@@ -151,12 +157,14 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
             player1TileStack->pop();
         }
 
-        // Restore original stack
+       
         while (!tempStack->empty()) {
             player1TileStack->push(tempStack->top());
             tempStack->pop();
         }
         delete tempStack;
+
+
 
         // Bonus logic for Player 1
         if (player1BonusCount >= 5) {
@@ -180,16 +188,19 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
         }
     }
     else {
-        // Clear stack when streak breaks
+        
         player1TileStack->clear();
         player1BonusApplied = false;
     }
 
-    // Calculate score for player 1
+    // score for player 1
     int player1ScoreIncrease = max(0, player1NewTiles) * player1Multiplier;
+
+
     player1Score += player1ScoreIncrease;
 
-    // Power-up acquisition logic for Player 1 using stack
+    // -----------------------------------------POWERUP LOGIC---------------------------------------//
+
     if (player1Score >= 100 && player1LastPowerUpScore < 100) {
         player1PowerUpStack->push(1);
         player1LastPowerUpScore = 100;
@@ -205,7 +216,7 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
         player1LastPowerUpScore = 50;
     }
 
-    // Multiplayer logic
+    //----------------------------------------- Multiplayer logic-------------------------------------------//
     if (!isSinglePlayer) {
         int player2Multiplier = 1;
 
@@ -222,14 +233,14 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
                 player2TileStack->pop();
             }
 
-            // Restore original stack
+          
             while (!tempStack->empty()) {
                 player2TileStack->push(tempStack->top());
                 tempStack->pop();
             }
             delete tempStack;
 
-            // Bonus logic for Player 2
+            //-------------------------------------- Bonus logic for Player 2------------------------------------------//
             if (player2BonusCount >= 5) {
                 player2Multiplier = (player2NewTiles > 5) ? 4 : 1;
             }
@@ -255,15 +266,16 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
             player2BonusApplied = false;
         }
 
-        // Calculate score for player 2
+        //--------------------------- score for player 2---------------------------------//
         int player2ScoreIncrease = max(0, player2NewTiles) * player2Multiplier;
         player2Score += player2ScoreIncrease;
 
-        // Power-up acquisition logic for Player 2
+		//---------------------------------- POWERUP LOGIC FOR PLAYER2-------------------------------------//
         if (player2Score >= 100 && player2LastPowerUpScore < 100) {
             player2PowerUpStack->push(1);
             player2LastPowerUpScore = 100;
         }
+
         else if (player2Score >= 70 && player2LastPowerUpScore < 70) {
             if (player2PowerUpStack->size() < 2) {
                 player2PowerUpStack->push(1);
@@ -277,25 +289,43 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
 bool ScoreManager::canActivatePowerUp(bool isPlayer1) const {
-    return isPlayer1 ? !player1PowerUpStack->empty() :
-        (!isSinglePlayer && !player2PowerUpStack->empty());
+    if (isPlayer1) {
+        return !player1PowerUpStack->empty();
+    }
+    else {
+        return (!isSinglePlayer && !player2PowerUpStack->empty());
+    }
 }
 
 bool ScoreManager::tryActivatePowerUp(bool isPlayer1) {
     if (isPlayer1) {
+
+		//------------------ Check if power-up is available for player 1 -----------------//
         if (!player1PowerUpStack->empty()) {
             player1PowerUpStack->pop();
             player1PowerUpUsed = true;
-            player1PowerUpStartTime = static_cast<unsigned int>(time(nullptr));
+            player1PowerUpStartTime = static_cast<unsigned int>(time(NULL));
             return true;
         }
     }
+	//------------------ Check if power-up is available for player 2 -----------------//
     else if (!isSinglePlayer) {
         if (!player2PowerUpStack->empty()) {
             player2PowerUpStack->pop();
             player2PowerUpUsed = true;
-            player2PowerUpStartTime = static_cast<unsigned int>(time(nullptr));
+            player2PowerUpStartTime = static_cast<unsigned int>(time(NULL));
             return true;
         }
     }
@@ -303,14 +333,19 @@ bool ScoreManager::tryActivatePowerUp(bool isPlayer1) {
 }
 
 void ScoreManager::updatePowerUpTimer(bool isPlayer1) {
-    unsigned int currentTime = static_cast<unsigned int>(time(nullptr));
 
+
+    unsigned int currentTime = static_cast<unsigned int>(time(NULL));
+
+    
+	//------------------ Reset power-up state after 3 seconds if not used -----------------//
     if (isPlayer1) {
         if (player1PowerUpUsed &&
             currentTime - player1PowerUpStartTime >= 3) {
             player1PowerUpUsed = false;
         }
     }
+	//------------------ Reset power-up state after 3 seconds if not used -----------------//
     else {
         if (player2PowerUpUsed &&
             currentTime - player2PowerUpStartTime >= 3) {
@@ -320,10 +355,14 @@ void ScoreManager::updatePowerUpTimer(bool isPlayer1) {
 }
 
 void ScoreManager::resetPowerUpState(bool isPlayer1) {
-    if (isPlayer1) {
+
+	//------------------ Reset power-up state for player 1-----------------//
+    if (isPlayer1) 
+    {
         player1PowerUpUsed = false;
         player1PowerUpStartTime = 0;
     }
+	//---------------- Reset power-up state for player 2-----------------//
     else {
         player2PowerUpUsed = false;
         player2PowerUpStartTime = 0;
@@ -331,11 +370,21 @@ void ScoreManager::resetPowerUpState(bool isPlayer1) {
 }
 
 int ScoreManager::getPowerUpCount(bool isPlayer1) const {
-    return isPlayer1 ? player1PowerUpStack->size() : player2PowerUpStack->size();
+    if (isPlayer1) {
+        return player1PowerUpStack->size();
+    }
+    else {
+        return player2PowerUpStack->size();
+    }
 }
 
 bool ScoreManager::isPowerUpUsed(bool isPlayer1) const {
-    return isPlayer1 ? player1PowerUpUsed : player2PowerUpUsed;
+    if (isPlayer1) {
+        return player1PowerUpUsed;
+    }
+    else {
+        return player2PowerUpUsed;
+    }
 }
 
 int ScoreManager::getPlayer1Score() const {
@@ -359,27 +408,39 @@ void ScoreManager::setPlayerUsernames(const string& p1Username, const string& p2
 }
 
 void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode) {
-    
+
     isSinglePlayer = isSinglePlayerMode;
+
+
+    
 
     if (isSinglePlayerMode) {
         string scoreText = "Score: " + to_string(player1Score);
 
-        // Add bonus level information
+      
         if (player1BonusCount > 0) {
             scoreText += " (Bonus Lvl " + to_string(player1BonusCount) + ")";
         }
 
-        // Add power-up count with more descriptive text
+       
         scoreText += " [Power-Ups: " + to_string(player1PowerUpStack->size()) + "]";
 
-        // Show if a power-up is currently in use
+       
         if (player1PowerUpUsed) {
             scoreText += " (Active)";
         }
 
         player1ScoreText.setString(scoreText);
+
+        player1ScoreText.setCharacterSize(27);
+        player1ScoreText.setPosition(340, 26);
+
         window.draw(player1ScoreText);
+
+
+
+
+
     }
     else {
         /*      string player1ScoreStr = "Player 1: " + to_string(player1Score);
@@ -404,7 +465,8 @@ void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode)
         player2ScoreStr += " [Power-Ups: " + to_string(player2PowerUpStack->size()) + "]";
 
         // Show if power-ups are in use
-        if (player1PowerUpUsed) {
+        if (player1PowerUpUsed)
+        {
             player1ScoreStr += " (Active)";
         }
         if (player2PowerUpUsed) {
@@ -413,6 +475,11 @@ void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode)
 
         player1ScoreText.setString(player1ScoreStr);
         player2ScoreText.setString(player2ScoreStr);
+
+
+        player1ScoreText.setPosition(50, 20);
+        player2ScoreText.setPosition(600, 20);
+
 
         window.draw(player1ScoreText);
         window.draw(player2ScoreText);
@@ -434,39 +501,94 @@ int ScoreManager::countFilledTiles(int grid[35][55]) {
     return filledTiles;
 }
 
-string ScoreManager::sanitizeFilename(const string& username) {
-    string sanitized = username;
-    // Remove or replace characters that might cause issues in filenames
-    for (char& c : sanitized) {
+string ScoreManager::helper(const string& username) {
+
+
+    string updated = username;
+   
+
+    for (char& c : updated) {
         if (c == '/' || c == '\\' || c == ':' || c == '*' || c == '?' ||
             c == '"' || c == '<' || c == '>' || c == '|') {
             c = '_';
         }
     }
-    return sanitized;
+    return updated;
 }
 
 string ScoreManager::getCurrentDateTime() {
-    time_t now = time(nullptr);
-    tm local_tm = {};
-    localtime_s(&local_tm, &now);
+ 
+    static int currentYear = 2024;
+    static int currentMonth = 5;
+    static int currentDay = 11;
+    static int currentHour = 12;
+    static int currentMinute = 30;
+    static int currentSecond = 0;
 
-    ostringstream timestampStream;
-    timestampStream << put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
-    return timestampStream.str();
+
+    currentSecond++;
+
+    // Handle second overflow
+    if (currentSecond >= 60) {
+        currentSecond = 0;
+        currentMinute++;
+
+        // Handle minute overflow
+        if (currentMinute >= 60) {
+            currentMinute = 0;
+            currentHour++;
+
+            // Handle hour overflow
+            if (currentHour >= 24) {
+                currentHour = 0;
+                currentDay++;
+
+                // Simple month day count (not accounting for leap years)
+                int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+                // Handle day overflow
+                if (currentDay > daysInMonth[currentMonth]) {
+                    currentDay = 1;
+                    currentMonth++;
+
+                    // Handle month overflow
+                    if (currentMonth > 12) {
+                        currentMonth = 1;
+                        currentYear++;
+                    }
+                }
+            }
+        }
+    }
+
+    // Manual string formatting with leading zeros
+    string timestamp =
+        (currentYear < 10 ? "0" : "") + to_string(currentYear) + "-" +
+        (currentMonth < 10 ? "0" : "") + to_string(currentMonth) + "-" +
+        (currentDay < 10 ? "0" : "") + to_string(currentDay) + " " +
+        (currentHour < 10 ? "0" : "") + to_string(currentHour) + ":" +
+        (currentMinute < 10 ? "0" : "") + to_string(currentMinute) + ":" +
+        (currentSecond < 10 ? "0" : "") + to_string(currentSecond);
+
+    return timestamp;
 }
 
-void ScoreManager::saveUserProgress(const string& username) {
-    // Sanitize username for file operations
-    string safeUsername = sanitizeFilename(username);
 
-    // Create user-specific progress file
+void ScoreManager::saveUserProgress(const string& username) {
+    
+    string safeUsername =helper(username);
+
+   
     string progressFilePath = "user_progress_" + safeUsername + ".txt";
+
+
+    
 
     ofstream progressFile(progressFilePath, ios::app);
     if (progressFile.is_open()) {
         string currentTime = getCurrentDateTime();
 
+        
         progressFile << "--- Game Session on " << currentTime << " ---\n";
         if (isSinglePlayer) {
             progressFile << "Final Score: " << player1Score << "\n";
@@ -485,37 +607,36 @@ void ScoreManager::saveUserProgress(const string& username) {
     }
 }
 
-bool ScoreManager::loadUserProgress(const string& username) {
-    // Sanitize username for file operations
-    string safeUsername = sanitizeFilename(username);
+bool ScoreManager::loadUserProgress(const string& username) 
+{
+    
+    string safeUsername =helper(username);
 
-    // Create user-specific progress file path
+   
     string progressFilePath = "user_progress_" + safeUsername + ".txt";
 
     ifstream progressFile(progressFilePath);
     if (progressFile.is_open()) {
-        // Here you could implement logic to load previous game state
-        // For now, just return true if file exists
+    
         progressFile.close();
         return true;
     }
     return false;
 }
 
-void ScoreManager::recordGameResults(const string& scoreFilePath,
-    const string& powerUpFilePath,
-    const string& player1Username,
-    const string& player2Username,
-    bool isSinglePlayer) {
-    // Sanitize usernames for file operations
-    string safePlayer1Username = sanitizeFilename(player1Username);
-    string safePlayer2Username = sanitizeFilename(player2Username);
+void ScoreManager::recordGameResults(const string& scoreFilePath, const string& powerUpFilePath,const string& player1Username,  const string& player2Username,
+bool isSinglePlayer)
+{
 
-    // Get current timestamp
+    string safePlayer1Username =helper(player1Username);
+    string safePlayer2Username =helper(player2Username);
+
+  
     string timestamp = getCurrentDateTime();
 
-    // Append to global score file
+
     ofstream scoreFile(scoreFilePath, ios::app);
+
     if (scoreFile.is_open()) {
         scoreFile << "--- Game Score for " << safePlayer1Username << endl;
 
@@ -534,10 +655,19 @@ void ScoreManager::recordGameResults(const string& scoreFilePath,
                 << " (Bonus Level: " << player1BonusCount
                 << ", Power-Ups: " << player1PowerUpStack->size()
                 << ", Used: " << (player1PowerUpUsed ? "Yes" : "No") << ")\n";
+
+            
+
+            
+            
             scoreFile << "Game Score for " << player2Username << "\n";
+
             scoreFile << "Player 2 Score: " << player2Score
+
                 << " (Bonus Level: " << player2BonusCount
+
                 << ", Power-Ups: " << player2PowerUpStack->size()
+
                 << ", Used: " << (player2PowerUpUsed ? "Yes" : "No") << ")\n\n";
         }
         scoreFile.close();
@@ -546,15 +676,18 @@ void ScoreManager::recordGameResults(const string& scoreFilePath,
         cout << "Unable to open score file: " << scoreFilePath << endl;
     }
 
-    // Save user-specific progress
     saveUserProgress(player1Username);
 
-    // Separate detailed power-up tracking
+
+	//------------------- Record power-up usage -----------------//
+
     ofstream powerUpFile(powerUpFilePath, ios::app);
     if (powerUpFile.is_open()) {
         powerUpFile << "--- Power-Up Tracking for " << safePlayer1Username
             << " (" << timestamp << ") ---\n";
 
+
+        
         if (isSinglePlayer) {
             powerUpFile << "Game Mode: Single Player\n";
             powerUpFile << "Total Power-Ups: " << player1PowerUpStack->size() << "\n";
@@ -563,9 +696,13 @@ void ScoreManager::recordGameResults(const string& scoreFilePath,
         }
         else {
             powerUpFile << "Game Mode: Multiplayer\n";
+
             powerUpFile << "Player 1 - Total Power-Ups: " << player1PowerUpStack->size()
+
                 << " (Status: " << (player1PowerUpUsed ? "Active" : "Inactive") << ")\n";
+
             powerUpFile << "Player 2 - Total Power-Ups: " << player2PowerUpStack->size()
+
                 << " (Status: " << (player2PowerUpUsed ? "Active" : "Inactive") << ")\n\n";
         }
         powerUpFile.close();

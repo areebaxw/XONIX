@@ -9,17 +9,17 @@ const int HEAP_SIZE = 10;
 using namespace std;
 
 struct LeaderboardEntry {
-    std::string username;
+    //---------------------Player Information---------------------
+    string username;
     int score = 0;
-    std::string player1Name;
-    std::string player2Name;
+    string player1Name;
+    string player2Name;
     int player1Score = 0;
     int player2Score = 0;
     bool isMultiplayer = false;
-    // Remove gameTimestamp if it was causing issues
     int gameLevel = 0;
 
-    // Default constructor to ensure all fields are initialized
+    //---------------------Constructor---------------------
     LeaderboardEntry() :
         score(0),
         player1Score(0),
@@ -30,60 +30,47 @@ struct LeaderboardEntry {
 
 class Leaderboard {
 public:
-    // Constructor
+    //---------------------Constructor---------------------
     Leaderboard();
 
-    // Current heap size (number of entries)
+    //---------------------Current Heap Size---------------------
     int heapSize;
 
-    // Set and get display mode
+    //---------------------Display Mode Methods---------------------
     void setDisplayMode(int mode);
     int getDisplayMode() const;
 
-    void saveLeaderboardFromScoreFile(const std::string& scoreFilePath, const std::string& leaderboardFilePath);
-
-
-
-    // Insert a new player or update existing player's score
-    void insertPlayer(const std::string& username, int score);
-
-    // Update player score with full entry (handles all fields)
+    //---------------------Leaderboard Management---------------------
+    void saveLeaderboardFromScoreFile(const string& scoreFilePath, const string& leaderboardFilePath);
+    void insertPlayer(const string& username, int score);
     void updatePlayerScore(const LeaderboardEntry& entry);
-
-    // Display leaderboard (sorted from highest to lowest)
     void displayLeaderboard();
-
-    // Sort leaderboard for display
     void sortForDisplay(LeaderboardEntry* sortedArray);
-
-    // Save and load leaderboard from file
     void saveLeaderboard();
     void loadLeaderboard();
 
-    // Record game result (multiplayer or single player)
+    //---------------------Game Result Recording---------------------
     void recordGameResult(
-        const std::string& player1,
+        const string& player1,
         int score1,
-        const std::string& player2 = "",
+        const string& player2 = "",
         int score2 = 0,
         bool isMultiplayer = false,
         int level = 0
     );
 
-    // New method to get the top scorer (highest score)
-    std::string getTopScorer();
-
-    // Save detailed leaderboard entry
+    //---------------------Leaderboard Utilities---------------------
+    string getTopScorer();
     void saveDetailedLeaderboard(const LeaderboardEntry& entry);
 
 private:
-    // Current display mode
+    //---------------------Current Display Mode---------------------
     int currentDisplayMode = 0; // 0 for Single Player, 1 for Multiplayer
 
-    // Min-heap array to store top players
+    //---------------------Min-Heap Data Structure---------------------
     LeaderboardEntry heap[HEAP_SIZE];
 
-    // Helper functions for heap operations
+    //---------------------Helper Functions---------------------
     void swapPlayers(LeaderboardEntry& a, LeaderboardEntry& b);
     void minHeapify(int index);
 };

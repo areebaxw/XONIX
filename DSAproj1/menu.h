@@ -22,42 +22,55 @@ private:
 
     Leaderboard leaderboard;
 
-    // Main menu text
+    Authentication& auth;
+
+    PlayerHashTable playerHashTable;
+    Level level;
+
+	//-------------------MENU TEXTS-------------------//
     Text startText;
     Text selectLevelText;
     Text leaderboardText;
     Text profileText;
-	MySprite bgSprite;
-    // End menu text
     Text endText;
     Text finalScoreText;
+    Text themeSelectionText;
+    Text friendListText;
+    Text queueStatusText;
 
-    Level level;  // Reference to level class
+
+	//-------------------MENU SPRITES-------------------//
     MySprite bgMode;
-
+    MySprite bgSprite;
     MySprite bgLevel;
+    MySprite bgLeaderboard;
+    MySprite bgFriends;
+    MySprite bgPlayer;
 
     void initMainMenu();
     void initEndMenu();
 
 public:
-    // Matchmaking and game state variables
+   
+
+    //----------------------------------MATCHMAKING STUFF--------------------//
     bool isMatchmakingEnabled;
     bool showingMatchmakingQueue;
 
-    std::string matchedPlayer1;  // First player's username (single declaration)
-    std::string matchedPlayer2;  // Second player's username (single declaration)
+    string matchedPlayer1;  
+    string matchedPlayer2; 
     Matchmaking matchmaker;
 
-    // Player usernames
-    std::string player1Username;
-    std::string player2Username;
 
-    // Player profile
+	//------------------ PLAYER USERNAMES--------------------//
+    string player1Username;
+    string player2Username;
+
+     //----------------------PLAYER PROFILE-----------------------------//
     PlayerProfile* currentProfile;
     void handleModeSelection();
 
-    // Level and game state
+    //--------------------------LEVEL AND GAME STATE------------------------------//
     int currentLevel;
     bool showingMainMenu = true;
     bool showingModeSelection = false;
@@ -65,27 +78,27 @@ public:
     bool gameStarted = false;
     bool isSinglePlayerSelected = true;
 
-    // Set current level
+
     void setCurrentLevel(int level) {
         currentLevel = level;
     }
-    // ThemeInventory themeInventory;
-    sf::Text themeSelectionText;
+   
+   
 
-    // Menu display functions
+    //------------------------ MENU DISPLAY FUNCTIONS-----------------------//
     void displayLevelSelection();
     void handleLevelSelection();
     void displayMainMenu();
     void handleMainMenu();
     void selectMode();
-
     void selectLevel();
 
-    // Leaderboard methods
+
+    //------------------------------LEADERBOARD METHODS-------------------------//
     void setLeaderboardDisplayMode(int mode);
     void showLeaderboard();
 
-    // Game management methods
+    //----------------------------GAME MANAGMENT METHODS--------------------------//
     void displayEndMenu(int score, int highScore);
     void handleEndMenu();
     void showProfile();
@@ -93,77 +106,49 @@ public:
     bool startMatchmaking();
     void handleMatchmakingQueue();
 
-    // Constructor and Destructor
-    Menu(RenderWindow& window, const std::string& username, Authentication& authRef);
-    ~Menu();
 
-    // Game control methods
+	//----------------------------GAME MANAGEMENT METHODS--------------------------//
     void startGame();
     void restartGame();
-    bool isPlayerInQueue(const std::string& username);
+    bool isPlayerInQueue(const string& username);
     void exitGame();
     int getCurrentLevel();
 
-    MySprite bgLeaderboard;
 
-
-
-
-    // Score tracking
+	//------------------------GAME STATE VARIABLES--------------------------//
     int player1Score = 0;
     int player2Score = 0;
     bool restartRequested = false;
 
-
-
-
-
-
-
-
-
-
-    // Queue status text
-    Text queueStatusText;
-
-
-    void setSecondPlayerName(const std::string& playerName);
-    std::string secondPlayerName;
-
-    std::string promptForSecondPlayerName();
-
-
-    std::string getValidPlayerName(const std::string& name, const std::string& defaultName);
-
+  
+//------------------------SECOND PLAYER NAME STUFF------------------------------//
+    void setSecondPlayerName(const string& playerName);
+    string secondPlayerName;
+    string promptForSecondPlayerName();
+    string getValidPlayerName(const string& name, const string& defaultName);
     void syncPlayerNames();
 
 
-
-    //friendlist 
-    // 
-    Text friendListText;                // Text for Friends List menu option
-
-    // New methods for friend list management
-    void displayFriendList();           // Display friend list screen
-    void handleFriendListInteractions();// Handle user interactions in friend list
-    void sendFriendRequest();           // Open window to send friend request
+	//------------------------FRIENDLIST METHODS--------------------------//
+    void sendFriendRequest();           
     void displayFriendRequests();
     void showFriendList();
     bool showingFriendList = false;
-    Authentication& auth;
-    void sendFriendRequestToUser(const std::string& sender, const std::string& receiver);
-
-
-
-    void acceptFriendRequest();  // Function signature for accepting friend requests
+    void sendFriendRequestToUser(const string& sender, const string& receiver);
+    void acceptFriendRequest();  
     void rejectFriendRequest();
+    void showFriendsForMultiplayer();
 
 
 
+	//------------------------THEME SELECTION METHODS--------------------------//
 	int themeSelection();
 
 
 
+	//----------------------------CONSTRUCTOR AND DESTRUCTOR--------------------------//
+    Menu(RenderWindow& window, const string& username, Authentication& authRef);
+    ~Menu();
 
 
 };
