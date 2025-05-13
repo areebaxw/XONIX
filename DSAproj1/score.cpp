@@ -135,69 +135,38 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
 {
    
 
+
+
+    //-------------------------------------BONUS LOGIC-------------------------------------------------//
     int player1Multiplier = 1;
+    bool bonusApplied = false;
 
-
-	// Player 1 logic
     if (player1NewTiles > 0) {
-
-        
-        player1TileStack->push(player1NewTiles);
-
-       
-        int continuousTiles = 0;
-        Stack* tempStack = new Stack();
-
-
-		// Calculating continuous tiles
-        while (!player1TileStack->empty()) {
-            int tile = player1TileStack->top();
-            continuousTiles += tile;
-            tempStack->push(tile);
-            player1TileStack->pop();
+        if (player1BonusCount < 3 && player1NewTiles > 10) {
+            player1Multiplier = 2;
+            bonusApplied = true;
+        }
+        else if (player1BonusCount >= 3 && player1BonusCount < 5 && player1NewTiles > 5) {
+            player1Multiplier = 2;
+            bonusApplied = true;
+        }
+        else if (player1BonusCount >= 5 && player1NewTiles > 5) {
+            player1Multiplier = 4;
+            bonusApplied = true;
         }
 
-       
-        while (!tempStack->empty()) {
-            player1TileStack->push(tempStack->top());
-            tempStack->pop();
+        if (bonusApplied && player1BonusCount < 5) {
+            player1BonusCount++;
         }
-        delete tempStack;
 
-
-
-        // Bonus logic for Player 1
-        if (player1BonusCount >= 5) {
-            player1Multiplier = (player1NewTiles > 5) ? 4 : 1;
-        }
-        else if (player1BonusCount >= 3) {
-            if (player1NewTiles > 5) {
-                player1Multiplier = 2;
-
-                if (!player1BonusApplied) {
-                    player1BonusCount++;
-                    player1BonusApplied = true;
-                }
-            }
-        }
-        else {
-            if (continuousTiles > 10 && !player1BonusApplied) {
-                player1BonusCount++;
-                player1BonusApplied = true;
-            }
-        }
-    }
-    else {
-        
-        player1TileStack->clear();
-        player1BonusApplied = false;
+        player1Score += player1NewTiles * player1Multiplier;
     }
 
-    // score for player 1
-    int player1ScoreIncrease = max(0, player1NewTiles) * player1Multiplier;
-
-
+  
+    int player1ScoreIncrease = player1NewTiles * player1Multiplier;
     player1Score += player1ScoreIncrease;
+
+
 
     // -----------------------------------------POWERUP LOGIC---------------------------------------//
 
@@ -288,16 +257,6 @@ void ScoreManager::updateScore(int player1NewTiles, int player2NewTiles)
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 bool ScoreManager::canActivatePowerUp(bool isPlayer1) const {
@@ -418,9 +377,18 @@ void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode)
         string scoreText = "Score: " + to_string(player1Score);
 
       
-        if (player1BonusCount > 0) {
-            scoreText += " (Bonus Lvl " + to_string(player1BonusCount) + ")";
-        }
+    /*    if (player1BonusCount > 0) {
+            if (player1BonusCount < 3) {
+                scoreText += " (×2 when >10 tiles)";
+            }
+            else if (player1BonusCount < 5) {
+                scoreText += " (×2 when >5 tiles)";
+            }
+            else {
+                scoreText += " (×4 when >5 tiles)";
+            }
+            scoreText += " [Bonus Lvl " + to_string(player1BonusCount) + "]";
+        }*/
 
        
         scoreText += " [Power-Ups: " + to_string(player1PowerUpStack->size()) + "]";
@@ -442,6 +410,8 @@ void ScoreManager::drawScores(sf::RenderWindow& window, bool isSinglePlayerMode)
 
 
     }
+
+
     else {
         /*      string player1ScoreStr = "Player 1: " + to_string(player1Score);
               string player2ScoreStr = "Player 2: " + to_string(player2Score);*/

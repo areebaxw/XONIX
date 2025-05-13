@@ -35,6 +35,23 @@ void PlayerHashTable::addPlayer(const string& username) {
     int index = hashUsername(username);
     HashNode* newNode = new HashNode(username);
 
+    /*
+	int friendListSize = 0;
+    if
+		(table[index] == NULL) {
+		newNode->friendList.addFriend(username);
+		friendListSize++;
+	}
+	else {
+		HashNode* current = table[index];
+		while (current != NULL) {
+			if (current->username == username) {
+				return;
+			}
+			current = current->next;
+		}
+	}*/
+
     if (table[index] == NULL) {
         table[index] = newNode;
     }
@@ -52,7 +69,20 @@ void PlayerHashTable::addPlayer(const string& username) {
 void PlayerHashTable::findMutualFriends(const string& user1,const string& user2,string mutualFriends[],int& count) {
     count = 0;
 
-    
+
+
+	//if (user1 == user2) {
+	//	return;
+	//}
+ //   
+	//if (!userExists(user1) || !userExists(user2)) {
+	//	return;
+	//}
+
+	//if (user1.empty() || user2.empty()) {
+	//	return;
+	//}
+
     FriendList* friendList1 = getFriendList(user1);
     FriendList* friendList2 = getFriendList(user2);
 
@@ -66,6 +96,10 @@ void PlayerHashTable::findMutualFriends(const string& user1,const string& user2,
     friendList1->getFriendsList(friends1, count1);
     friendList2->getFriendsList(friends2, count2);
 
+
+	//if (count1 == 0 || count2 == 0) {
+	//	return; // No mutual friends if either list is empty
+	//}
 
 
     //-------------MUTUAL FRIENDS-----------------------------//
@@ -99,6 +133,12 @@ bool PlayerHashTable::userExists(const string& username) {
     int index = hashUsername(username);
     HashNode* current = table[index];
 
+ //   if(current == NULL) {
+	//	return false;
+	//}
+
+
+
     while (current != NULL) {
         if (current->username == username) {
             return true;
@@ -108,11 +148,28 @@ bool PlayerHashTable::userExists(const string& username) {
 
     return false;
 }
+
+
+//int PlayerHashTable::hashUsername(const string& username) {
+//	unsigned long hash = 5381;
+//	for (char c : username) {
+//		hash = ((hash << 5) + hash) + c;
+//	}
+//	return hash % tablesize;
+//}
+
 //-------------HASH FUNCTION for player-----------------------------//
-void PlayerHashTable::removePlayer(const string& username) {
+void PlayerHashTable::removePlayer(const string& username) 
+{
     int index = hashUsername(username);
     HashNode* current = table[index];
     HashNode* prev = NULL;
+
+
+	//while (current != NULL && current->username != username) {
+	//	prev = current;
+	//	current = current->next;
+	//}
 
     while (current != NULL) {
         if (current->username == username) {

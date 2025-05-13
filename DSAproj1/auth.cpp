@@ -333,7 +333,7 @@ bool Authentication::showAuthScreen(RenderWindow& window)
                                 }
                             }
                             else {
-                                // Signup mode
+                                //----------------------------------- Signup mode------------------------------------------------//
                                 if (!hasSpecialCharacter(password))
                                 {
                                     messageText.setString("Password must contain a special character");
