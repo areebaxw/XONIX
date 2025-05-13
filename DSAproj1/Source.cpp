@@ -13,7 +13,10 @@
 #include "theme.h"
 #include "player.h"
 #include "leaderboard.h"
+#include <ctime>
+#include <iomanip>
 #include "fstream"
+#include "LinkedList.h"
 
 using namespace sf;
 using namespace std;
@@ -209,20 +212,41 @@ void resetGame(bool resetMenu, Menu& menu, ScoreManager& scoreManager,
     }
 }
 
-void saveGame(const string& filename, int grid[M][N], int x1, int y1, int dx1, int dy1,
+string saveGame(const string& filename, int grid[M][N], int x1, int y1, int dx1, int dy1,
      Enemy enemies[], int enemyCount, ScoreManager& scoreManager) 
 {
     ofstream outFile(filename);
+
     if (!outFile) {
         cout << "Failed to open save file!" << endl;
-        return;
+        return "";
     }
 
+    time_t now = time(nullptr);
+    tm localTime;
+    localtime_s(&localTime, &now);
+
+    char buffer[100];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &localTime); 
+    string timeStamp = string(buffer);
+
+
+    outFile << timeStamp << "\n";
     // Save grid
+
+	LinkedList linkedList;
+	linkedList.convert2D(grid, M, N);
+	Node* current = linkedList.getHead();
     for (int i = 0; i < M; ++i) 
     {
         for (int j = 0; j < N; ++j) 
-            outFile << grid[i][j] << " ";
+        {
+            if(current)
+            {
+                outFile << current->data << " ";
+                current = current->next;
+            }
+        }
         
         outFile << "\n";
     }
@@ -239,23 +263,39 @@ void saveGame(const string& filename, int grid[M][N], int x1, int y1, int dx1, i
 
     outFile.close();
     cout << "Game saved successfully." << endl;
+
+	return timeStamp;
 }
 
-void loadGame(const string& filename, int grid[M][N], int& x1, int& y1, int& dx1, int& dy1,
+string loadGame(const string& filename, int grid[M][N], int& x1, int& y1, int& dx1, int& dy1,
 	Enemy enemies[], int& enemyCount, ScoreManager& scoreManager) {
 	
     ifstream inFile(filename);
+	
 	if (!inFile) {
 		cout << "Failed to open save file!" << endl;
-		return;
+		return "";
 	}
-	// Load grid
-	for (int i = 0; i < M; ++i)
-	{
-		for (int j = 0; j < N; ++j)
-			inFile >> grid[i][j];
 
-	}
+    string timesaved;
+	getline(inFile, timesaved);
+
+	LinkedList linkedList;
+
+    for (int i = 0; i < M; ++i)
+    {
+        int temp;
+        for (int j = 0; j < N; ++j)
+        {
+            inFile >> temp;
+			linkedList.insert(temp);
+        }
+    }
+
+	linkedList.convertTo2D(grid);
+
+
+
 	inFile >> x1 >> y1 >> dx1 >> dy1;
 	inFile >> enemyCount;
 	for (int i = 0; i < enemyCount; ++i) {
@@ -264,11 +304,31 @@ void loadGame(const string& filename, int grid[M][N], int& x1, int& y1, int& dx1
 	inFile >> scoreManager.player1Score >> scoreManager.player2Score;
 	inFile.close();
 	cout << "Game loaded successfully." << endl;
+
+    return timesaved;
 }
 
 int main() {
    
     RenderWindow authWindow(VideoMode(600, 500), "Xonix - Login");
+
+	Font font;
+	font.loadFromFile("Courier Prime Bold.ttf");
+
+	Text saveText;
+	saveText.setFont(font);
+	saveText.setCharacterSize(25);
+	saveText.setFillColor(Color::Black);
+	saveText.setPosition(40, 50);
+
+	Text loadText;
+	loadText.setFont(font);
+	loadText.setCharacterSize(25);
+	loadText.setFillColor(Color::Black);
+	loadText.setPosition(40, 70);
+
+	Clock saveClock;
+	Clock loadClock;
 
     //--------------------  music--------------------------------//
     Music music;
@@ -280,10 +340,12 @@ int main() {
     music.setVolume(50);      
     music.play();
 
+    string time1, time2;
+	bool save = false;
+	bool load = false;
 
 
     Authentication auth;
-
 
 
     Clock powerUpClock;
@@ -469,13 +531,19 @@ int main() {
 					if (e.key.code == Keyboard::S) 
                     {
 						string filename = username + "_save.txt";
-						saveGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
+					    time1 = saveGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
+                        save = 1;
+						saveText.setString("Game saved successfully at: " + time1 + " by "+username);
+						saveClock.restart();
 					}
 
                     if (e.key.code == Keyboard::L) 
                     {
 						string filename = username + "_save.txt";
-                        loadGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
+                        time2 = loadGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
+						load = 1;
+						loadText.setString("Game loaded successfully at: " + time2 + " by " + username);
+						loadClock.restart();
                     }
                 }
 
@@ -735,6 +803,13 @@ int main() {
 
            
             }
+
+			if (saveClock.getElapsedTime().asSeconds() > 5)
+				save = false;
+
+			if (loadClock.getElapsedTime().asSeconds() > 5)
+				load = false;
+
             window.clear();
 
 
@@ -749,8 +824,6 @@ int main() {
 
 
             window.draw(sprite);
-
-            
             
 			//---------------------- Draw grid ----------------------------//
             for (int i = 0; i < M; i++)
@@ -796,6 +869,16 @@ int main() {
             
             scoreManager.drawScores(window, menu.isSinglePlayerSelected);
 
+
+            if (saveClock.getElapsedTime().asSeconds() < 5 && save)
+            {
+                window.draw(saveText);
+            }
+
+            if (loadClock.getElapsedTime().asSeconds() < 5 && load)
+            {
+                window.draw(loadText);
+            }
 
             window.display();
         }

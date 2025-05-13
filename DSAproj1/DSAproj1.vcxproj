@@ -157,6 +157,7 @@ sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="friendlist.h" />
     <ClInclude Include="leaderboard.h" />
     <ClInclude Include="level.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="matchmaking.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="player.h" />

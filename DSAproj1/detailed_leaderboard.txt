@@ -167,3 +167,12 @@ hannah vs aeba,219,hannah,219,aeba,0,Multiplayer,0
 aeba,527,aeba,527,Player2,0,Single Player,0
 aeba,65,aeba,65,Player2,0,Single Player,0
 aeba,247,aeba,247,Player2,0,Single Player,0
+aeba,10,aeba,10,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
+aeba,26,aeba,26,Player2,0,Single Player,0
