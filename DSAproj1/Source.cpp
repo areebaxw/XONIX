@@ -499,7 +499,8 @@ int main() {
                     player1Name + " vs " + player2Name + ")";
                 window.setTitle(windowTitle);
             }
-            else {
+            else 
+            {
                 
                 scoreManager.setPlayerUsernames(username, "");
             }
