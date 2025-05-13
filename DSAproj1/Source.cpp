@@ -13,6 +13,7 @@
 #include "theme.h"
 #include "player.h"
 #include "leaderboard.h"
+#include "fstream"
 
 using namespace sf;
 using namespace std;
@@ -206,6 +207,63 @@ void resetGame(bool resetMenu, Menu& menu, ScoreManager& scoreManager,
         menu.gameStarted = false;
         menu.showingMainMenu = true;
     }
+}
+
+void saveGame(const string& filename, int grid[M][N], int x1, int y1, int dx1, int dy1,
+     Enemy enemies[], int enemyCount, ScoreManager& scoreManager) 
+{
+    ofstream outFile(filename);
+    if (!outFile) {
+        cout << "Failed to open save file!" << endl;
+        return;
+    }
+
+    // Save grid
+    for (int i = 0; i < M; ++i) 
+    {
+        for (int j = 0; j < N; ++j) 
+            outFile << grid[i][j] << " ";
+        
+        outFile << "\n";
+    }
+
+    outFile << x1 << " " << y1 << " " << dx1 << " " << dy1 << "\n";
+
+    outFile << enemyCount << "\n";
+    for (int i = 0; i < enemyCount; ++i) {
+        outFile << enemies[i].x << " " << enemies[i].y << " " << enemies[i].dx << " "
+            << enemies[i].dy << " " << enemies[i].isPaused << "\n";
+    }
+
+    outFile << scoreManager.getPlayer1Score() << " " << scoreManager.getPlayer2Score() << "\n";
+
+    outFile.close();
+    cout << "Game saved successfully." << endl;
+}
+
+void loadGame(const string& filename, int grid[M][N], int& x1, int& y1, int& dx1, int& dy1,
+	Enemy enemies[], int& enemyCount, ScoreManager& scoreManager) {
+	
+    ifstream inFile(filename);
+	if (!inFile) {
+		cout << "Failed to open save file!" << endl;
+		return;
+	}
+	// Load grid
+	for (int i = 0; i < M; ++i)
+	{
+		for (int j = 0; j < N; ++j)
+			inFile >> grid[i][j];
+
+	}
+	inFile >> x1 >> y1 >> dx1 >> dy1;
+	inFile >> enemyCount;
+	for (int i = 0; i < enemyCount; ++i) {
+		inFile >> enemies[i].x >> enemies[i].y >> enemies[i].dx >> enemies[i].dy >> enemies[i].isPaused;
+	}
+	inFile >> scoreManager.player1Score >> scoreManager.player2Score;
+	inFile.close();
+	cout << "Game loaded successfully." << endl;
 }
 
 int main() {
@@ -407,6 +465,18 @@ int main() {
                         else {
                             pause = true;
                         }
+                    }
+
+					if (e.key.code == Keyboard::S) 
+                    {
+						string filename = username + "_save.txt";
+						saveGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
+					}
+
+                    if (e.key.code == Keyboard::L) 
+                    {
+						string filename = username + "_save.txt";
+                        loadGame(filename, grid, x1, y1, dx1, dy1, a, enemyCount, scoreManager);
                     }
                 }
 

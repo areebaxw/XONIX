@@ -10,8 +10,7 @@ class Stack;
 
 
 class ScoreManager {
-private:
-    // ---------------Private members for storing player data and game state---------------//
+public:
     int player1Score;
     int player2Score;
     bool isSinglePlayer;
@@ -46,7 +45,7 @@ private:
     string getCurrentDateTime();
     int determinePowerUpLevel(int score);
 
-public:
+
     // --------------For managing player usernames---------------//
     void setPlayerUsernames(const string& p1Username, const string& p2Username);
     string player1Username;
